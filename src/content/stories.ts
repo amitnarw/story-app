@@ -1,8 +1,43 @@
 import type { Story } from './types';
 
-const cover = (slug: string) => require(`../assets/stories/${slug}/cover.svg`) as any;
-const storyImage = (slug: string, n: number) =>
-  require(`../assets/stories/${slug}/img-${n}.svg`) as any;
+const coverMap: Record<string, any> = {
+  'the-lamplighters-daughter': require('../../assets/stories/the-lamplighters-daughter/cover.png'),
+  'a-room-with-yellow-curtains': require('../../assets/stories/a-room-with-yellow-curtains/cover.png'),
+  'the-last-train-to-somewhere': require('../../assets/stories/the-last-train-to-somewhere/cover.png'),
+  'what-the-orchard-kept': require('../../assets/stories/what-the-orchard-kept/cover.png'),
+  'small-hours': require('../../assets/stories/small-hours/cover.png'),
+  'the-cartographer-of-rain': require('../../assets/stories/the-cartographer-of-rain/cover.png'),
+};
+
+const storyImageMap: Record<string, Record<number, any>> = {
+  'the-lamplighters-daughter': {
+    1: require('../../assets/stories/the-lamplighters-daughter/img-1.png'),
+    2: require('../../assets/stories/the-lamplighters-daughter/img-2.png'),
+  },
+  'a-room-with-yellow-curtains': {
+    1: require('../../assets/stories/a-room-with-yellow-curtains/img-1.png'),
+    2: require('../../assets/stories/a-room-with-yellow-curtains/img-2.png'),
+  },
+  'the-last-train-to-somewhere': {
+    1: require('../../assets/stories/the-last-train-to-somewhere/img-1.png'),
+    2: require('../../assets/stories/the-last-train-to-somewhere/img-2.png'),
+  },
+  'what-the-orchard-kept': {
+    1: require('../../assets/stories/what-the-orchard-kept/img-1.png'),
+    2: require('../../assets/stories/what-the-orchard-kept/img-2.png'),
+  },
+  'small-hours': {
+    1: require('../../assets/stories/small-hours/img-1.png'),
+    2: require('../../assets/stories/small-hours/img-2.png'),
+  },
+  'the-cartographer-of-rain': {
+    1: require('../../assets/stories/the-cartographer-of-rain/img-1.png'),
+    2: require('../../assets/stories/the-cartographer-of-rain/img-2.png'),
+  },
+};
+
+const cover = (slug: string) => coverMap[slug];
+const storyImage = (slug: string, n: number) => storyImageMap[slug][n];
 
 /**
  * Loom launch library — six original literary stories.

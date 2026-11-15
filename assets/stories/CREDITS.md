@@ -14,6 +14,20 @@ artwork created for Loom. No third-party photography or illustration is used.
 | Small Hours | cover.svg | img-1.svg, img-2.svg |
 | The Cartographer of Rain | cover.svg | img-1.svg, img-2.svg |
 
+## Build pipeline
+
+The SVG files are the design source of truth, but React Native's `<Image>`
+cannot decode SVG on Android. Rasterized PNGs live alongside the SVGs and are
+what the app loads at runtime (`src/content/stories.ts` requires the `.png`
+files). Regenerate them after editing any SVG with:
+
+```
+node scripts/build-story-images.mjs
+```
+
+The script renders each SVG via `@resvg/resvg-js` at its intrinsic size,
+capping the long edge at 1200px. Existing PNGs are skipped unless deleted.
+
 ## Brand assets
 
 The app icon, splash screen, and favicon are derived from a single SVG mark

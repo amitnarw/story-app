@@ -1,4 +1,4 @@
-import { Image, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
 
 import { AppText } from '@/components/ui/app-text';
@@ -27,10 +27,13 @@ export default function GetInScreen() {
         </Appear>
 
         <Appear delay={70} distance={16} className="items-center">
-          <View className="w-full max-w-[300px] overflow-hidden rounded-sheet">
+          <View
+            className="w-full max-w-[300px] overflow-hidden rounded-sheet"
+            style={{ aspectRatio: 2 / 3 }}
+          >
             <Image
               source={featured.cover}
-              style={{ width: '100%', height: '100%' }}
+              style={StyleSheet.absoluteFill}
               resizeMode="cover"
             />
           </View>
