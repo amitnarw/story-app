@@ -48,7 +48,7 @@ export function Button({
       disabled={disabled}
       className={cn(base, className)}
       style={[style, disabled && { opacity: 0.5 }]}>
-      <AppText variant="button" tone={tone as any} className="font-sans-semibold">
+      <AppText variant="button" tone={tone as any}>
         {label}
       </AppText>
     </PressableScale>

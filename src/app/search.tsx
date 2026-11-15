@@ -9,7 +9,8 @@ import { AppText } from '@/components/ui/app-text';
 import { IconButton } from '@/components/ui/icon-button';
 import { PressableScale } from '@/components/ui/pressable-scale';
 import { Screen } from '@/components/ui/screen';
-import { allStories, type Story } from '@/content';
+import { buildStories, useStories, type Story } from '@/content';
+import { useI18n } from '@/i18n';
 import { useTheme } from '@/theme/ThemeProvider';
 
 function chunk<T>(items: T[], size: number): T[][] {
@@ -20,22 +21,42 @@ function chunk<T>(items: T[], size: number): T[][] {
   return result;
 }
 
+/**
+ * Search runs against the active language, and also against the English
+ * copy so readers can type either script and still find the story.
+ */
+function matchesQuery(story: Story, english: Story | undefined, query: string) {
+  const candidates: Pick<Story, 'title' | 'author' | 'tags' | 'summary'>[] = [story];
+  if (english && english !== story) candidates.push(english);
+  return candidates.some((text) => {
+    const matchTitle = text.title.toLowerCase().includes(query);
+    const matchAuthor = text.author.toLowerCase().includes(query);
+    const matchTags = text.tags.some((tag) => tag.toLowerCase().includes(query));
+    const matchSummary = text.summary.toLowerCase().includes(query);
+    return matchTitle || matchAuthor || matchTags || matchSummary;
+  });
+}
+
 export default function SearchScreen() {
   const { colors } = useTheme();
   const [query, setQuery] = useState('');
+  const { t } = useI18n();
+  const stories = useStories();
+
+  const englishStories = useMemo(() => buildStories('en'), []);
+  const englishBySlug = useMemo(
+    () => new Map(englishStories.map((story) => [story.slug, story])),
+    [englishStories],
+  );
 
   const trimmed = query.trim().toLowerCase();
 
   const matchingStories = useMemo<Story[]>(() => {
     if (!trimmed) return [];
-    return allStories.filter((story) => {
-      const matchTitle = story.title.toLowerCase().includes(trimmed);
-      const matchAuthor = story.author.toLowerCase().includes(trimmed);
-      const matchTags = story.tags.some((tag) => tag.toLowerCase().includes(trimmed));
-      const matchSummary = story.summary.toLowerCase().includes(trimmed);
-      return matchTitle || matchAuthor || matchTags || matchSummary;
-    });
-  }, [trimmed]);
+    return stories.filter(
+      (story) => matchesQuery(story, englishBySlug.get(story.slug), trimmed),
+    );
+  }, [trimmed, stories, englishBySlug]);
 
   const hasSearched = trimmed.length > 0;
   const hasResults = matchingStories.length > 0;
@@ -46,7 +67,7 @@ export default function SearchScreen() {
         <View className="flex-row items-center gap-3">
           <IconButton
             icon={ChevronLeft}
-            label="Back"
+            label={t('common.back')}
             onPress={() => {
               if (router.canGoBack()) router.back();
               else router.replace('/home');
@@ -62,7 +83,7 @@ export default function SearchScreen() {
             <TextInput
               value={query}
               onChangeText={setQuery}
-              placeholder="Search stories, authors, tags..."
+              placeholder={t('search.placeholder')}
               placeholderTextColor={colors.muted}
               autoFocus
               returnKeyType="search"
@@ -78,7 +99,7 @@ export default function SearchScreen() {
             {query.length > 0 ? (
               <PressableScale
                 accessibilityRole="button"
-                accessibilityLabel="Clear search"
+                accessibilityLabel={t('search.clear')}
                 scaleTo={0.9}
                 onPress={() => setQuery('')}
                 className="p-1">
@@ -113,13 +134,13 @@ export default function SearchScreen() {
               <SearchIcon size={26} color={colors.muted} strokeWidth={1.6} />
             </View>
             <AppText variant="headline" style={{ textAlign: 'center' }}>
-              Search Loom
+              {t('search.title')}
             </AppText>
             <AppText
               variant="body"
               tone="muted"
               style={{ textAlign: 'center', marginTop: 8, maxWidth: 280 }}>
-              Find stories by title, author, or tag across the library.
+              {t('search.hint')}
             </AppText>
           </View>
         ) : null}
@@ -137,13 +158,13 @@ export default function SearchScreen() {
               <SearchIcon size={26} color={colors.muted} strokeWidth={1.6} />
             </View>
             <AppText variant="headline" style={{ textAlign: 'center' }}>
-              No matches found
+              {t('search.noMatches')}
             </AppText>
             <AppText
               variant="body"
               tone="muted"
               style={{ textAlign: 'center', marginTop: 8, maxWidth: 280 }}>
-              We could not find anything matching &quot;{query}&quot;. Try a different search term.
+              {t('search.noMatchesBody', { query })}
             </AppText>
           </View>
         ) : null}
@@ -151,7 +172,7 @@ export default function SearchScreen() {
         {hasSearched && matchingStories.length > 0 ? (
           <View>
             <AppText variant="label" className="mb-3">
-              Stories ({matchingStories.length})
+              {t('search.results', { count: matchingStories.length })}
             </AppText>
             <View className="gap-3">
               {chunk(matchingStories, 2).map((row) => (

@@ -1,63 +1,18 @@
-import type { Story } from './types';
-
-const coverMap: Record<string, any> = {
-  'the-lamplighters-daughter': require('../../assets/stories/the-lamplighters-daughter/cover.png'),
-  'a-room-with-yellow-curtains': require('../../assets/stories/a-room-with-yellow-curtains/cover.png'),
-  'the-last-train-to-somewhere': require('../../assets/stories/the-last-train-to-somewhere/cover.png'),
-  'what-the-orchard-kept': require('../../assets/stories/what-the-orchard-kept/cover.png'),
-  'small-hours': require('../../assets/stories/small-hours/cover.png'),
-  'the-cartographer-of-rain': require('../../assets/stories/the-cartographer-of-rain/cover.png'),
-};
-
-const storyImageMap: Record<string, Record<number, any>> = {
-  'the-lamplighters-daughter': {
-    1: require('../../assets/stories/the-lamplighters-daughter/img-1.png'),
-    2: require('../../assets/stories/the-lamplighters-daughter/img-2.png'),
-  },
-  'a-room-with-yellow-curtains': {
-    1: require('../../assets/stories/a-room-with-yellow-curtains/img-1.png'),
-    2: require('../../assets/stories/a-room-with-yellow-curtains/img-2.png'),
-  },
-  'the-last-train-to-somewhere': {
-    1: require('../../assets/stories/the-last-train-to-somewhere/img-1.png'),
-    2: require('../../assets/stories/the-last-train-to-somewhere/img-2.png'),
-  },
-  'what-the-orchard-kept': {
-    1: require('../../assets/stories/what-the-orchard-kept/img-1.png'),
-    2: require('../../assets/stories/what-the-orchard-kept/img-2.png'),
-  },
-  'small-hours': {
-    1: require('../../assets/stories/small-hours/img-1.png'),
-    2: require('../../assets/stories/small-hours/img-2.png'),
-  },
-  'the-cartographer-of-rain': {
-    1: require('../../assets/stories/the-cartographer-of-rain/img-1.png'),
-    2: require('../../assets/stories/the-cartographer-of-rain/img-2.png'),
-  },
-};
-
-const cover = (slug: string) => coverMap[slug];
-const storyImage = (slug: string, n: number) => storyImageMap[slug][n];
+import type { StoryCopy } from '../types';
 
 /**
- * Loom launch library — six original literary stories.
- *
- * Copy rules: warm, plain-spoken, inclusive, non-explicit. No graphic
- * description. Every story assumes ongoing consent between its characters.
+ * English prose for the launch library — the original text, unchanged.
+ * Image blocks carry alt/caption only; artwork merges in from the manifest.
  */
-
-export const stories: Story[] = [
+export const enCopy: StoryCopy[] = [
   {
     slug: 'the-lamplighters-daughter',
-    order: 1,
     title: "The Lamplighter's Daughter",
     author: 'Loom Editorial',
     kicker: 'A coastal town, a father’s nightly rounds, a daughter leaving',
     summary:
       'Every evening Elias climbs the cliff to light the harbour lamps. His daughter Mina has watched him do it all her life — until the morning she packs a bag and does not come back. A story about the light we leave behind and the light we carry with us.',
-    minutes: 8,
     tags: ['family', 'coast', 'coming of age', 'light'],
-    cover: cover('the-lamplighters-daughter'),
     coverAlt: 'A lighthouse at dusk, a single lamp glowing against a deep-blue sky',
     chapters: [
       {
@@ -91,7 +46,6 @@ export const stories: Story[] = [
           },
           {
             kind: 'image',
-            source: storyImage('the-lamplighters-daughter', 1),
             alt: 'A coastal path winding along cliffs at twilight, with a single figure walking toward a distant light',
             caption: 'The cliff path Mina took, in the direction of the bus.',
           },
@@ -111,15 +65,12 @@ export const stories: Story[] = [
   },
   {
     slug: 'a-room-with-yellow-curtains',
-    order: 2,
     title: 'A Room with Yellow Curtains',
     author: 'Loom Editorial',
     kicker: 'A woman returns to the house she grew up in',
     summary:
       'Clara inherits her grandmother’s cottage and finds it exactly as she left it twenty years ago — yellow curtains, a crack in the ceiling, and a drawer full of letters she never sent. Returning is not the same as belonging.',
-    minutes: 7,
     tags: ['home', 'memory', 'inheritance', 'quiet'],
-    cover: cover('a-room-with-yellow-curtains'),
     coverAlt: 'Yellow curtains in a sunlit window, with dust motes dancing in the light',
     chapters: [
       {
@@ -153,7 +104,6 @@ export const stories: Story[] = [
           },
           {
             kind: 'image',
-            source: storyImage('a-room-with-yellow-curtains', 1),
             alt: 'An old wooden desk drawer pulled open, revealing letters tied with ribbon',
             caption: 'The drawer Clara had not opened since she was a girl.',
           },
@@ -178,15 +128,12 @@ export const stories: Story[] = [
   },
   {
     slug: 'the-last-train-to-somewhere',
-    order: 3,
     title: 'The Last Train to Somewhere',
     author: 'Loom Editorial',
     kicker: 'Two strangers share a compartment through the night',
     summary:
       'On the final train of the season, Arthur and Nora find themselves alone in a first-class compartment. They do not know where the train is going, only that neither of them wants to be the first to get off. A story about conversations that begin because there is nowhere else to go.',
-    minutes: 9,
     tags: ['travel', 'strangers', 'conversation', 'night'],
-    cover: cover('the-last-train-to-somewhere'),
     coverAlt: 'A train window at night, streaks of light passing by in the dark',
     chapters: [
       {
@@ -217,11 +164,9 @@ export const stories: Story[] = [
             kind: 'paragraph',
             text:
               'They talked about everything and nothing. Nora was a translator who had spent three years in Lisbon translating poems she could not speak aloud. Arthur repaired clocks in a shop above a chemist’s, and he believed that every broken mechanism could be fixed if you were patient enough to find the right gear. They found they liked the sound of each other’s voices, which is the rarest thing there is.',
-            dropCap: false,
           },
           {
             kind: 'image',
-            source: storyImage('the-last-train-to-somewhere', 1),
             alt: 'Two people sitting opposite each other in a train compartment, silhouetted against a window',
             caption: 'Arthur and Nora, discovering that the night was long enough for a lifetime of words.',
           },
@@ -246,15 +191,12 @@ export const stories: Story[] = [
   },
   {
     slug: 'what-the-orchard-kept',
-    order: 4,
     title: 'What the Orchard Kept',
     author: 'Loom Editorial',
     kicker: 'Siblings sell the family farm and find what was buried there',
     summary:
       'After their parents die, Leo and Ruby return to the orchard to prepare it for sale. Among the old apple trees they find a tin box their mother buried forty years ago, and the secret inside changes what they thought they knew about her. A story about the things we inherit, and the things we choose to keep.',
-    minutes: 8,
     tags: ['family', 'farm', 'siblings', 'secrets'],
-    cover: cover('what-the-orchard-kept'),
     coverAlt: 'An apple orchard in autumn, golden leaves falling, sunlight through branches',
     chapters: [
       {
@@ -285,11 +227,9 @@ export const stories: Story[] = [
             kind: 'paragraph',
             text:
               'It was a tin biscuit box, the kind that once held shortbread, its paint rubbed away at the corners. Inside, wrapped in oilcloth, were three things: a ring with a small sapphire, a letter addressed to “My love,” and a photograph of a woman Leo did not recognise — his mother, young, standing in front of a building that was not their farmhouse.',
-            dropCap: false,
           },
           {
             kind: 'image',
-            source: storyImage('what-the-orchard-kept', 1),
             alt: 'A rusted tin box on old wood, with a letter and a photograph partially visible',
             caption: 'What their mother kept, and never told them about.',
           },
@@ -314,15 +254,12 @@ export const stories: Story[] = [
   },
   {
     slug: 'small-hours',
-    order: 5,
     title: 'Small Hours',
     author: 'Loom Editorial',
     kicker: 'A night-shift baker and the insomniac who keeps buying the last loaf',
     summary:
       'Mira bakes through the night, pulling loaves from the oven while the city sleeps. Elias comes every night at three for the last sourdough, and they exchange words across the counter until dawn. A love story told in flour, crust, and the hours between midnight and morning.',
-    minutes: 7,
     tags: ['romance', 'city', 'night', 'food'],
-    cover: cover('small-hours'),
     coverAlt: 'Fresh bread on a wooden counter in a bakery at dawn, warm light spilling onto the street',
     chapters: [
       {
@@ -353,11 +290,9 @@ export const stories: Story[] = [
             kind: 'paragraph',
             text:
               'He appeared on a Tuesday, rain slicking his coat, holding a notebook and looking as though he had not slept in days. “The last sourdough,” he said, and Mira reached under the counter, pulled out the final loaf still warm from the oven, and wrapped it in brown paper.',
-            dropCap: false,
           },
           {
             kind: 'image',
-            source: storyImage('small-hours', 1),
             alt: 'A baker handing a loaf of bread to a customer across a wooden counter at dawn',
             caption: 'Three in the morning, and the last loaf of the night.',
           },
@@ -382,15 +317,12 @@ export const stories: Story[] = [
   },
   {
     slug: 'the-cartographer-of-rain',
-    order: 6,
     title: 'The Cartographer of Rain',
     author: 'Loom Editorial',
     kicker: 'A mapmaker who charts storms that have not happened yet',
     summary:
       'Silas draws maps of storms before they arrive, marking cloud formations and wind directions that exist only in his imagination. When a real storm comes to his town, he discovers that the future is not something you can chart — only something you can live through, together.',
-    minutes: 8,
     tags: ['weather', 'maps', 'future', 'community'],
-    cover: cover('the-cartographer-of-rain'),
     coverAlt: 'An old map spread on a table, with storm clouds painted in ink at its edges',
     chapters: [
       {
@@ -421,11 +353,9 @@ export const stories: Story[] = [
             kind: 'paragraph',
             text:
               'On the third Thursday of October, the barometer dropped. The air went still. The birds stopped singing. Silas looked at his latest map — a slow spiral of cloud over the valley, rain moving east to west — and for the first time, the sky matched his ink exactly.',
-            dropCap: false,
           },
           {
             kind: 'image',
-            source: storyImage('the-cartographer-of-rain', 1),
             alt: 'Storm clouds gathering over a town, seen from an attic window',
             caption: 'The storm Silas had drawn, now arriving for real.',
           },

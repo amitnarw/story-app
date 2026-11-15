@@ -38,7 +38,7 @@ export function Toggle({ value, label, onValueChange, className }: ToggleProps) 
           transform: [{ translateX: value ? 18 : 0 }],
         }}
       />
-      <AppText variant="small" tone={value ? 'ink' : 'muted'} className="font-sans-medium">
+      <AppText variant="small" tone={value ? 'ink' : 'muted'} font="sans-medium">
         {label}
       </AppText>
     </PressableScale>

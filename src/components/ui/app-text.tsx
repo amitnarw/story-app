@@ -2,6 +2,12 @@ import type { TextProps } from 'react-native';
 import { Text } from 'react-native';
 
 import { cn } from '@/lib/cn';
+import { useSettings } from '@/store/settings';
+import {
+  devanagariFonts,
+  latinFonts,
+  type FontRole,
+} from '@/theme/fonts';
 
 export type TextVariant =
   | 'display'
@@ -73,22 +79,45 @@ const maxScale: Partial<Record<TextVariant, number>> = {
   headline: 1.2,
 };
 
+const variantFont: Record<TextVariant, FontRole> = {
+  display: 'display',
+  title: 'display',
+  headline: 'display',
+  subtitle: 'sans-medium',
+  body: 'sans',
+  small: 'sans',
+  caption: 'sans',
+  label: 'sans-semibold',
+  numeric: 'sans-medium',
+  quote: 'display-italic',
+  button: 'sans-semibold',
+};
+
 export type AppTextProps = TextProps & {
   variant?: TextVariant;
   tone?: TextTone;
+  /** Explicit font role, overriding the variant default. */
+  font?: FontRole;
 };
 
 export function AppText({
   variant = 'body',
   tone,
+  font,
   className,
   children,
   maxFontSizeMultiplier,
+  style,
   ...rest
 }: AppTextProps) {
+  const language = useSettings((state) => state.language);
+  const families = language === 'hi' ? devanagariFonts : latinFonts;
+  const fontFamily = families[font ?? variantFont[variant]];
+
   return (
     <Text
       className={cn(variantClass[variant], toneClass[tone ?? defaultTone[variant]], className)}
+      style={[{ fontFamily }, style]}
       maxFontSizeMultiplier={maxFontSizeMultiplier ?? maxScale[variant] ?? 1.35}
       {...rest}>
       {children}

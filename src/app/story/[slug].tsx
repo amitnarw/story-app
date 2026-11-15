@@ -16,10 +16,11 @@ import { PressableScale } from '@/components/ui/pressable-scale';
 import { Appear } from '@/components/ui/reveal';
 import { Rule } from '@/components/ui/rule';
 import { Screen } from '@/components/ui/screen';
-import { allStories, getStory } from '@/content';
+import { useStory, useStories } from '@/content';
 import { useIsFavorite, useLibrary } from '@/store/library';
 import { layout } from '@/theme/scale';
 import { useTheme } from '@/theme/ThemeProvider';
+import { useI18n } from '@/i18n';
 
 function close() {
   if (router.canGoBack()) {
@@ -30,19 +31,20 @@ function close() {
 }
 
 function NotFound() {
+  const { t } = useI18n();
   return (
     <Screen edges={['top', 'bottom']} padded>
       <View className="pt-2">
-        <IconButton icon={ChevronLeft} label="Back" onPress={close} />
+        <IconButton icon={ChevronLeft} label={t('common.back')} onPress={close} />
       </View>
       <View className="flex-1 items-center justify-center pb-20">
-        <AppText variant="title" className="text-center font-display-italic">
-          Story not found.
+        <AppText variant="title" font="display-italic" className="text-center">
+          {t('story.notFoundTitle')}
         </AppText>
         <AppText variant="body" className="mt-3 max-w-[300px] text-center">
-          It may have moved. The library is one tap away.
+          {t('story.notFoundBody')}
         </AppText>
-        <Button label="Back to stories" variant="secondary" onPress={close} className="mt-6" />
+        <Button label={t('story.backToStories')} variant="secondary" onPress={close} className="mt-6" />
       </View>
     </Screen>
   );
@@ -51,7 +53,9 @@ function NotFound() {
 export default function StoryScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
 
-  const story = getStory(slug);
+  const story = useStory(slug);
+  const allStories = useStories();
+  const { t } = useI18n();
 
   const scrollY = useSharedValue(0);
   const [chapterHeights, setChapterHeights] = useState<number[]>([]);
@@ -116,14 +120,14 @@ export default function StoryScreen() {
       style={{ width: '100%', maxWidth: layout.maxWidth, alignSelf: 'center' }}>
       {/* Sticky Top Header */}
       <View className="flex-row items-center justify-between px-5 pt-2 pb-2 z-20">
-        <IconButton icon={ChevronLeft} label="Back" onPress={close} />
+        <IconButton icon={ChevronLeft} label={t('common.back')} onPress={close} />
         <View className="flex-row items-center gap-3">
           <AppText variant="caption" tone="muted">
-            {story.minutes} min read
+            {t('story.minRead', { minutes: story.minutes })}
           </AppText>
           <IconButton
             icon={Heart}
-            label={saved ? 'Remove from saved' : 'Save story'}
+            label={saved ? t('story.removeSaved') : t('story.saveStory')}
             selected={saved}
             onPress={() => toggleFavorite(story.slug)}
           />
@@ -145,13 +149,16 @@ export default function StoryScreen() {
           <ImageStory source={story.cover} alt={story.coverAlt} />
         </View>
         <AppText variant="label" className="mt-3">
-          Story {String(story.order).padStart(2, '0')} · {story.tags.join(' · ')}
+          {t('story.storyNumber', {
+            number: String(story.order).padStart(2, '0'),
+            tags: story.tags.join(' · '),
+          })}
         </AppText>
         <AppText variant="title" className="mt-2">
           {story.title}
         </AppText>
         <AppText variant="subtitle" className="mt-1">
-          by {story.author}
+          {t('story.byAuthor', { author: story.author })}
         </AppText>
         <AppText variant="body" className="mt-3 max-w-[600px]">
           {story.summary}
@@ -188,19 +195,22 @@ export default function StoryScreen() {
       {nextStory ? (
         <PressableScale
           accessibilityRole="button"
-          accessibilityLabel={`Next story: ${nextStory.title}`}
+          accessibilityLabel={t('story.nextA11y', { title: nextStory.title })}
           scaleTo={0.98}
           onPress={() =>
             router.replace({ pathname: '/story/[slug]', params: { slug: nextStory.slug } })
           }
           className="flex-row items-center gap-4 py-8 border-t border-line pt-8">
           <View className="flex-1">
-            <AppText variant="label">Next story</AppText>
+            <AppText variant="label">{t('story.nextStory')}</AppText>
             <AppText variant="headline" className="mt-1.5 text-[22px]">
               {nextStory.title}
             </AppText>
             <AppText variant="caption" className="mt-1">
-              by {nextStory.author} · {nextStory.minutes} min
+              {t('story.nextStoryMeta', {
+                author: nextStory.author,
+                minutes: nextStory.minutes,
+              })}
             </AppText>
           </View>
           <ChevronRight size={17} color={colors.muted} strokeWidth={1.6} />
@@ -208,13 +218,13 @@ export default function StoryScreen() {
       ) : (
         <PressableScale
           accessibilityRole="button"
-          accessibilityLabel="Back to home"
+          accessibilityLabel={t('story.backHomeA11y')}
           scaleTo={0.98}
           onPress={() => router.replace('/home')}
           className="flex-row items-center gap-2 py-8 border-t border-line pt-8">
           <ChevronLeft size={17} color={colors.muted} strokeWidth={1.6} />
-          <AppText variant="small" className="font-sans-medium">
-            Back to all stories
+          <AppText variant="small" font="sans-medium">
+            {t('story.backToAll')}
           </AppText>
         </PressableScale>
       )}

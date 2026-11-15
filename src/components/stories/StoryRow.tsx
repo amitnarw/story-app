@@ -6,6 +6,7 @@ import { AppText } from '@/components/ui/app-text';
 import { PressableScale } from '@/components/ui/pressable-scale';
 import { Appear, staggerDelay } from '@/components/ui/reveal';
 import type { Story } from '@/content';
+import { useI18n } from '@/i18n';
 import { useIsFavorite, useLibrary } from '@/store/library';
 import { useTheme } from '@/theme/ThemeProvider';
 
@@ -26,12 +27,13 @@ export const StoryRow = function StoryRow({
   const { colors } = useTheme();
   const saved = useIsFavorite(story.slug);
   const toggleFavorite = useLibrary((state) => state.toggleFavorite);
+  const { t } = useI18n();
 
   return (
     <Appear delay={staggerDelay(index)}>
       <PressableScale
         accessibilityRole="button"
-        accessibilityLabel={`${story.title}, by ${story.author}`}
+        accessibilityLabel={t('story.rowA11y', { title: story.title, author: story.author })}
         scaleTo={0.975}
         haptic="none"
         onPress={() => openStory(story.slug)}
@@ -65,17 +67,20 @@ export const StoryRow = function StoryRow({
           <AppText
             variant="subtitle"
             numberOfLines={2}
-            className="text-[17px] leading-[22px] font-sans-semibold">
+            font="sans-semibold"
+            className="text-[17px] leading-[22px]">
             {story.title}
           </AppText>
           <AppText variant="caption" className="mt-1 text-[12.5px]" numberOfLines={1}>
-            by {story.author} · {story.minutes} min read
+            {t('story.rowMeta', { author: story.author, minutes: story.minutes })}
           </AppText>
         </View>
 
         <PressableScale
           accessibilityRole="button"
-          accessibilityLabel={saved ? 'Remove from favorites' : 'Save story'}
+          accessibilityLabel={
+            saved ? t('saved.removeFavorite') : t('saved.saveStory')
+          }
           scaleTo={0.82}
           haptic="select"
           hitSlop={10}

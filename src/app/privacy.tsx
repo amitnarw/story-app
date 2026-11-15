@@ -8,11 +8,13 @@ import { IconButton } from '@/components/ui/icon-button';
 import { PressableScale } from '@/components/ui/pressable-scale';
 import { Rule } from '@/components/ui/rule';
 import { Screen } from '@/components/ui/screen';
+import { useI18n } from '@/i18n';
 import { layout } from '@/theme/scale';
 import { useTheme } from '@/theme/ThemeProvider';
 
 export default function PrivacyScreen() {
   const { colors } = useTheme();
+  const { t, messages } = useI18n();
 
   const goBack = () => {
     router.back();
@@ -27,7 +29,7 @@ export default function PrivacyScreen() {
       style={{ width: '100%', maxWidth: layout.maxWidth, alignSelf: 'center' }}>
       <View className="flex-row items-center pt-2 pb-4">
         <View className="w-11 items-start">
-          <IconButton icon={ChevronLeft} label="Back" onPress={goBack} />
+          <IconButton icon={ChevronLeft} label={t('common.back')} onPress={goBack} />
         </View>
         <View className="flex-1 items-center">
           <AppText variant="label" className="text-ink">
@@ -39,55 +41,41 @@ export default function PrivacyScreen() {
 
       <View className="mt-6">
         <AppText variant="title" className="max-w-[560px]">
-          Privacy policy
+          {t('privacy.title')}
         </AppText>
         <AppText variant="body" className="mt-4 max-w-[560px]">
-          Loom is a library of stories for adults. This policy describes what
-          information the app collects and how advertising works.
+          {t('privacy.intro')}
         </AppText>
       </View>
 
       <Rule className="mt-10" />
 
       <View>
-        <SectionTitle className="mt-6">Data that stays on your device</SectionTitle>
+        <SectionTitle className="mt-6">{t('privacy.deviceTitle')}</SectionTitle>
         <AppText variant="body" className="max-w-[560px]">
-          Your saved stories, reading progress, theme, and haptics settings are
-          stored locally on your device only. Nothing is uploaded to a server,
-          and no account is created.
+          {t('privacy.deviceBody')}
         </AppText>
       </View>
 
       <View>
-        <SectionTitle>Advertising</SectionTitle>
+        <SectionTitle>{t('privacy.adsTitle')}</SectionTitle>
         <AppText variant="body" className="max-w-[560px]">
-          Loom shows advertising to support development. Ads may appear as
-          banners in story lists and as occasional full-screen interstitials at
-          natural breaks.
+          {t('privacy.adsBody')}
         </AppText>
-        <BulletList
-          className="mt-4"
-          items={[
-            'Ad networks may receive your device/advertising identifier and limited device information to serve and measure ads. You can limit ad tracking in your device settings.',
-            'We do not serve ads based on your story views, saves, or reading progress. Personal app data is not shared with ad networks.',
-            'During development, test ads are used and no revenue is generated.',
-          ]}
-        />
+        <BulletList className="mt-4" items={[...messages.privacy.adsBullets]} />
       </View>
 
       <View>
-        <SectionTitle>Children</SectionTitle>
+        <SectionTitle>{t('privacy.childrenTitle')}</SectionTitle>
         <AppText variant="body" className="max-w-[560px]">
-          Loom is intended for general audiences. Stories are non-explicit and
-          suitable for adult readers.
+          {t('privacy.childrenBody')}
         </AppText>
       </View>
 
       <View>
-        <SectionTitle>Contact</SectionTitle>
+        <SectionTitle>{t('privacy.contactTitle')}</SectionTitle>
         <AppText variant="body" className="max-w-[560px]">
-          Questions about this policy or your data can be sent through the app
-          Settings screen.
+          {t('privacy.contactBody')}
         </AppText>
       </View>
 
@@ -96,12 +84,12 @@ export default function PrivacyScreen() {
       <View className="mt-8">
         <PressableScale
           accessibilityRole="button"
-          accessibilityLabel="Done"
+          accessibilityLabel={t('privacy.done')}
           scaleTo={0.95}
           onPress={goBack}
           className="flex-row items-center gap-2 self-start">
-          <AppText variant="small" tone="muted" className="font-sans-medium">
-            Done
+          <AppText variant="small" tone="muted" font="sans-medium">
+            {t('privacy.done')}
           </AppText>
           <ChevronLeft size={16} color={colors.muted} strokeWidth={1.6} />
         </PressableScale>

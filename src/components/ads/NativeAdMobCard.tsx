@@ -2,6 +2,7 @@ import { Image, View } from 'react-native';
 
 import { AppText } from '@/components/ui/app-text';
 import { PressableScale } from '@/components/ui/pressable-scale';
+import { useI18n } from '@/i18n';
 import { useTheme } from '@/theme/ThemeProvider';
 
 type NativeAdMobCardProps = {
@@ -10,6 +11,7 @@ type NativeAdMobCardProps = {
 
 export function NativeAdMobCard({ index }: NativeAdMobCardProps) {
   const { colors } = useTheme();
+  const { t } = useI18n();
 
   return (
     <View
@@ -22,15 +24,15 @@ export function NativeAdMobCard({ index }: NativeAdMobCardProps) {
       />
       <View className="flex-1">
         <AppText variant="caption" tone="muted" className="text-[11px]">
-          Advertisement
+          {t('ads.label')}
         </AppText>
         <AppText variant="subtitle" tone="ink" numberOfLines={2} className="text-[15px]">
-          Discover your next favorite story
+          {t('ads.discoverTeaser')}
         </AppText>
       </View>
       <PressableScale
         accessibilityRole="button"
-        accessibilityLabel="Advertisement"
+        accessibilityLabel={t('ads.label')}
         scaleTo={0.96}
         className="p-2"
       >

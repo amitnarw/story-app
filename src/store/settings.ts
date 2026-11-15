@@ -2,6 +2,9 @@ import Storage from 'expo-sqlite/kv-store';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
+import { detectLanguage } from '@/i18n/detect';
+import type { Language } from '@/i18n/types';
+
 export type ThemePreference = 'system' | 'light' | 'dark';
 
 export const SETTINGS_KEY = 'loom.settings';
@@ -16,10 +19,12 @@ type SettingsState = {
   adsConsented: boolean;
   theme: ThemePreference;
   haptics: boolean;
+  language: Language;
   enter: () => void;
   setAdsConsented: (consented: boolean) => void;
   setTheme: (theme: ThemePreference) => void;
   setHaptics: (enabled: boolean) => void;
+  setLanguage: (language: Language) => void;
   resetAll: () => void;
   markHydrated: () => void;
 };
@@ -29,6 +34,7 @@ const defaults = {
   adsConsented: true,
   theme: 'dark' as ThemePreference,
   haptics: true,
+  language: detectLanguage(),
 };
 
 export const useSettings = create<SettingsState>()(
@@ -40,6 +46,7 @@ export const useSettings = create<SettingsState>()(
       setAdsConsented: (adsConsented: boolean) => set({ adsConsented }),
       setTheme: (theme) => set({ theme }),
       setHaptics: (haptics) => set({ haptics }),
+      setLanguage: (language) => set({ language }),
       resetAll: () => {
         void Storage.removeItem(SETTINGS_KEY);
         set({ ...defaults, hydrated: true });

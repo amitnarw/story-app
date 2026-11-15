@@ -6,22 +6,23 @@ import { Animated, Pressable, StyleSheet, View } from 'react-native';
 
 import { AdSlot } from '@/components/ads/AdSlot';
 import { AppText } from '@/components/ui/app-text';
-import { cn } from '@/lib/cn';
 import { haptics } from '@/lib/haptics';
+import { useI18n } from '@/i18n';
 import { useTheme } from '@/theme/ThemeProvider';
 
-type TabMeta = { icon: LucideIcon; label: string };
+type TabMeta = { icon: LucideIcon; key: 'tabs.home' | 'tabs.settings' };
 
 const TAB_META: Record<string, TabMeta> = {
-  home: { icon: House, label: 'Home' },
-  settings: { icon: BookOpen, label: 'Settings' },
+  home: { icon: House, key: 'tabs.home' },
+  settings: { icon: BookOpen, key: 'tabs.settings' },
 };
 
-const FALLBACK_META: TabMeta = { icon: House, label: 'Home' };
+const FALLBACK_META: TabMeta = { icon: House, key: 'tabs.home' };
 
 export function TabBar(props: BottomTabBarProps) {
   const { state, descriptors, emitter, navigateToTab, insets } = props;
   const { colors, scheme } = useTheme();
+  const { t } = useI18n();
   const isDark = scheme === 'dark';
   const [rowWidth, setRowWidth] = useState(0);
   const pillX = new Animated.Value(0);
@@ -104,13 +105,14 @@ export function TabBar(props: BottomTabBarProps) {
             const focused = state.routes[state.index]?.key === route.key;
             const meta = TAB_META[route.name] ?? FALLBACK_META;
             const Icon = meta.icon;
+            const label = t(meta.key);
 
             return (
               <Pressable
                 key={route.key}
                 accessibilityRole="tab"
                 accessibilityLabel={
-                  descriptors[route.key]?.options.tabBarAccessibilityLabel ?? meta.label
+                  descriptors[route.key]?.options.tabBarAccessibilityLabel ?? label
                 }
                 accessibilityState={{ selected: focused }}
                 onPress={() => {
@@ -135,8 +137,8 @@ export function TabBar(props: BottomTabBarProps) {
                 <AppText
                   variant="small"
                   tone={focused ? 'ink' : 'muted'}
-                  className={cn(focused ? 'font-sans-semibold' : 'font-sans-medium')}>
-                  {meta.label}
+                  font={focused ? 'sans-semibold' : 'sans-medium'}>
+                  {label}
                 </AppText>
               </Pressable>
             );

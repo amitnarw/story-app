@@ -6,6 +6,7 @@ import { AppText } from '@/components/ui/app-text';
 import { PressableScale } from '@/components/ui/pressable-scale';
 import { Appear, staggerDelay } from '@/components/ui/reveal';
 import type { Story } from '@/content';
+import { useI18n } from '@/i18n';
 import { useIsFavorite, useLibrary } from '@/store/library';
 import { useTheme } from '@/theme/ThemeProvider';
 import type { StyleProp, ViewStyle } from 'react-native';
@@ -28,6 +29,7 @@ export const StoryCard = function StoryCard({
   const isDark = scheme === 'dark';
   const saved = useIsFavorite(story.slug);
   const toggleFavorite = useLibrary((state) => state.toggleFavorite);
+  const { t } = useI18n();
 
   const heartColor = isDark ? '#FFFFFF' : colors.ink;
   const cardStyle: StyleProp<ViewStyle> = {
@@ -49,7 +51,7 @@ export const StoryCard = function StoryCard({
       <PressableScale
         accessibilityRole="button"
         accessibilityLabel={story.title}
-        accessibilityHint={`by ${story.author}`}
+        accessibilityHint={t('story.byAuthor', { author: story.author })}
         scaleTo={0.965}
         haptic="none"
         onPress={() => openStory(story.slug)}
@@ -69,11 +71,11 @@ export const StoryCard = function StoryCard({
             numberOfLines={2}
             tone="ink"
             style={{ color: titleColor }}
-            className="text-[17px] leading-tight font-display">
+            className="text-[17px] leading-tight">
             {story.title}
           </AppText>
           <AppText variant="caption" tone="muted" className="mt-1 text-[12px]">
-            by {story.author}
+            {t('story.byAuthor', { author: story.author })}
           </AppText>
         </View>
 
@@ -81,7 +83,9 @@ export const StoryCard = function StoryCard({
           <PressableScale
             accessibilityRole="button"
             accessibilityLabel={
-              saved ? `Remove ${story.title} from saved` : `Save ${story.title}`
+              saved
+                ? t('story.removeCardA11y', { title: story.title })
+                : t('story.saveCardA11y', { title: story.title })
             }
             accessibilityState={{ selected: saved }}
             scaleTo={0.82}

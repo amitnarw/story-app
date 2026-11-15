@@ -7,13 +7,16 @@ import { StoryCard } from '@/components/stories/StoryCard';
 import { AppText } from '@/components/ui/app-text';
 import { IconButton } from '@/components/ui/icon-button';
 import { Screen } from '@/components/ui/screen';
-import { allStories, type Story } from '@/content';
+import { useStories, type Story } from '@/content';
+import { useI18n } from '@/i18n';
 import { useLibrary } from '@/store/library';
 import { useTheme } from '@/theme/ThemeProvider';
 
 export default function FavoritesScreen() {
   const { colors } = useTheme();
   const favorites = useLibrary((state) => state.favorites);
+  const { t } = useI18n();
+  const allStories = useStories();
 
   const savedStories = favorites
     .map((slug) => allStories.find((s) => s.slug === slug))
@@ -25,21 +28,20 @@ export default function FavoritesScreen() {
         <View className="flex-row items-center gap-3">
           <IconButton
             icon={ChevronLeft}
-            label="Back"
+            label={t('common.back')}
             onPress={() => {
               if (router.canGoBack()) router.back();
               else router.replace('/home');
             }}
           />
           <View className="flex-1">
-            <AppText variant="title" className="font-display">
-              Saved
-            </AppText>
-          </View>
+            <AppText variant="title">
+              {t('saved.title')}
+            </AppText>          </View>
         </View>
 
         <AppText variant="subtitle" tone="muted" className="mt-2 text-[14px]">
-          Your private collection of stories
+          {t('saved.subtitle')}
         </AppText>
       </View>
 
@@ -66,13 +68,13 @@ export default function FavoritesScreen() {
             <Heart size={26} color={colors.muted} strokeWidth={1.6} />
           </View>
           <AppText variant="headline" style={{ textAlign: 'center' }}>
-            No saved stories yet
+            {t('saved.emptyTitle')}
           </AppText>
           <AppText
             variant="body"
             tone="muted"
             style={{ textAlign: 'center', marginTop: 8, maxWidth: 280 }}>
-            Tap the heart on any story card to keep it here.
+            {t('saved.emptyBody')}
           </AppText>
         </View>
       ) : (

@@ -5,14 +5,22 @@ import { AppText } from '@/components/ui/app-text';
 import { PressableScale } from '@/components/ui/pressable-scale';
 import { Appear } from '@/components/ui/reveal';
 import { Screen } from '@/components/ui/screen';
-import { featured } from '@/content';
+import { Segmented } from '@/components/ui/segmented';
+import { useFeatured } from '@/content';
+import { useI18n, type Language } from '@/i18n';
+import { LANGUAGES } from '@/i18n/types';
 import { useSettings } from '@/store/settings';
 
 /**
- * The first-run experience: one promise, one button.
+ * The first-run experience: one promise, one button — and a language switch
+ * so readers can find their own words before anything else matters.
  */
 export default function GetInScreen() {
   const enter = useSettings((state) => state.enter);
+  const language = useSettings((state) => state.language);
+  const setLanguage = useSettings((state) => state.setLanguage);
+  const { t } = useI18n();
+  const featured = useFeatured();
 
   const start = () => {
     enter();
@@ -23,7 +31,7 @@ export default function GetInScreen() {
     <Screen edges={['top', 'bottom', 'left', 'right']} padded>
       <View className="flex-1 justify-between py-8">
         <Appear distance={10}>
-          <AppText variant="label">A library of stories</AppText>
+          <AppText variant="label">{t('onboarding.eyebrow')}</AppText>
         </Appear>
 
         <Appear delay={70} distance={16} className="items-center">
@@ -41,23 +49,29 @@ export default function GetInScreen() {
             Loom
           </AppText>
           <AppText variant="body" className="mt-3 max-w-[300px] text-center">
-            Read stories. One chapter at a time.
+            {t('onboarding.tagline')}
           </AppText>
         </Appear>
 
         <Appear delay={150} distance={10}>
+          <Segmented
+            className="mb-5"
+            value={language}
+            options={LANGUAGES.map((item) => ({ value: item.value, label: item.label }))}
+            onChange={(next: Language) => setLanguage(next)}
+          />
           <PressableScale
             accessibilityRole="button"
-            accessibilityLabel="Get started"
+            accessibilityLabel={t('onboarding.getStarted')}
             scaleTo={0.97}
             onPress={start}
             className="h-13 w-full items-center justify-center rounded-pill bg-ink">
             <AppText variant="button" tone="paper">
-              Get started
+              {t('onboarding.getStarted')}
             </AppText>
           </PressableScale>
           <AppText variant="caption" tone="muted" className="mt-4 text-center">
-            Your library stays on this device.
+            {t('onboarding.caption')}
           </AppText>
         </Appear>
       </View>

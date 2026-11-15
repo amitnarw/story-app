@@ -10,18 +10,39 @@ type ParagraphProps = {
   className?: string;
 };
 
+const COMBINING = /[\p{Mn}\p{Mc}\p{Me}]/u;
+const VIRAMA = 0x094d;
+
+/**
+ * The first grapheme-ish cluster of a string: base character plus any
+ * combining marks (matras, nukta), and — when it ends on a virama — the
+ * rest of the consonant cluster. This is what a drop cap must swallow so
+ * the remainder still renders as valid script: "ट्रेन" → "ट्रे" + "न...".
+ */
+function firstCluster(text: string): string {
+  if (text.length === 0) return '';
+  let i = 1;
+  while (i < text.length && COMBINING.test(text[i])) i += 1;
+  while (text.charCodeAt(i - 1) === VIRAMA && i < text.length) {
+    i += 1;
+    while (i < text.length && COMBINING.test(text[i])) i += 1;
+  }
+  return text.slice(0, i);
+}
+
 export function ParagraphBlock({ text, dropCap, className }: ParagraphProps) {
   const { colors } = useTheme();
 
   if (dropCap) {
-    const first = text.charAt(0);
-    const rest = text.slice(1);
+    const first = firstCluster(text);
+    const rest = text.slice(first.length);
     return (
       <View className={cn('flex-row gap-2', className)}>
         <AppText
           variant="display"
           tone="ink"
-          className="text-[56px] leading-none font-display font-bold"
+          font="display-bold"
+          className="text-[56px] leading-none"
           style={{ color: colors.clay }}
         >
           {first}

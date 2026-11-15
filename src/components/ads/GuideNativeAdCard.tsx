@@ -2,6 +2,7 @@ import { Image, View } from 'react-native';
 
 import { AppText } from '@/components/ui/app-text';
 import { PressableScale } from '@/components/ui/pressable-scale';
+import { useI18n } from '@/i18n';
 import { useTheme } from '@/theme/ThemeProvider';
 
 type GuideNativeAdCardProps = {
@@ -10,6 +11,7 @@ type GuideNativeAdCardProps = {
 
 export function GuideNativeAdCard({ index }: GuideNativeAdCardProps) {
   const { colors } = useTheme();
+  const { t } = useI18n();
 
   return (
     <View className="flex-row items-center gap-4 py-4 rounded-card bg-surface p-4 border border-line">
@@ -23,15 +25,15 @@ export function GuideNativeAdCard({ index }: GuideNativeAdCardProps) {
       />
       <View className="flex-1">
         <AppText variant="caption" tone="muted" className="text-[11px]">
-          Advertisement
+          {t('ads.label')}
         </AppText>
         <AppText variant="subtitle" tone="ink" numberOfLines={2} className="text-[15px]">
-          A great book you might enjoy
+          {t('ads.bookTeaser')}
         </AppText>
       </View>
       <PressableScale
         accessibilityRole="button"
-        accessibilityLabel="Advertisement"
+        accessibilityLabel={t('ads.label')}
         scaleTo={0.96}
         className="p-2"
       >

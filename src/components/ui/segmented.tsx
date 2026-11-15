@@ -84,7 +84,7 @@ export function Segmented<T extends string>({
             <AppText
               variant="small"
               tone={selected ? 'ink' : 'muted'}
-              className={cn(selected ? 'font-sans-semibold' : 'font-sans-medium')}>
+              font={selected ? 'sans-semibold' : 'sans-medium'}>
               {option.label}
             </AppText>
           </PressableScale>

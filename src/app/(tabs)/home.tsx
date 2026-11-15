@@ -11,7 +11,8 @@ import { StoryCard } from '@/components/stories/StoryCard';
 import { AppText } from '@/components/ui/app-text';
 import { PressableScale } from '@/components/ui/pressable-scale';
 import { Screen } from '@/components/ui/screen';
-import { allStories, type Story } from '@/content';
+import { useStories, type Story } from '@/content';
+import { useI18n } from '@/i18n';
 import { useSettings } from '@/store/settings';
 import { useTheme } from '@/theme/ThemeProvider';
 
@@ -28,6 +29,8 @@ export default function HomeScreen() {
   const setTheme = useSettings((state) => state.setTheme);
   const adsConsented = useSettings((state) => state.adsConsented);
   const { show } = useInterstitial({ firstOpen: false });
+  const { t } = useI18n();
+  const allStories = useStories();
   const [scrollY] = useState(() => new Animated.Value(0));
 
   const topFadeOpacity = useMemo(
@@ -48,7 +51,7 @@ export default function HomeScreen() {
     [scrollY],
   );
 
-  const rest = allStories.slice(1);
+  const rest = useMemo(() => allStories.slice(1), [allStories]);
 
   const gridItems = useMemo<GridItem[]>(() => {
     const items: GridItem[] = [];
@@ -72,14 +75,14 @@ export default function HomeScreen() {
   const header = (
     <View className="px-5 pb-2 pt-2">
       <View className="flex-row items-center justify-between">
-        <AppText variant="display" className="text-[32px] leading-[36px] font-display">
+        <AppText variant="display" className="text-[32px] leading-[36px]">
           Loom
         </AppText>
 
         <View className="flex-row items-center gap-2.5">
           <PressableScale
             accessibilityRole="button"
-            accessibilityLabel="Search"
+            accessibilityLabel={t('home.a11ySearch')}
             scaleTo={0.9}
             style={{
               backgroundColor: colors.surface,
@@ -93,7 +96,7 @@ export default function HomeScreen() {
 
           <PressableScale
             accessibilityRole="button"
-            accessibilityLabel="Saved stories"
+            accessibilityLabel={t('home.a11ySaved')}
             scaleTo={0.9}
             style={{
               backgroundColor: colors.surface,
@@ -107,7 +110,7 @@ export default function HomeScreen() {
 
           <PressableScale
             accessibilityRole="button"
-            accessibilityLabel="Theme toggle"
+            accessibilityLabel={t('home.a11yTheme')}
             scaleTo={0.9}
             style={{
               backgroundColor: colors.surface,
@@ -126,7 +129,7 @@ export default function HomeScreen() {
       </View>
 
       <AppText variant="subtitle" tone="muted" className="mt-1 text-[13.5px]">
-        Stories worth your time
+        {t('home.subtitle')}
       </AppText>
     </View>
   );
@@ -176,7 +179,7 @@ export default function HomeScreen() {
           keyboardShouldPersistTaps="handled"
           keyboardDismissMode="on-drag"
           showsVerticalScrollIndicator={false}
-          ListEmptyComponent={empty('No stories yet', 'Check back soon for new stories.')}
+          ListEmptyComponent={empty(t('home.emptyTitle'), t('home.emptyBody'))}
         />
 
         <Animated.View
