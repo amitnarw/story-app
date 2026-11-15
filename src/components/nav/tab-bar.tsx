@@ -1,7 +1,7 @@
-import type { MaterialTopTabBarProps } from 'expo-router/js-top-tabs';
+import type { BottomTabBarProps } from 'expo-router/js-tabs';
 import { BlurView } from 'expo-blur';
 import { House, BookOpen, type LucideIcon } from 'lucide-react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Animated, Pressable, StyleSheet, View } from 'react-native';
 
 import { AdSlot } from '@/components/ads/AdSlot';
@@ -19,22 +19,27 @@ const TAB_META: Record<string, TabMeta> = {
 
 const FALLBACK_META: TabMeta = { icon: House, label: 'Home' };
 
-export function TabBar(props: MaterialTopTabBarProps) {
-  const { state, descriptors, emitter, insets, position, jumpTo } = props;
+export function TabBar(props: BottomTabBarProps) {
+  const { state, descriptors, emitter, navigateToTab, insets } = props;
   const { colors, scheme } = useTheme();
   const isDark = scheme === 'dark';
   const [rowWidth, setRowWidth] = useState(0);
+  const pillX = new Animated.Value(0);
 
   const routeCount = Math.max(state.routes.length, 1);
   const cell = rowWidth / routeCount;
   const pillWidth = cell * 0.92;
   const pillInset = (cell - pillWidth) / 2;
+  const targetPillX = state.index * cell + pillInset;
 
-  const pillTranslate = position.interpolate({
-    inputRange: state.routes.map((_route: unknown, index: number) => index),
-    outputRange: state.routes.map((_route: unknown, index: number) => index * cell + pillInset),
-    extrapolate: 'clamp',
-  });
+  useEffect(() => {
+    if (cell <= 0) return;
+    Animated.timing(pillX, {
+      toValue: targetPillX,
+      duration: 220,
+      useNativeDriver: false,
+    }).start();
+  }, [state.index, cell, pillInset]);
 
   return (
     <View
@@ -90,7 +95,7 @@ export function TabBar(props: MaterialTopTabBarProps) {
                 backgroundColor: isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.08)',
                 borderWidth: StyleSheet.hairlineWidth,
                 borderColor: isDark ? 'rgba(255, 255, 255, 0.18)' : 'rgba(0, 0, 0, 0.06)',
-                transform: [{ translateX: pillTranslate }],
+                transform: [{ translateX: pillX }],
               }}
             />
           ) : null}
@@ -117,7 +122,7 @@ export function TabBar(props: MaterialTopTabBarProps) {
                   });
 
                   if (event.defaultPrevented || focused) return;
-                  jumpTo(route.key);
+                  navigateToTab(route.key);
                 }}
                 onLongPress={() => emitter.emit({ type: 'tabLongPress', target: route.key })}
                 className="flex-1 flex-row items-center justify-center gap-2 rounded-full"

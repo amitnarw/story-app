@@ -1,3 +1,3 @@
-module.exports = function () {
-  return { inlineRequires: true };
+module.exports = function (config) {
+  return { ...config, inlineRequires: true };
 };
