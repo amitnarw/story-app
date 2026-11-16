@@ -29,6 +29,10 @@ export function registerInterstitialTrigger(fn: ((zoneId: string) => Promise<AdO
   interstitialTrigger = fn;
 }
 
+export function hasInterstitialTrigger() {
+  return interstitialTrigger != null;
+}
+
 export function initAds(): Promise<void> {
   if (initPromise) return initPromise;
   provider = resolveProvider(adConfig);
@@ -88,14 +92,23 @@ export const useInterstitial = ({
   const adsConsented = useSettings((state) => state.adsConsented);
 
   const show = useCallback(
-    async (zoneId: string) => {
+    async (zoneId: string): Promise<AdOutcome | undefined> => {
       if (!adsConsented) return;
+      if (!interstitialTrigger) {
+        console.log('[ads] interstitial trigger not ready');
+        return { kind: 'error', zoneId, message: 'interstitial trigger not ready' };
+      }
       if (!canShowInterstitial({ firstOpen, adsConsented })) return;
       setShowing(true);
-      const outcome = await interstitialTrigger?.(zoneId);
-      recordInterstitial();
-      setShowing(false);
-      return outcome;
+      try {
+        const outcome = await interstitialTrigger(zoneId);
+        if (outcome?.kind !== 'error') {
+          recordInterstitial();
+        }
+        return outcome;
+      } finally {
+        setShowing(false);
+      }
     },
     [firstOpen, adsConsented],
   );

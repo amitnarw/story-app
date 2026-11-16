@@ -1,9 +1,8 @@
-import type { BottomTabBarProps } from 'expo-router/js-tabs';
 import { BlurView } from 'expo-blur';
-import { House, BookOpen, type LucideIcon } from 'lucide-react-native';
-import { useEffect, useState } from 'react';
+import { BookOpen, House, type LucideIcon } from 'lucide-react-native';
+import { useEffect, useState, type ComponentRef } from 'react';
 import { Animated, Pressable, StyleSheet, View } from 'react-native';
-
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AdSlot } from '@/components/ads/AdSlot';
 import { AppText } from '@/components/ui/app-text';
 import { haptics } from '@/lib/haptics';
@@ -12,26 +11,35 @@ import { useTheme } from '@/theme/ThemeProvider';
 
 type TabMeta = { icon: LucideIcon; key: 'tabs.home' | 'tabs.settings' };
 
-const TAB_META: Record<string, TabMeta> = {
-  home: { icon: House, key: 'tabs.home' },
-  settings: { icon: BookOpen, key: 'tabs.settings' },
+const TABS: TabMeta[] = [
+  { icon: House, key: 'tabs.home' },
+  { icon: BookOpen, key: 'tabs.settings' },
+];
+
+type TabBarProps = {
+  activeIndex: number;
+  onChangeTab: (index: number) => void;
+  /** Ref to the view rendered behind the bar — its content is what gets blurred. */
+  blurTarget?: React.RefObject<ComponentRef<typeof View> | null>;
 };
 
-const FALLBACK_META: TabMeta = { icon: House, key: 'tabs.home' };
-
-export function TabBar(props: BottomTabBarProps) {
-  const { state, descriptors, emitter, navigateToTab, insets } = props;
+/**
+ * Floating pill tab bar for the swipeable Home/Settings pager. Tapping a tab
+ * scrolls the pager; swiping the pager moves the pill.
+ */
+export function TabBar({ activeIndex, onChangeTab, blurTarget }: TabBarProps) {
   const { colors, scheme } = useTheme();
   const { t } = useI18n();
   const isDark = scheme === 'dark';
+  const insets = useSafeAreaInsets();
   const [rowWidth, setRowWidth] = useState(0);
   const pillX = new Animated.Value(0);
 
-  const routeCount = Math.max(state.routes.length, 1);
+  const routeCount = Math.max(TABS.length, 1);
   const cell = rowWidth / routeCount;
   const pillWidth = cell * 0.92;
   const pillInset = (cell - pillWidth) / 2;
-  const targetPillX = state.index * cell + pillInset;
+  const targetPillX = activeIndex * cell + pillInset;
 
   useEffect(() => {
     if (cell <= 0) return;
@@ -40,7 +48,7 @@ export function TabBar(props: BottomTabBarProps) {
       duration: 220,
       useNativeDriver: false,
     }).start();
-  }, [state.index, cell, pillInset]);
+  }, [activeIndex, cell, pillInset]);
 
   return (
     <View
@@ -62,7 +70,7 @@ export function TabBar(props: BottomTabBarProps) {
           maxWidth: 390,
           borderRadius: 999,
           overflow: 'hidden',
-          backgroundColor: isDark ? 'rgba(28, 23, 21, 0.82)' : 'rgba(255, 255, 255, 0.88)',
+          backgroundColor: isDark ? 'rgba(28, 23, 21, 0.65)' : 'rgba(255, 255, 255, 0.7)',
           borderWidth: 0,
           paddingHorizontal: 4,
           paddingVertical: 4,
@@ -76,6 +84,7 @@ export function TabBar(props: BottomTabBarProps) {
           intensity={85}
           tint={isDark ? 'dark' : 'light'}
           blurMethod="dimezisBlurView"
+          blurTarget={blurTarget ?? undefined}
           style={[StyleSheet.absoluteFill, { borderRadius: 999 }]}
         />
 
@@ -101,32 +110,21 @@ export function TabBar(props: BottomTabBarProps) {
             />
           ) : null}
 
-          {state.routes.map((route: any) => {
-            const focused = state.routes[state.index]?.key === route.key;
-            const meta = TAB_META[route.name] ?? FALLBACK_META;
-            const Icon = meta.icon;
-            const label = t(meta.key);
+          {TABS.map((tab, index) => {
+            const focused = activeIndex === index;
+            const Icon = tab.icon;
+            const label = t(tab.key);
 
             return (
               <Pressable
-                key={route.key}
+                key={tab.key}
                 accessibilityRole="tab"
-                accessibilityLabel={
-                  descriptors[route.key]?.options.tabBarAccessibilityLabel ?? label
-                }
+                accessibilityLabel={label}
                 accessibilityState={{ selected: focused }}
                 onPress={() => {
                   haptics.select();
-                  const event = emitter.emit({
-                    type: 'tabPress',
-                    target: route.key,
-                    canPreventDefault: true,
-                  });
-
-                  if (event.defaultPrevented || focused) return;
-                  navigateToTab(route.key);
+                  onChangeTab(index);
                 }}
-                onLongPress={() => emitter.emit({ type: 'tabLongPress', target: route.key })}
                 className="flex-1 flex-row items-center justify-center gap-2 rounded-full"
                 style={{ overflow: 'hidden' }}>
                 <Icon

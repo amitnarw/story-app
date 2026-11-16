@@ -1,4 +1,5 @@
 import { Image, StyleSheet, View } from 'react-native';
+import { useState } from 'react';
 import { router } from 'expo-router';
 
 import { AppText } from '@/components/ui/app-text';
@@ -6,23 +7,28 @@ import { PressableScale } from '@/components/ui/pressable-scale';
 import { Appear } from '@/components/ui/reveal';
 import { Screen } from '@/components/ui/screen';
 import { Segmented } from '@/components/ui/segmented';
+import { Toggle } from '@/components/ui/toggle';
 import { useFeatured } from '@/content';
 import { useI18n, type Language } from '@/i18n';
 import { LANGUAGES } from '@/i18n/types';
 import { useSettings } from '@/store/settings';
 
 /**
- * The first-run experience: one promise, one button — and a language switch
- * so readers can find their own words before anything else matters.
+ * The first-run experience: language choice, an age confirmation for mature
+ * stories, and one button to enter the library.
  */
 export default function GetInScreen() {
   const enter = useSettings((state) => state.enter);
+  const setMature = useSettings((state) => state.setMature);
   const language = useSettings((state) => state.language);
   const setLanguage = useSettings((state) => state.setLanguage);
   const { t } = useI18n();
   const featured = useFeatured();
 
+  const [matureConfirmed, setMatureConfirmed] = useState(false);
+
   const start = () => {
+    setMature(true);
     enter();
     router.replace('/home');
   };
@@ -54,8 +60,23 @@ export default function GetInScreen() {
         </Appear>
 
         <Appear delay={150} distance={10}>
+          <AppText variant="label" className="mb-2">
+            {t('onboarding.ageTitle')}
+          </AppText>
+          <AppText variant="body" tone="muted" className="mb-6 max-w-[300px] text-center">
+            {t('onboarding.ageBody')}
+          </AppText>
+
+          <View className="flex-row items-center justify-center gap-3">
+            <Toggle
+              value={matureConfirmed}
+              label={t('onboarding.ageConfirm')}
+              onValueChange={setMatureConfirmed}
+            />
+          </View>
+
           <Segmented
-            className="mb-5"
+            className="mb-5 mt-6"
             value={language}
             options={LANGUAGES.map((item) => ({ value: item.value, label: item.label }))}
             onChange={(next: Language) => setLanguage(next)}
@@ -64,6 +85,7 @@ export default function GetInScreen() {
             accessibilityRole="button"
             accessibilityLabel={t('onboarding.getStarted')}
             scaleTo={0.97}
+            disabled={!matureConfirmed}
             onPress={start}
             className="h-13 w-full items-center justify-center rounded-pill bg-ink">
             <AppText variant="button" tone="paper">

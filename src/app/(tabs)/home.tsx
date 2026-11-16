@@ -1,211 +1,70 @@
-import { router, useFocusEffect } from 'expo-router';
-import { Heart, Search, Sun, Moon } from 'lucide-react-native';
-import { useCallback, useMemo, useState } from 'react';
-import { Animated, FlatList, View } from 'react-native';
-import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
+import { useCallback, useEffect, useRef, useState, type ComponentRef } from 'react';
+import { ScrollView, useWindowDimensions, View, type ScrollViewInstance } from 'react-native';
+import { BlurTargetView } from 'expo-blur';
 
 import { consumePendingInterstitial, useInterstitial } from '@/ads/adManager';
 import { adConfig } from '@/ads/config';
-import { GuideNativeAdCard } from '@/components/ads/GuideNativeAdCard';
-import { StoryCard } from '@/components/stories/StoryCard';
-import { AppText } from '@/components/ui/app-text';
-import { PressableScale } from '@/components/ui/pressable-scale';
+import { TabBar } from '@/components/nav/tab-bar';
+import { HomeScreen } from '@/components/screens/HomeScreen';
+import { SettingsScreen } from '@/components/screens/SettingsScreen';
 import { Screen } from '@/components/ui/screen';
-import { useStories, type Story } from '@/content';
-import { useI18n } from '@/i18n';
-import { useSettings } from '@/store/settings';
-import { useTheme } from '@/theme/ThemeProvider';
 
-type GridItem =
-  | { kind: 'story'; story: Story }
-  | { kind: 'native-ad'; id: string };
-
-function padGridItems(items: GridItem[]): GridItem[] {
-  return items.length % 2 === 0 ? items : [...items, { kind: 'native-ad', id: `spacer-${items.length}` }];
-}
-
-export default function HomeScreen() {
-  const { colors, scheme } = useTheme();
-  const setTheme = useSettings((state) => state.setTheme);
-  const adsConsented = useSettings((state) => state.adsConsented);
+/**
+ * The `/home` route hosts the swipeable pager: Home and Settings are pages
+ * you can swipe between, with a floating tab bar on top.
+ */
+export default function TabsPagerScreen() {
+  const { width } = useWindowDimensions();
+  const pagerRef = useRef<ScrollViewInstance | null>(null);
+  const blurTargetRef = useRef<ComponentRef<typeof View> | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
   const { show } = useInterstitial({ firstOpen: false });
-  const { t } = useI18n();
-  const allStories = useStories();
-  const [scrollY] = useState(() => new Animated.Value(0));
 
-  const topFadeOpacity = useMemo(
-    () =>
-      scrollY.interpolate({
-        inputRange: [0, 24],
-        outputRange: [0, 1],
-        extrapolate: 'clamp',
-      }),
-    [scrollY],
+  // Same interstitial behavior the Home tab had on focus.
+  useEffect(() => {
+    if (activeIndex !== 0) return;
+    if (!consumePendingInterstitial()) return;
+    const zone = adConfig.zones.interstitial;
+    if (zone) void show(zone);
+  }, [activeIndex, show]);
+
+  const onChangeTab = useCallback(
+    (index: number) => {
+      pagerRef.current?.scrollTo({ x: index * width, animated: true });
+    },
+    [width],
   );
 
-  const onScrollEvent = useMemo(
-    () =>
-      Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
-        useNativeDriver: false,
-      }),
-    [scrollY],
+  const onPagerScroll = useCallback(
+    (event: { nativeEvent: { contentOffset: { x: number } } }) => {
+      const idx = Math.round(event.nativeEvent.contentOffset.x / width);
+      setActiveIndex((prev) => (prev === idx ? prev : idx));
+    },
+    [width],
   );
-
-  const rest = useMemo(() => allStories.slice(1), [allStories]);
-
-  const gridItems = useMemo<GridItem[]>(() => {
-    const items: GridItem[] = [];
-    rest.forEach((story, idx) => {
-      items.push({ kind: 'story', story });
-      if (adsConsented && (idx + 1) % 6 === 0) {
-        items.push({ kind: 'native-ad', id: `native-ad-${idx}` });
-      }
-    });
-    return padGridItems(items);
-  }, [rest, adsConsented]);
-
-  useFocusEffect(
-    useCallback(() => {
-      if (!consumePendingInterstitial()) return;
-      const zone = adConfig.zones.interstitial;
-      if (zone) void show(zone);
-    }, [show]),
-  );
-
-  const header = (
-    <View className="px-5 pb-2 pt-2">
-      <View className="flex-row items-center justify-between">
-        <AppText variant="display" className="text-[32px] leading-[36px]">
-          Loom
-        </AppText>
-
-        <View className="flex-row items-center gap-2.5">
-          <PressableScale
-            accessibilityRole="button"
-            accessibilityLabel={t('home.a11ySearch')}
-            scaleTo={0.9}
-            style={{
-              backgroundColor: colors.surface,
-              borderColor: colors.line,
-              borderWidth: 1,
-            }}
-            className="h-10 w-10 items-center justify-center rounded-full"
-            onPress={() => router.push('/search' as any)}>
-            <Search size={18} color={colors.ink} strokeWidth={1.9} />
-          </PressableScale>
-
-          <PressableScale
-            accessibilityRole="button"
-            accessibilityLabel={t('home.a11ySaved')}
-            scaleTo={0.9}
-            style={{
-              backgroundColor: colors.surface,
-              borderColor: colors.line,
-              borderWidth: 1,
-            }}
-            className="h-10 w-10 items-center justify-center rounded-full"
-            onPress={() => router.push('/favorites' as any)}>
-            <Heart size={18} color={colors.ink} fill="transparent" strokeWidth={1.9} />
-          </PressableScale>
-
-          <PressableScale
-            accessibilityRole="button"
-            accessibilityLabel={t('home.a11yTheme')}
-            scaleTo={0.9}
-            style={{
-              backgroundColor: colors.surface,
-              borderColor: colors.line,
-              borderWidth: 1,
-            }}
-            className="h-10 w-10 items-center justify-center rounded-full"
-            onPress={() => setTheme(scheme === 'dark' ? 'light' : 'dark')}>
-            {scheme === 'dark' ? (
-              <Sun size={17} color={colors.ink} strokeWidth={1.9} />
-            ) : (
-              <Moon size={17} color={colors.ink} strokeWidth={1.9} />
-            )}
-          </PressableScale>
-        </View>
-      </View>
-
-      <AppText variant="subtitle" tone="muted" className="mt-1 text-[13.5px]">
-        {t('home.subtitle')}
-      </AppText>
-    </View>
-  );
-
-  const empty = (title: string, body: string) => (
-    <View style={{ flex: 1, width: '100%', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 28, paddingVertical: 40 }}>
-      <AppText variant="headline" style={{ textAlign: 'center' }}>
-        {title}
-      </AppText>
-      <AppText variant="body" tone="muted" style={{ textAlign: 'center', marginTop: 8, maxWidth: 280 }}>
-        {body}
-      </AppText>
-    </View>
-  );
-
-  const topFadeColor = scheme === 'dark' ? '#141211' : '#E4DCD2';
 
   return (
     <Screen edges={['top', 'left', 'right']} className="flex-1">
-      {header}
-
-      <View className="flex-1 relative">
-        <FlatList
-          key="stories"
-          data={gridItems}
-          keyExtractor={(item, index) =>
-            item.kind === 'story' ? `story-${item.story.slug}` : item.kind === 'native-ad' ? `ad-${item.id}` : `spacer-${index}`
-          }
-          numColumns={2}
-          onScroll={onScrollEvent}
+      <BlurTargetView ref={blurTargetRef} style={{ flex: 1 }}>
+        <ScrollView
+          ref={pagerRef}
+          horizontal
+          pagingEnabled
+          className="flex-1"
+          showsHorizontalScrollIndicator={false}
           scrollEventThrottle={16}
-          renderItem={({ item, index }) => {
-            if (item.kind === 'story') {
-              return <StoryCard story={item.story} index={index} />;
-            }
-            if (item.kind === 'native-ad') {
-              return <GuideNativeAdCard index={index} />;
-            }
-            return <View className="flex-1" />;
-          }}
-          columnWrapperStyle={gridItems.length > 0 ? { gap: 12 } : undefined}
-          contentContainerStyle={
-            gridItems.length === 0
-              ? { flexGrow: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 20, paddingBottom: 220 }
-              : { paddingHorizontal: 20, paddingTop: 12, paddingBottom: 220, gap: 12 }
-          }
-          keyboardShouldPersistTaps="handled"
-          keyboardDismissMode="on-drag"
-          showsVerticalScrollIndicator={false}
-          ListEmptyComponent={empty(t('home.emptyTitle'), t('home.emptyBody'))}
-        />
+          onScroll={onPagerScroll as never}
+          onMomentumScrollEnd={onPagerScroll as never}>
+          <View style={{ width }}>
+            <HomeScreen />
+          </View>
+          <View style={{ width }}>
+            <SettingsScreen />
+          </View>
+        </ScrollView>
+      </BlurTargetView>
 
-        <Animated.View
-          pointerEvents="none"
-          style={{
-            position: 'absolute',
-            top: -14,
-            left: 0,
-            right: 0,
-            height: 38,
-            zIndex: 10,
-            opacity: topFadeOpacity,
-          }}>
-          <Svg width="100%" height="100%">
-            <Defs>
-              <LinearGradient id="homeTopFade" x1="0" y1="0" x2="0" y2="1">
-                <Stop offset="0%" stopColor={topFadeColor} stopOpacity="1" />
-                <Stop offset="35%" stopColor={topFadeColor} stopOpacity="0.75" />
-                <Stop offset="70%" stopColor={topFadeColor} stopOpacity="0.25" />
-                <Stop offset="100%" stopColor={topFadeColor} stopOpacity="0" />
-              </LinearGradient>
-            </Defs>
-            <Rect width="100%" height="100%" fill="url(#homeTopFade)" />
-          </Svg>
-        </Animated.View>
-      </View>
+      <TabBar activeIndex={activeIndex} onChangeTab={onChangeTab} blurTarget={blurTargetRef} />
     </Screen>
   );
 }

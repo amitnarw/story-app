@@ -37,7 +37,8 @@ export default function FavoritesScreen() {
           <View className="flex-1">
             <AppText variant="title">
               {t('saved.title')}
-            </AppText>          </View>
+            </AppText>
+          </View>
         </View>
 
         <AppText variant="subtitle" tone="muted" className="mt-2 text-[14px]">
@@ -82,14 +83,12 @@ export default function FavoritesScreen() {
           key="saved-stories-list"
           data={savedStories}
           keyExtractor={(item) => item.slug}
-          numColumns={2}
           renderItem={({ item, index }) => <StoryCard story={item} index={index} />}
-          columnWrapperStyle={{ gap: 12 }}
           contentContainerStyle={{
             paddingHorizontal: 20,
             paddingTop: 12,
             paddingBottom: 50,
-            gap: 12,
+            gap: 16,
           }}
           showsVerticalScrollIndicator={false}
         />

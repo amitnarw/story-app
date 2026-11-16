@@ -16,6 +16,10 @@ export const hinglish: Messages = {
     tagline: 'Kahaniyan padhiye. Ek baar mein ek chapter.',
     getStarted: 'Shuru karein',
     caption: 'Aapki library isi device par rehti hai.',
+    ageTitle: 'Kya aap 18 saal ya usse zyada ke hain?',
+    ageBody:
+      'Is library mein kuch kahaniyon mein adult themes aur sensuality hain jo adult readers ke liye hain.',
+    ageConfirm: 'Haan, main 18 saal ya usse zyada ka hoon.',
   },
   tabs: {
     home: 'Home',
@@ -41,7 +45,10 @@ export const hinglish: Messages = {
     haptics: 'Haptics',
     hapticsDesc: 'Kuch bhi chhoone par halka sa vibration milta hai.',
     ads: 'Ads allow karein',
-    adsDesc: 'Banners aur beech-beech mein aane wale ads Loom ko free rakhte hain.',
+    adsDesc: 'Banners aur beech-beech mein aane wale ads is app ko free rakhte hain.',
+    mature: 'Mature stories',
+    matureDesc:
+      'Adult themes aur sensuality wali stories. Iske liye 18 saal ya usse zyada umar hone ki confirmation chahiye.',
     privacy: 'Privacy',
     privacyA11y: 'Privacy policy',
     reset: 'Sab kuch reset karein',
@@ -57,7 +64,7 @@ export const hinglish: Messages = {
     back: 'Wapas',
     placeholder: 'Stories, authors ya tags search karein...',
     clear: 'Search clear karein',
-    title: 'Loom search karein',
+    title: 'Kahaniyan search karein',
     hint: 'Title, author ya tag se poori library mein stories dhoondhiye.',
     noMatches: 'Koi match nahi mila',
     noMatchesBody:
@@ -84,6 +91,8 @@ export const hinglish: Messages = {
     backToAll: 'Sab stories par wapas',
     nextA11y: 'Agli story: {title}',
     backHomeA11y: 'Home par wapas',
+    backToTop: 'Wapas upar jayein',
+    backToTopA11y: 'Story ke shuru par wapas jayein',
     notFoundTitle: 'Story nahi mili.',
     notFoundBody: 'Shayad woh kahin aur chali gayi ho. Library ek tap door hai.',
     backToStories: 'Stories par wapas',
@@ -95,21 +104,21 @@ export const hinglish: Messages = {
   privacy: {
     title: 'Privacy policy',
     intro:
-      'Loom bade padhne walon ke liye kahaniyon ka collection hai. Ye policy batati hai ki app kaun si jaankari ikattha karta hai aur ads kaise kaam karte hain.',
+      'Ye app bade padhne walon ke liye kahaniyon ka collection hai. Ye policy batati hai ki app kaun si jaankari ikattha karta hai aur ads kaise kaam karte hain.',
     deviceTitle: 'Data jo sirf aapke device par rehta hai',
     deviceBody:
       'Aapki saved stories, reading progress, theme aur haptics settings sirf aapke device par save hoti hain. Kuch bhi server par upload nahi hota, aur koi account nahi banta.',
     adsTitle: 'Ads',
     adsBody:
-      'Loom ka development chalane ke liye ads dikhaye jaate hain. Ads story lists mein banners ki tarah, aur theek-thaak breaks par kabhi-kabhi full-screen interstitials ki tarah dikh sakte hain.',
+      'Is app ka development chalane ke liye ads dikhaye jaate hain. Ads story lists mein banners ki tarah, aur theek-thaak breaks par kabhi-kabhi full-screen interstitials ki tarah dikh sakte hain.',
     adsBullets: [
       'Ad networks ads dikhane aur measure karne ke liye aapka device/advertising identifier aur thodi device jaankari paa sakte hain. Aap device settings mein ad tracking limit kar sakte hain.',
       'Hum aapke padhe, save kiye ya reading progress ke basis par ads nahi dikhaate. App ka personal data ad networks ke saath share nahi hota.',
       'Development ke dauraan test ads use hote hain aur koi kamai nahi hoti.',
     ],
-    childrenTitle: 'Bachche',
+    childrenTitle: 'Age rating',
     childrenBody:
-      'Loom aam audience ke liye hai. Kahaniyan non-explicit hain aur bade readers ke liye suitable hain.',
+      'Ye app adult readers ke liye hai. Kuch kahaniyon mein mature themes aur sensuality hai. Pehle baar kholne par age confirmation dikhayi jaati hai, aur mature stories ko Settings se hide kiya ja sakta hai.',
     contactTitle: 'Contact',
     contactBody:
       'Is policy ya aapke data se jude sawaal app ki Settings screen se bheje ja sakte hain.',

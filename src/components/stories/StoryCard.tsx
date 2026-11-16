@@ -15,8 +15,11 @@ function openStory(slug: string) {
   router.push({ pathname: '/story/[slug]', params: { slug } });
 }
 
+const heartColor = '#FFFFFF';
+
 /**
- * Home-page story card: cover image, title, author, and a heart to save.
+ * Home-page story card: landscape cover, title over a gradient scrim,
+ * author · reading time meta, optional 18+ badge, and an icon-only heart.
  */
 export const StoryCard = function StoryCard({
   story,
@@ -25,29 +28,19 @@ export const StoryCard = function StoryCard({
   story: Story;
   index: number;
 }) {
-  const { colors, scheme } = useTheme();
-  const isDark = scheme === 'dark';
+  const { colors } = useTheme();
   const saved = useIsFavorite(story.slug);
   const toggleFavorite = useLibrary((state) => state.toggleFavorite);
   const { t } = useI18n();
 
-  const heartColor = isDark ? '#FFFFFF' : colors.ink;
   const cardStyle: StyleProp<ViewStyle> = {
-    aspectRatio: 2 / 3,
-    borderRadius: 24,
+    aspectRatio: 16 / 9,
+    borderRadius: 22,
     backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.line,
-  };
-  const titleColor = isDark ? '#FFFFFF' : colors.ink;
-  const heartButtonStyle: StyleProp<ViewStyle> = {
-    backgroundColor: colors.surface,
-    borderColor: colors.line,
-    borderWidth: 1,
   };
 
   return (
-    <Appear delay={staggerDelay(index)} className="flex-1">
+    <Appear delay={staggerDelay(index)} className="w-full">
       <PressableScale
         accessibilityRole="button"
         accessibilityLabel={story.title}
@@ -55,27 +48,62 @@ export const StoryCard = function StoryCard({
         scaleTo={0.965}
         haptic="none"
         onPress={() => openStory(story.slug)}
-        className="flex-1 overflow-hidden relative"
+        className="w-full overflow-hidden relative"
         style={cardStyle}>
         <Image
-          source={story.cover as any}
+          source={story.cardCover as any}
           style={StyleSheet.absoluteFill as any}
           resizeMode="cover"
         />
+        {/* Gradient scrim: transparent at top, dark at bottom for text legibility */}
+        <View
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `linear-gradient(to top,
+              rgba(0,0,0,0.72),
+              rgba(0,0,0,0.42) 35%,
+              rgba(0,0,0,0.12) 65%,
+              transparent)}`,
+          }}
+        />
         <View
           pointerEvents="none"
-          className="absolute inset-x-0 bottom-0 px-4 pb-4 items-start"
-          style={{ height: 96 }}>
+          className="absolute inset-x-0 bottom-0 px-6 pb-6 items-start justify-end"
+          style={{ paddingTop: 60 }}>
+          <View className="flex-row items-center gap-2 mb-2">
+            {story.mature && (
+              <View
+                className="flex-row items-center gap-1 rounded-full bg-accent px-2 py-0.5">
+                <AppText
+                  variant="caption"
+                  tone="accentOn"
+                  font="sans-semibold"
+                  className="text-[10px] uppercase leading-none">
+                  18+
+                </AppText>
+              </View>
+            )}
+            <AppText
+              variant="caption"
+              tone="muted"
+              className="text-[11px] uppercase tracking-wider"
+              style={{ color: 'rgba(255,255,255,0.7)' }}>
+              {story.genre}
+            </AppText>
+          </View>
           <AppText
             variant="headline"
             numberOfLines={2}
             tone="ink"
-            style={{ color: titleColor }}
-            className="text-[17px] leading-tight">
+            style={{ color: '#FFFFFF' }}
+            className="text-[20px] leading-tight mb-2">
             {story.title}
           </AppText>
-          <AppText variant="caption" tone="muted" className="mt-1 text-[12px]">
-            {t('story.byAuthor', { author: story.author })}
+          <AppText
+            variant="caption"
+            className="text-[13px]"
+            style={{ color: 'rgba(255,255,255,0.85)' }}>
+            {t('story.rowMeta', { author: story.author, minutes: story.minutes })}
           </AppText>
         </View>
 
@@ -91,13 +119,22 @@ export const StoryCard = function StoryCard({
             scaleTo={0.82}
             haptic="select"
             onPress={() => toggleFavorite(story.slug)}
-            className="h-9 w-9 items-center justify-center"
-            style={heartButtonStyle}>
+            className="h-10 w-10 items-center justify-center">
+            <View
+              className="absolute inset-0 rounded-full bg-black/40"
+              style={{
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.25,
+                shadowRadius: 4,
+                elevation: 4,
+              }}
+            />
             <Heart
-              size={19}
+              size={24}
               color={heartColor}
               fill={saved ? heartColor : 'transparent'}
-              strokeWidth={1.7}
+              strokeWidth={1.8}
             />
           </PressableScale>
         </View>

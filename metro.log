@@ -1,0 +1,266 @@
+Starting project at C:\Users\Narwal\Desktop\loom
+Using src/app as the root directory for Expo Router.
+React Compiler enabled
+Starting Metro Bundler
+
+Waiting on http://localhost:8082
+
+Logs for your project will appear below.
+| react-native-css: node_modules\@expo\log-box\build\overlay\AnsiHighlight.module.css - 1 declaration dropped, no React Native equivalent
+|   properties: white-space
+| react-native-css: node_modules\@expo\log-box\build\overlay\Header.module.css - 5 declarations dropped, no React Native equivalent
+|   properties: cursor, outline
+|   values: border: medium, none
+| react-native-css: node_modules\@expo\log-box\build\overlay\LogBoxInspectorSourceMapStatus.module.css - 3 declarations dropped, no React Native equivalent
+|   properties: cursor
+|   values: border: medium, none
+| react-native-css: node_modules\@expo\log-box\build\toast\ErrorToast.module.css - 10 declarations dropped, no React Native equivalent
+|   properties: background, cursor, text-overflow, white-space
+|   values: border: medium, none; display: block; position: fixed
+| react-native-css: node_modules\@expo\log-box\build\overlay\CodeFrame.module.css - 12 declarations dropped, no React Native equivalent
+|   properties: background, cursor, overflow-wrap, overflow-x, transform-origin, white-space
+|   values: color: inherit; display: block, inline-flex
+| react-native-css: node_modules\@expo\log-box\build\overlay\StackTraceList.module.css - 9 declarations dropped, no React Native equivalent
+|   properties: background, cursor, overflow-wrap
+|   values: border: medium, none; display: block
+| react-native-css: node_modules\@expo\log-box\build\overlay\Overlay.module.css - 9 declarations dropped, no React Native equivalent
+|   properties: -webkit-font-smoothing, backdrop-filter, background, mask-image, overflow-x
+|   values: position: fixed
+| react-native-css: src\global.css - 45 declarations dropped, no React Native equivalent
+|   properties: -webkit-tap-highlight-color, appearance, border-collapse, font-feature-settings, font-variant-numeric, font-variation-settings, list-style, outline, resize, tab-size (+1 more)
+|   values: border-color: inherit; color: inherit; display: block, grid, inline, inline-flex, list-item (+1 more); font: inherit; font-size: inherit; font-weight: bolder, inherit; letter-spacing: inherit; min-height: 1lh; position: fixed; text-align: inherit (+2 more)
+|   Set reactNativeCSS.warnings to "verbose" for the full list, or "none" to silence this.
+Android Bundled 3944ms node_modules\expo-router\entry.js (4616 modules)
+ WARN  You have selected the "dimezisBlurView" blur method, but the `blurTarget` prop has not been configured. The blur view will fallback to "none" blur method to avoid errors. You can learn more about the new BlurView API at: https://docs.expo.dev/versions/latest/sdk/blur-view/
+ LOG  [ads] admob initialized (testMode=true)
+ LOG  [ads] provider=admob testMode=true
+ WARN  You have selected the "dimezisBlurView" blur method, but the `blurTarget` prop has not been configured. The blur view will fallback to "none" blur method to avoid errors. You can learn more about the new BlurView API at: https://docs.expo.dev/versions/latest/sdk/blur-view/
+ ERROR  SyntaxError: C:\Users\Narwal\Desktop\loom\src\app\story\[slug].tsx: Expected corresponding JSX closing tag for <BlurTargetView>. (313:4)
+
+  311 |         <AdSlot variant="dock" />
+  312 |       </View>
+> 313 |     </Screen>
+      |     ^
+  314 |   );
+  315 | }
+  316 |
+    at constructor (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:369:19)
+    at TypeScriptParserMixin.raise (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:6632:19)
+    at TypeScriptParserMixin.jsxParseElementAt (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:4744:16)
+    at TypeScriptParserMixin.jsxParseElementAt (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:4715:32)
+    at TypeScriptParserMixin.jsxParseElement (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:4766:17)
+    at TypeScriptParserMixin.parseExprAtom (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:4776:19)
+    at TypeScriptParserMixin.parseExprSubscripts (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:8068:23)
+    at TypeScriptParserMixin.parseUpdate (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:8053:21)
+    at TypeScriptParserMixin.parseMaybeUnary (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:8033:23)
+    at TypeScriptParserMixin.parseMaybeUnary (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:13900:18)
+    at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7879:61)
+    at TypeScriptParserMixin.parseExprOps (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7884:23)
+    at TypeScriptParserMixin.parseMaybeConditional (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7861:23)
+    at TypeScriptParserMixin.parseMaybeConditional (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:14109:20)
+    at TypeScriptParserMixin.parseMaybeAssign (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7809:21)
+    at C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:13811:39
+    at TypeScriptParserMixin.tryParse (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:6998:20)
+    at TypeScriptParserMixin.tsParseMaybeAssign (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:13811:18)
+    at TypeScriptParserMixin.parseMaybeAssign (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:13732:19)
+    at C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7773:39
+    at TypeScriptParserMixin.allowInAnd (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:9436:12)
+    at TypeScriptParserMixin.parseMaybeAssignAllowIn (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7773:17)
+    at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:9503:17)
+    at TypeScriptParserMixin.parseParenAndDistinguishExpression (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:8678:28)
+    at TypeScriptParserMixin.parseExprAtom (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:8332:23)
+    at TypeScriptParserMixin.parseExprAtom (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:4781:20)
+    at TypeScriptParserMixin.parseExprSubscripts (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:8068:23)
+    at TypeScriptParserMixin.parseUpdate (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:8053:21)
+    at TypeScriptParserMixin.parseMaybeUnary (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:8033:23)
+    at TypeScriptParserMixin.parseMaybeUnary (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:13900:18)
+    at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7879:61)
+    at TypeScriptParserMixin.parseExprOps (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7884:23)
+    at TypeScriptParserMixin.parseMaybeConditional (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7861:23)
+    at TypeScriptParserMixin.parseMaybeConditional (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:14109:20)
+    at TypeScriptParserMixin.parseMaybeAssign (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7809:21)
+    at TypeScriptParserMixin.tsParseMaybeAssign (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:13822:20)
+    at TypeScriptParserMixin.parseMaybeAssign (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:13732:19)
+    at TypeScriptParserMixin.parseExpressionBase (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7757:23)
+    at C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7753:39
+    at TypeScriptParserMixin.allowInAnd (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:9431:16)
+    at TypeScriptParserMixin.parseExpression (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7753:17)
+    at TypeScriptParserMixin.parseReturnStatement (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:10182:28)
+    at TypeScriptParserMixin.parseStatementContent (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:9825:21)
+    at TypeScriptParserMixin.parseStatementContent (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:13447:18)
+    at TypeScriptParserMixin.parseStatementLike (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:9794:17)
+    at TypeScriptParserMixin.parseStatementListItem (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:9774:17)
+    at TypeScriptParserMixin.parseBlockOrModuleBlockBody (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:10356:61)
+    at TypeScriptParserMixin.parseBlockBody (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:10349:10)
+    at TypeScriptParserMixin.parseBlock (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:10337:10)
+    at TypeScriptParserMixin.parseFunctionBody (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:9105:24)
+ ERROR  SyntaxError: C:\Users\Narwal\Desktop\loom\src\app\story\[slug].tsx: Expected corresponding JSX closing tag for <BlurTargetView>. (313:4)
+
+  311 |         <AdSlot variant="dock" />
+  312 |       </View>
+> 313 |     </Screen>
+      |     ^
+  314 |   );
+  315 | }
+  316 |
+    at constructor (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:369:19)
+    at TypeScriptParserMixin.raise (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:6632:19)
+    at TypeScriptParserMixin.jsxParseElementAt (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:4744:16)
+    at TypeScriptParserMixin.jsxParseElementAt (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:4715:32)
+    at TypeScriptParserMixin.jsxParseElement (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:4766:17)
+    at TypeScriptParserMixin.parseExprAtom (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:4776:19)
+    at TypeScriptParserMixin.parseExprSubscripts (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:8068:23)
+    at TypeScriptParserMixin.parseUpdate (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:8053:21)
+    at TypeScriptParserMixin.parseMaybeUnary (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:8033:23)
+    at TypeScriptParserMixin.parseMaybeUnary (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:13900:18)
+    at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7879:61)
+    at TypeScriptParserMixin.parseExprOps (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7884:23)
+    at TypeScriptParserMixin.parseMaybeConditional (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7861:23)
+    at TypeScriptParserMixin.parseMaybeConditional (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:14109:20)
+    at TypeScriptParserMixin.parseMaybeAssign (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7809:21)
+    at C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:13811:39
+    at TypeScriptParserMixin.tryParse (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:6998:20)
+    at TypeScriptParserMixin.tsParseMaybeAssign (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:13811:18)
+    at TypeScriptParserMixin.parseMaybeAssign (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:13732:19)
+    at C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7773:39
+    at TypeScriptParserMixin.allowInAnd (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:9436:12)
+    at TypeScriptParserMixin.parseMaybeAssignAllowIn (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7773:17)
+    at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:9503:17)
+    at TypeScriptParserMixin.parseParenAndDistinguishExpression (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:8678:28)
+    at TypeScriptParserMixin.parseExprAtom (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:8332:23)
+    at TypeScriptParserMixin.parseExprAtom (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:4781:20)
+    at TypeScriptParserMixin.parseExprSubscripts (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:8068:23)
+    at TypeScriptParserMixin.parseUpdate (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:8053:21)
+    at TypeScriptParserMixin.parseMaybeUnary (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:8033:23)
+    at TypeScriptParserMixin.parseMaybeUnary (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:13900:18)
+    at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7879:61)
+    at TypeScriptParserMixin.parseExprOps (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7884:23)
+    at TypeScriptParserMixin.parseMaybeConditional (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7861:23)
+    at TypeScriptParserMixin.parseMaybeConditional (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:14109:20)
+    at TypeScriptParserMixin.parseMaybeAssign (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7809:21)
+    at TypeScriptParserMixin.tsParseMaybeAssign (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:13822:20)
+    at TypeScriptParserMixin.parseMaybeAssign (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:13732:19)
+    at TypeScriptParserMixin.parseExpressionBase (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7757:23)
+    at C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7753:39
+    at TypeScriptParserMixin.allowInAnd (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:9431:16)
+    at TypeScriptParserMixin.parseExpression (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7753:17)
+    at TypeScriptParserMixin.parseReturnStatement (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:10182:28)
+    at TypeScriptParserMixin.parseStatementContent (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:9825:21)
+    at TypeScriptParserMixin.parseStatementContent (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:13447:18)
+    at TypeScriptParserMixin.parseStatementLike (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:9794:17)
+    at TypeScriptParserMixin.parseStatementListItem (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:9774:17)
+    at TypeScriptParserMixin.parseBlockOrModuleBlockBody (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:10356:61)
+    at TypeScriptParserMixin.parseBlockBody (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:10349:10)
+    at TypeScriptParserMixin.parseBlock (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:10337:10)
+    at TypeScriptParserMixin.parseFunctionBody (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:9105:24)
+ ERROR  SyntaxError: C:\Users\Narwal\Desktop\loom\src\app\story\[slug].tsx: Identifier 'BlurView' has already been declared. (11:9)
+
+   9 |   withTiming,
+  10 | } from 'react-native-reanimated';
+> 11 | import { BlurView } from 'expo-blur';
+     |          ^
+  12 |
+  13 | import { AdSlot } from '@/components/ads/AdSlot';
+  14 | import { InlineNativeAdCard } from '@/components/ads/InlineNativeAdCard';
+    at constructor (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:369:19)
+    at TypeScriptParserMixin.raise (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:6632:19)
+    at TypeScriptScopeHandler.declareName (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:4884:21)
+    at TypeScriptParserMixin.declareNameFromIdentifier (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7676:16)
+    at TypeScriptParserMixin.checkIdentifier (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7659:12)
+    at TypeScriptParserMixin.checkLVal (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:7606:12)
+    at TypeScriptParserMixin.finishImportSpecifier (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:11309:10)
+    at TypeScriptParserMixin.parseImportSpecifier (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:11462:17)
+    at TypeScriptParserMixin.parseImportSpecifier (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:14242:18)
+    at TypeScriptParserMixin.parseNamedImportSpecifiers (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:11441:36)
+    at TypeScriptParserMixin.parseImportSpecifiersAndAfter (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:11285:37)
+    at TypeScriptParserMixin.parseImport (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:11278:17)
+    at TypeScriptParserMixin.parseImport (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:13292:26)
+    at TypeScriptParserMixin.parseStatementContent (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:9904:27)
+    at TypeScriptParserMixin.parseStatementContent (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:13447:18)
+    at TypeScriptParserMixin.parseStatementLike (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:9794:17)
+    at TypeScriptParserMixin.parseModuleItem (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:9771:17)
+    at TypeScriptParserMixin.parseBlockOrModuleBlockBody (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:10356:36)
+    at TypeScriptParserMixin.parseBlockBody (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:10349:10)
+    at TypeScriptParserMixin.parseProgram (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:9633:10)
+    at TypeScriptParserMixin.parseTopLevel (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:9623:25)
+    at TypeScriptParserMixin.parse (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:14896:25)
+    at TypeScriptParserMixin.parse (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:14220:18)
+    at parse (C:\Users\Narwal\Desktop\loom\node_modules\@babel\parser\lib\index.js:14909:26)
+    at parser (C:\Users\Narwal\Desktop\loom\node_modules\@babel\core\lib\parser\index.js:41:34)
+    at parser.next (<anonymous>)
+    at normalizeFile (C:\Users\Narwal\Desktop\loom\node_modules\@babel\core\lib\transformation\normalize-file.js:51:37)
+    at normalizeFile.next (<anonymous>)
+    at run (C:\Users\Narwal\Desktop\loom\node_modules\@babel\core\lib\transformation\index.js:22:50)
+    at run.next (<anonymous>)
+    at transform (C:\Users\Narwal\Desktop\loom\node_modules\@babel\core\lib\transform.js:22:33)
+    at transform.next (<anonymous>)
+    at evaluateSync (C:\Users\Narwal\Desktop\loom\node_modules\gensync\index.js:251:28)
+    at sync (C:\Users\Narwal\Desktop\loom\node_modules\gensync\index.js:89:14)
+    at stopHiding - secret - don't use this - v1 (C:\Users\Narwal\Desktop\loom\node_modules\@babel\core\lib\errors\rewrite-stack-trace.js:47:12)
+    at Object.transformSync (C:\Users\Narwal\Desktop\loom\node_modules\@babel\core\lib\transform.js:40:76)
+    at parseWithBabel (C:\Users\Narwal\Desktop\loom\node_modules\@expo\metro-config\build\transformSync.js:88:23)
+    at transformSync (C:\Users\Narwal\Desktop\loom\node_modules\@expo\metro-config\build\transformSync.js:68:16)
+    at Object.transform (C:\Users\Narwal\Desktop\loom\node_modules\@expo\metro-config\build\babel-transformer.js:259:57)
+    at transformJSWithBabelFallback (C:\Users\Narwal\Desktop\loom\node_modules\@expo\metro-config\build\transform-worker\metro-transform-worker.js:767:47)
+    at transformJSWithBabel (C:\Users\Narwal\Desktop\loom\node_modules\@expo\metro-config\build\transform-worker\metro-transform-worker.js:670:16)
+    at Object.transform (C:\Users\Narwal\Desktop\loom\node_modules\@expo\metro-config\build\transform-worker\metro-transform-worker.js:886:12)
+    at transformImpl (C:\Users\Narwal\Desktop\loom\node_modules\@expo\metro-config\build\transform-worker\transform-worker.js:216:34)
+    at Object.transform (C:\Users\Narwal\Desktop\loom\node_modules\@expo\metro-config\build\transform-worker\transform-worker.js:104:30)
+    at Object.transform (C:\Users\Narwal\Desktop\loom\node_modules\react-native-css\dist\commonjs\metro\metro-transformer.js:17:19)
+    at Object.transform (C:\Users\Narwal\Desktop\loom\node_modules\@expo\metro-config\build\transform-worker\supervising-transform-worker.js:120:25)
+    at transformFile (C:\Users\Narwal\Desktop\loom\node_modules\metro\src\DeltaBundler\Worker.flow.js:70:36)
+    at Object.transform (C:\Users\Narwal\Desktop\loom\node_modules\metro\src\DeltaBundler\Worker.flow.js:42:10)
+    at execFunction (C:\Users\Narwal\Desktop\loom\node_modules\jest-worker\build\workers\threadChild.js:167:17)
+    at execHelper (C:\Users\Narwal\Desktop\loom\node_modules\jest-worker\build\workers\threadChild.js:155:5)
+Android Bundled 161ms node_modules\expo-router\entry.js (1 module)
+ LOG  [ads] admob initialized (testMode=true)
+ LOG  [ads] provider=admob testMode=true
+Android Bundled 128ms node_modules\expo-router\entry.js (1 module)
+ LOG  [ads] admob initialized (testMode=true)
+ LOG  [ads] provider=admob testMode=true
+ WARN  [Reanimated] Dependencies should only be used on the web and are always ignored on native. Check DevTools to see the offending code.
+ ERROR  
+
+Code: [slug].tsx
+[0m [90m 240 |[39m               [33m<[39m[33mAppear[39m delay[33m=[39m{chapterIndex [33m*[39m [35m40[39m [33m+[39m [35m20[39m}[33m>[39m
+ [90m 241 |[39m                 {chapter[33m.[39mblocks[33m.[39mmap((block[33m,[39m blockIndex) [33m=>[39m (
+[31m[1m>[22m[39m[90m 242 |[39m                   [33m<[39m[33m>[39m
+ [90m     |[39m                   [31m[1m^[22m[39m
+ [90m 243 |[39m                     [33m<[39m[33mStoryBlock[39m key[33m=[39m{blockIndex} block[33m=[39m{block} [33m/[39m[33m>[39m
+ [90m 244 |[39m                     {adsConsented [33m&&[39m blockIndex [33m>[39m [35m0[39m [33m&&[39m blockIndex [33m%[39m [35m5[39m [33m===[39m [35m0[39m [33m&&[39m (
+ [90m 245 |[39m                       [33m<[39m[33mInlineNativeAdCard[39m key[33m=[39m{[32m`inline-ad-${chapterIndex}-${blockIndex}`[39m} index[33m=[39m{blockIndex} [33m/[39m[33m>[39m[0m
+Call Stack
+  chapter.blocks.map$argument_0 (src\app\story\[slug].tsx:242:19)
+  story.chapters.map$argument_0 (src\app\story\[slug].tsx:241:36)
+  StoryScreen (src\app\story\[slug].tsx:227:30)
+  RootNavigator (src\app\_layout.tsx:48:9)
+  RootLayout (src\app\_layout.tsx:141:11)
+Android Bundled 428ms node_modules\expo-router\entry.js (1 module)
+ LOG  [ads] admob initialized (testMode=true)
+ LOG  [ads] provider=admob testMode=true
+ WARN  [Reanimated] Dependencies should only be used on the web and are always ignored on native. Check DevTools to see the offending code.
+ ERROR  
+
+Code: [slug].tsx
+[0m [90m 242 |[39m               [33m<[39m[33mAppear[39m delay[33m=[39m{chapterIndex [33m*[39m [35m40[39m [33m+[39m [35m20[39m}[33m>[39m
+ [90m 243 |[39m                 {chapter[33m.[39mblocks[33m.[39mmap((block[33m,[39m blockIndex) [33m=>[39m (
+[31m[1m>[22m[39m[90m 244 |[39m                   [33m<[39m[33m>[39m
+ [90m     |[39m                   [31m[1m^[22m[39m
+ [90m 245 |[39m                     [33m<[39m[33mStoryBlock[39m key[33m=[39m{blockIndex} block[33m=[39m{block} [33m/[39m[33m>[39m
+ [90m 246 |[39m                     {adsConsented [33m&&[39m blockIndex [33m>[39m [35m0[39m [33m&&[39m blockIndex [33m%[39m [35m5[39m [33m===[39m [35m0[39m [33m&&[39m (
+ [90m 247 |[39m                       [33m<[39m[33mInlineNativeAdCard[39m key[33m=[39m{[32m`inline-ad-${chapterIndex}-${blockIndex}`[39m} index[33m=[39m{blockIndex} [33m/[39m[33m>[39m[0m
+Call Stack
+  chapter.blocks.map$argument_0 (src\app\story\[slug].tsx:244:19)
+  story.chapters.map$argument_0 (src\app\story\[slug].tsx:243:36)
+  StoryScreen (src\app\story\[slug].tsx:229:30)
+  RootNavigator (src\app\_layout.tsx:48:9)
+  RootLayout (src\app\_layout.tsx:141:11)
+ WARN  [Reanimated] Reading from `value` during component render. Please ensure that you don't access the `value` property nor use `get` method of a shared value while React is rendering a component.
+
+If you don't want to see this message, you can disable the `strict` mode. Refer to:
+https://docs.swmansion.com/react-native-reanimated/docs/debugging/logger-configuration for more details.
+ WARN  [Reanimated] Dependencies should only be used on the web and are always ignored on native. Check DevTools to see the offending code.
+ WARN  [Reanimated] Reading from `value` during component render. Please ensure that you don't access the `value` property nor use `get` method of a shared value while React is rendering a component.
+
+If you don't want to see this message, you can disable the `strict` mode. Refer to:
+https://docs.swmansion.com/react-native-reanimated/docs/debugging/logger-configuration for more details.

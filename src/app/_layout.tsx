@@ -71,7 +71,7 @@ function RootNavigator() {
             }}
           />
           <Stack.Screen
-            name="(tabs)"
+            name="(tabs)/home"
             options={{
               cardStyleInterpolator: CardStyleInterpolators.forFadeFromCenter,
             }}

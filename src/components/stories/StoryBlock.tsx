@@ -37,12 +37,12 @@ export function ParagraphBlock({ text, dropCap, className }: ParagraphProps) {
     const first = firstCluster(text);
     const rest = text.slice(first.length);
     return (
-      <View className={cn('flex-row gap-2', className)}>
+      <View className={cn('flex-row gap-2 mb-6', className)}>
         <AppText
           variant="display"
           tone="ink"
           font="display-bold"
-          className="text-[56px] leading-none"
+          className="text-[56px] leading-none mt-2"
           style={{ color: colors.clay }}
         >
           {first}
@@ -54,7 +54,7 @@ export function ParagraphBlock({ text, dropCap, className }: ParagraphProps) {
     );
   }
 
-  return <AppText variant="body" tone="soft" className={className}>{text}</AppText>;
+  return <AppText variant="body" tone="soft" className={cn('mb-6', className)}>{text}</AppText>;
 }
 
 type HeadingProps = {
@@ -63,7 +63,15 @@ type HeadingProps = {
 };
 
 export function HeadingBlock({ text, className }: HeadingProps) {
-  return <AppText variant="headline" tone="ink" className={className}>{text}</AppText>;
+  return (
+    <AppText
+      variant="headline"
+      tone="ink"
+      className={cn('mb-6 mt-4', className)}
+    >
+      {text}
+    </AppText>
+  );
 }
 
 type ImageBlockProps = {
@@ -76,13 +84,14 @@ type ImageBlockProps = {
 export function ImageBlock({ source, alt, caption, className }: ImageBlockProps) {
   const { colors } = useTheme();
   return (
-    <View className={cn('items-center', className)}>
+    <View className={cn('items-center mb-6', className)}>
       <Image
         source={source as any}
         style={{
           width: '100%',
-          height: 360,
-          borderRadius: 16,
+          height: 320,
+          maxHeight: 320,
+          borderRadius: 20,
           backgroundColor: colors.surface2,
         }}
         accessibilityLabel={alt}
@@ -91,7 +100,7 @@ export function ImageBlock({ source, alt, caption, className }: ImageBlockProps)
         <AppText
           variant="caption"
           tone="muted"
-          className="mt-2 text-[12px] text-center max-w-[560px]"
+          className="mt-3 text-[12px] text-center max-w-[560px]"
           numberOfLines={2}>
           {caption}
         </AppText>
@@ -108,8 +117,8 @@ type QuoteBlockProps = {
 
 export function QuoteBlock({ text, cite, className }: QuoteBlockProps) {
   return (
-    <View className={cn('my-7 border-l border-clay pl-5', className)}>
-      <AppText variant="quote" tone="ink" className="max-w-[560px]">
+    <View className={cn('my-8 border-l border-clay pl-5', className)}>
+      <AppText variant="quote" tone="ink" className="max-w-[560px] mb-4">
         {text}
       </AppText>
       {cite && (

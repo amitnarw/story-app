@@ -5,15 +5,11 @@ import { View } from 'react-native';
 import { BulletList, SectionTitle } from '@/components/content/editorial';
 import { AppText } from '@/components/ui/app-text';
 import { IconButton } from '@/components/ui/icon-button';
-import { PressableScale } from '@/components/ui/pressable-scale';
 import { Rule } from '@/components/ui/rule';
 import { Screen } from '@/components/ui/screen';
 import { useI18n } from '@/i18n';
 import { layout } from '@/theme/scale';
-import { useTheme } from '@/theme/ThemeProvider';
-
 export default function PrivacyScreen() {
-  const { colors } = useTheme();
   const { t, messages } = useI18n();
 
   const goBack = () => {
@@ -31,11 +27,7 @@ export default function PrivacyScreen() {
         <View className="w-11 items-start">
           <IconButton icon={ChevronLeft} label={t('common.back')} onPress={goBack} />
         </View>
-        <View className="flex-1 items-center">
-          <AppText variant="label" className="text-ink">
-            Loom
-          </AppText>
-        </View>
+        <View className="flex-1" />
         <View className="w-11" />
       </View>
 
@@ -79,21 +71,7 @@ export default function PrivacyScreen() {
         </AppText>
       </View>
 
-      <Rule className="mt-12" />
-
-      <View className="mt-8">
-        <PressableScale
-          accessibilityRole="button"
-          accessibilityLabel={t('privacy.done')}
-          scaleTo={0.95}
-          onPress={goBack}
-          className="flex-row items-center gap-2 self-start">
-          <AppText variant="small" tone="muted" font="sans-medium">
-            {t('privacy.done')}
-          </AppText>
-          <ChevronLeft size={16} color={colors.muted} strokeWidth={1.6} />
-        </PressableScale>
-      </View>
+      <Rule className="mt-12 mb-4" />
     </Screen>
   );
 }

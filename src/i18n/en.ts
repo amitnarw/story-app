@@ -12,6 +12,10 @@ export const en = {
     tagline: 'Read stories. One chapter at a time.',
     getStarted: 'Get started',
     caption: 'Your library stays on this device.',
+    ageTitle: 'Are you 18 or older?',
+    ageBody:
+      'Some stories in this library contain mature themes and sensuality intended for adult readers.',
+    ageConfirm: 'Yes, I am 18 or older',
   },
   tabs: {
     home: 'Home',
@@ -37,7 +41,10 @@ export const en = {
     haptics: 'Haptics',
     hapticsDesc: 'A light tap when you touch something.',
     ads: 'Allow advertising',
-    adsDesc: 'Banners and occasional breaks keep Loom free.',
+    adsDesc: 'Banners and occasional breaks keep this app free.',
+    mature: 'Mature stories',
+    matureDesc:
+      'Stories with adult themes and sensuality. Requires confirmation you are 18 or older.',
     privacy: 'Privacy',
     privacyA11y: 'Privacy policy',
     reset: 'Reset everything',
@@ -53,7 +60,7 @@ export const en = {
     back: 'Back',
     placeholder: 'Search stories, authors, tags...',
     clear: 'Clear search',
-    title: 'Search Loom',
+    title: 'Search stories',
     hint: 'Find stories by title, author, or tag across the library.',
     noMatches: 'No matches found',
     noMatchesBody:
@@ -80,6 +87,8 @@ export const en = {
     backToAll: 'Back to all stories',
     nextA11y: 'Next story: {title}',
     backHomeA11y: 'Back to home',
+    backToTop: 'Back to top',
+    backToTopA11y: 'Back to top of story',
     notFoundTitle: 'Story not found.',
     notFoundBody: 'It may have moved. The library is one tap away.',
     backToStories: 'Back to stories',
@@ -91,21 +100,21 @@ export const en = {
   privacy: {
     title: 'Privacy policy',
     intro:
-      'Loom is a library of stories for adults. This policy describes what information the app collects and how advertising works.',
+      'This app is a library of stories for adults. This policy describes what information the app collects and how advertising works.',
     deviceTitle: 'Data that stays on your device',
     deviceBody:
       'Your saved stories, reading progress, theme, and haptics settings are stored locally on your device only. Nothing is uploaded to a server, and no account is created.',
     adsTitle: 'Advertising',
     adsBody:
-      'Loom shows advertising to support development. Ads may appear as banners in story lists and as occasional full-screen interstitials at natural breaks.',
+      'This app shows advertising to support development. Ads may appear as banners in story lists and as occasional full-screen interstitials at natural breaks.',
     adsBullets: [
       'Ad networks may receive your device/advertising identifier and limited device information to serve and measure ads. You can limit ad tracking in your device settings.',
       'We do not serve ads based on your story views, saves, or reading progress. Personal app data is not shared with ad networks.',
       'During development, test ads are used and no revenue is generated.',
     ],
-    childrenTitle: 'Children',
+    childrenTitle: 'Age rating',
     childrenBody:
-      'Loom is intended for general audiences. Stories are non-explicit and suitable for adult readers.',
+      'This app is intended for adult readers. Some stories contain mature themes and sensuality. An age confirmation is shown on first launch, and mature stories can be hidden in Settings.',
     contactTitle: 'Contact',
     contactBody:
       'Questions about this policy or your data can be sent through the app Settings screen.',

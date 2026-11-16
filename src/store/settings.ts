@@ -17,6 +17,7 @@ type SettingsState = {
   hydrated: boolean;
   onboarded: boolean;
   adsConsented: boolean;
+  mature: boolean;
   theme: ThemePreference;
   haptics: boolean;
   language: Language;
@@ -25,6 +26,7 @@ type SettingsState = {
   setTheme: (theme: ThemePreference) => void;
   setHaptics: (enabled: boolean) => void;
   setLanguage: (language: Language) => void;
+  setMature: (enabled: boolean) => void;
   resetAll: () => void;
   markHydrated: () => void;
 };
@@ -32,6 +34,7 @@ type SettingsState = {
 const defaults = {
   onboarded: false,
   adsConsented: true,
+  mature: true,
   theme: 'dark' as ThemePreference,
   haptics: true,
   language: detectLanguage(),
@@ -47,6 +50,7 @@ export const useSettings = create<SettingsState>()(
       setTheme: (theme) => set({ theme }),
       setHaptics: (haptics) => set({ haptics }),
       setLanguage: (language) => set({ language }),
+      setMature: (mature) => set({ mature }),
       resetAll: () => {
         void Storage.removeItem(SETTINGS_KEY);
         set({ ...defaults, hydrated: true });

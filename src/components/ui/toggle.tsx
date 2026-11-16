@@ -1,9 +1,13 @@
-import { View } from 'react-native';
+import { useEffect } from 'react';
+import { Pressable } from 'react-native';
+import Animated, {
+  interpolateColor,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
-import { PressableScale } from '@/components/ui/pressable-scale';
-import { AppText } from '@/components/ui/app-text';
-import { cn } from '@/lib/cn';
-import { StyleSheet } from 'react-native';
+import { haptics } from '@/lib/haptics';
 import { useTheme } from '@/theme/ThemeProvider';
 
 type ToggleProps = {
@@ -13,34 +17,65 @@ type ToggleProps = {
   className?: string;
 };
 
-export function Toggle({ value, label, onValueChange, className }: ToggleProps) {
+const TRACK_W = 50;
+const TRACK_H = 30;
+const THUMB = 24;
+const PADDING = 3;
+const TRAVEL = TRACK_W - THUMB - PADDING * 2;
+
+export function Toggle({ value, label, onValueChange }: ToggleProps) {
   const { colors } = useTheme();
+  const progress = useSharedValue(value ? 1 : 0);
+
+  useEffect(() => {
+    progress.value = withTiming(value ? 1 : 0, { duration: 180 });
+  }, [value, progress]);
+
+  const trackStyle = useAnimatedStyle(() => ({
+    backgroundColor: interpolateColor(
+      progress.value,
+      [0, 1],
+      [colors.control, colors.clay],
+    ),
+  }));
+
+  const thumbStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: progress.value * TRAVEL }],
+  }));
 
   return (
-    <PressableScale
-      accessibilityRole="button"
+    <Pressable
+      accessibilityRole="switch"
       accessibilityLabel={label}
-      scaleTo={0.96}
-      haptic="select"
-      onPress={() => onValueChange(!value)}
-      className={cn('flex-row items-center justify-between gap-3 px-3 py-2 rounded-full', className)}
-      style={{
-        backgroundColor: value ? colors.clay : colors.control,
-        borderWidth: value ? 0 : StyleSheet.hairlineWidth,
-        borderColor: colors.line,
-      }}>
-      <View
-        style={{
-          width: 20,
-          height: 20,
-          borderRadius: 999,
-          backgroundColor: value ? colors.accentOn : colors.ink,
-          transform: [{ translateX: value ? 18 : 0 }],
-        }}
-      />
-      <AppText variant="small" tone={value ? 'ink' : 'muted'} font="sans-medium">
-        {label}
-      </AppText>
-    </PressableScale>
+      accessibilityState={{ checked: value }}
+      onPress={() => {
+        haptics.select();
+        onValueChange(!value);
+      }}
+      hitSlop={8}>
+      <Animated.View
+        style={[
+          {
+            width: TRACK_W,
+            height: TRACK_H,
+            borderRadius: TRACK_H / 2,
+            padding: PADDING,
+            justifyContent: 'center',
+          },
+          trackStyle,
+        ]}>
+        <Animated.View
+          style={[
+            {
+              width: THUMB,
+              height: THUMB,
+              borderRadius: THUMB / 2,
+              backgroundColor: colors.accentOn,
+            },
+            thumbStyle,
+          ]}
+        />
+      </Animated.View>
+    </Pressable>
   );
 }

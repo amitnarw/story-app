@@ -25,6 +25,8 @@ export type StoryCopy = {
   tags: string[];
   coverAlt: string;
   chapters: StoryCopyChapter[];
+  /** Localised content advisory shown on mature cards and in the reader. */
+  contentNote?: string;
 };
 
 /** Blocks as they appear in the merged runtime story. */
