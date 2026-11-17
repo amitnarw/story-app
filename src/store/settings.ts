@@ -62,6 +62,8 @@ export const useSettings = create<SettingsState>()(
       storage: createJSONStorage(() => Storage),
       partialize: ({ hydrated, ...rest }) => rest,
       onRehydrateStorage: () => (state) => {
+        // Advertising is always enabled — ignore any previously saved value.
+        state?.setAdsConsented?.(true);
         state?.markHydrated();
       },
     },

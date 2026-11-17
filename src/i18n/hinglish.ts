@@ -44,8 +44,6 @@ export const hinglish: Messages = {
     preferences: 'Preferences',
     haptics: 'Haptics',
     hapticsDesc: 'Kuch bhi chhoone par halka sa vibration milta hai.',
-    ads: 'Ads allow karein',
-    adsDesc: 'Banners aur beech-beech mein aane wale ads is app ko free rakhte hain.',
     mature: 'Mature stories',
     matureDesc:
       'Adult themes aur sensuality wali stories. Iske liye 18 saal ya usse zyada umar hone ki confirmation chahiye.',

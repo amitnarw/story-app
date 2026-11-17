@@ -47,11 +47,9 @@ export function SettingsScreen() {
   const { colors } = useTheme();
   const theme = useSettings((state) => state.theme);
   const hapticsOn = useSettings((state) => state.haptics);
-  const adsConsented = useSettings((state) => state.adsConsented);
   const language = useSettings((state) => state.language);
   const setTheme = useSettings((state) => state.setTheme);
   const setHaptics = useSettings((state) => state.setHaptics);
-  const setAdsConsented = useSettings((state) => state.setAdsConsented);
   const setLanguage = useSettings((state) => state.setLanguage);
   const { t } = useI18n();
 
@@ -112,18 +110,6 @@ export function SettingsScreen() {
                     value={hapticsOn}
                     label={t('settings.haptics')}
                     onValueChange={setHaptics}
-                  />
-                }
-              />
-              <View className="h-px bg-line" />
-              <SettingRow
-                title={t('settings.ads')}
-                description={t('settings.adsDesc')}
-                right={
-                  <Toggle
-                    value={adsConsented}
-                    label={t('settings.ads')}
-                    onValueChange={setAdsConsented}
                   />
                 }
               />

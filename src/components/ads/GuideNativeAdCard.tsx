@@ -44,7 +44,7 @@ export function GuideNativeAdCard({ index }: GuideNativeAdCardProps) {
   return (
     <View
       className="w-full overflow-hidden"
-      style={{ aspectRatio: nativeAd.mediaContent?.aspectRatio ?? 16 / 9 }}>
+      style={{ aspectRatio: Math.min(Math.max(nativeAd.mediaContent?.aspectRatio ?? 16 / 9, 1.2), 1.9) }}>
       <NativeAdView nativeAd={nativeAd} style={{ flex: 1 }}>
         <View style={{ flex: 1 }}>
           <NativeMediaView
@@ -62,14 +62,12 @@ export function GuideNativeAdCard({ index }: GuideNativeAdCardProps) {
           <View
             className="absolute inset-x-0 bottom-0 px-6 pb-6"
             style={{ paddingTop: 56 }}>
-            <View className="flex-row items-center gap-2 mb-1">
-              <AppText
-                variant="caption"
-                tone="paper"
-                className="text-[10px] uppercase"
-                style={{ color: '#FFFFFF', opacity: 0.85 }}>
-                {t('ads.label')}
-              </AppText>
+            <View className="flex-row items-center gap-1 mb-1">
+              <View className="flex-row items-center gap-1 px-2 py-0.5 rounded-full" style={{ backgroundColor: 'rgba(0,0,0,0.55)' }}>
+                <AppText variant="caption" font="sans-semibold" className="text-[9px] uppercase" style={{ color: '#FFFFFF' }}>
+                  {t('ads.label')}
+                </AppText>
+              </View>
             </View>
 
             <NativeAsset assetType={NativeAssetType.HEADLINE}>
@@ -113,13 +111,21 @@ export function GuideNativeAdCard({ index }: GuideNativeAdCardProps) {
           </View>
 
           {nativeAd.icon?.url ? (
-            <View className="absolute left-4 top-4 overflow-hidden rounded-full">
+            <View className="absolute left-4 top-4 flex-row items-center gap-2" style={{ paddingRight: 4 }}>
               <NativeAsset assetType={NativeAssetType.ICON}>
                 <Image
                   source={{ uri: nativeAd.icon.url }}
                   style={{ width: 28, height: 28, borderRadius: 14 }}
                 />
               </NativeAsset>
+              {nativeAd.advertiser && (
+                <AppText
+                  variant="caption"
+                  font="sans-semibold"
+                  style={{ color: '#FFFFFF', backgroundColor: 'rgba(0,0,0,0.45)', paddingHorizontal: 6, paddingVertical: 2, borderRadius: 999 }}>
+                  {nativeAd.advertiser}
+                </AppText>
+              )}
             </View>
           ) : null}
         </View>

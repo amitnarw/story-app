@@ -50,6 +50,7 @@ export default function TabsPagerScreen() {
           ref={pagerRef}
           horizontal
           pagingEnabled
+          nestedScrollEnabled
           className="flex-1"
           showsHorizontalScrollIndicator={false}
           scrollEventThrottle={16}

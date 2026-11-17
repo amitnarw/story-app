@@ -102,7 +102,7 @@ export function TabBar({ activeIndex, onChangeTab, blurTarget }: TabBarProps) {
                 left: 0,
                 width: pillWidth,
                 borderRadius: 999,
-                backgroundColor: isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.08)',
+                backgroundColor: isDark ? 'rgba(255, 255, 255, 0.12)' : '#FFFFFF',
                 borderWidth: StyleSheet.hairlineWidth,
                 borderColor: isDark ? 'rgba(255, 255, 255, 0.18)' : 'rgba(0, 0, 0, 0.06)',
                 transform: [{ translateX: pillX }],

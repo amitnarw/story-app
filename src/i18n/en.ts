@@ -40,8 +40,6 @@ export const en = {
     preferences: 'Preferences',
     haptics: 'Haptics',
     hapticsDesc: 'A light tap when you touch something.',
-    ads: 'Allow advertising',
-    adsDesc: 'Banners and occasional breaks keep this app free.',
     mature: 'Mature stories',
     matureDesc:
       'Stories with adult themes and sensuality. Requires confirmation you are 18 or older.',

@@ -39,13 +39,12 @@ export function IconButton({
       haptic="tap"
       onPress={onPress}
       className={cn('h-10 w-10 items-center justify-center rounded-full', className)}
-      style={{ backgroundColor: active ? colors.ink : colors.control }}>
-      <Icon
-        size={size}
-        color={active ? colors.paper : colors.controlInk}
-        fill={iconFill}
-        strokeWidth={1.6}
-      />
+      style={{
+        backgroundColor: active ? colors.ink : colors.surface,
+        borderWidth: 1,
+        borderColor: colors.line,
+      }}>
+      <Icon size={size} color={active ? colors.paper : colors.ink} fill={iconFill} strokeWidth={1.9} />
     </PressableScale>
   );
 }

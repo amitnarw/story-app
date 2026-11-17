@@ -1,4 +1,4 @@
-import { Image, View } from 'react-native';
+import { Image, useWindowDimensions, View } from 'react-native';
 
 import { AppText } from '@/components/ui/app-text';
 import { cn } from '@/lib/cn';
@@ -83,14 +83,15 @@ type ImageBlockProps = {
 
 export function ImageBlock({ source, alt, caption, className }: ImageBlockProps) {
   const { colors } = useTheme();
+  const { width, height } = useWindowDimensions();
+  const isLandscape = width > height;
   return (
     <View className={cn('items-center mb-6', className)}>
       <Image
         source={source as any}
         style={{
           width: '100%',
-          height: 320,
-          maxHeight: 320,
+          ...(isLandscape ? { aspectRatio: 16 / 9 } : { height: 320, maxHeight: 320 }),
           borderRadius: 20,
           backgroundColor: colors.surface2,
         }}

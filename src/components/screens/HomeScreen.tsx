@@ -1,12 +1,13 @@
 import { router } from 'expo-router';
 import { Heart, Search, Sun, Moon } from 'lucide-react-native';
 import { useMemo, useState } from 'react';
-import { Animated, FlatList, View } from 'react-native';
+import { Animated, FlatList, ScrollView, View } from 'react-native';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 
 import { GuideNativeAdCard } from '@/components/ads/GuideNativeAdCard';
 import { StoryCard } from '@/components/stories/StoryCard';
 import { AppText } from '@/components/ui/app-text';
+import { IconButton } from '@/components/ui/icon-button';
 import { PressableScale } from '@/components/ui/pressable-scale';
 import { useStories, type Story } from '@/content';
 import { useI18n } from '@/i18n';
@@ -23,7 +24,6 @@ const FILTERS: { value: string; label: string }[] = [
   { value: 'mystery', label: 'Mystery' },
   { value: 'drama', label: 'Drama' },
   { value: 'fantasy', label: 'Fantasy' },
-  { value: 'mature', label: '18+' },
 ];
 
 /**
@@ -90,51 +90,24 @@ export function HomeScreen() {
         </AppText>
 
         <View className="flex-row items-center gap-2.5">
-          <PressableScale
-            accessibilityRole="button"
-            accessibilityLabel={t('home.a11ySearch')}
-            scaleTo={0.9}
-            style={{
-              backgroundColor: colors.surface,
-              borderColor: colors.line,
-              borderWidth: 1,
-            }}
-            className="h-10 w-10 items-center justify-center rounded-full"
-            onPress={() => router.push('/search' as any)}>
-            <Search size={18} color={colors.ink} strokeWidth={1.9} />
-          </PressableScale>
-
-          <PressableScale
-            accessibilityRole="button"
-            accessibilityLabel={t('home.a11ySaved')}
-            scaleTo={0.9}
-            style={{
-              backgroundColor: colors.surface,
-              borderColor: colors.line,
-              borderWidth: 1,
-            }}
-            className="h-10 w-10 items-center justify-center rounded-full"
-            onPress={() => router.push('/favorites' as any)}>
-            <Heart size={18} color={colors.ink} fill="transparent" strokeWidth={1.9} />
-          </PressableScale>
-
-          <PressableScale
-            accessibilityRole="button"
-            accessibilityLabel={t('home.a11yTheme')}
-            scaleTo={0.9}
-            style={{
-              backgroundColor: colors.surface,
-              borderColor: colors.line,
-              borderWidth: 1,
-            }}
-            className="h-10 w-10 items-center justify-center rounded-full"
-            onPress={() => setTheme(scheme === 'dark' ? 'light' : 'dark')}>
-            {scheme === 'dark' ? (
-              <Sun size={17} color={colors.ink} strokeWidth={1.9} />
-            ) : (
-              <Moon size={17} color={colors.ink} strokeWidth={1.9} />
-            )}
-          </PressableScale>
+          <IconButton
+            icon={Search}
+            label={t('home.a11ySearch')}
+            size={18}
+            onPress={() => router.push('/search' as any)}
+          />
+          <IconButton
+            icon={Heart}
+            label={t('home.a11ySaved')}
+            size={18}
+            onPress={() => router.push('/favorites' as any)}
+          />
+          <IconButton
+            icon={scheme === 'dark' ? Sun : Moon}
+            label={t('home.a11yTheme')}
+            size={17}
+            onPress={() => setTheme(scheme === 'dark' ? 'light' : 'dark')}
+          />
         </View>
       </View>
 
@@ -162,8 +135,14 @@ export function HomeScreen() {
       {header}
 
       {/* Filter chips */}
-      <View className="px-5 mt-4 mb-2">
-        <View className="flex-row gap-2">
+      <View className="mt-4 mb-2">
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+          nestedScrollEnabled
+          style={{ height: 44 }}
+          contentContainerStyle={{ paddingHorizontal: 20, alignItems: 'center', gap: 8 }}>
           {FILTERS.map((f) => {
             const active = f.value === filter;
             return (
@@ -173,11 +152,13 @@ export function HomeScreen() {
                 accessibilityLabel={f.label}
                 scaleTo={0.96}
                 onPress={() => setFilter(f.value as any)}
-                className="flex-row items-center gap-1.5 px-3 py-1.5 rounded-full"
+                className="flex-row items-center gap-1.5 rounded-full"
                 style={{
                   backgroundColor: active ? colors.clay : colors.surface,
                   borderWidth: 1,
                   borderColor: active ? colors.clay : colors.line,
+                  paddingHorizontal: 12,
+                  paddingVertical: 6,
                 }}>
                 <AppText
                   variant="caption"
@@ -191,7 +172,7 @@ export function HomeScreen() {
               </PressableScale>
             );
           })}
-        </View>
+        </ScrollView>
       </View>
 
       <View className="flex-1 relative">
@@ -218,7 +199,7 @@ export function HomeScreen() {
                   paddingHorizontal: 20,
                   paddingBottom: 220,
                 }
-              : { paddingHorizontal: 20, paddingTop: 12, paddingBottom: 120, gap: 16 }
+              : { paddingHorizontal: 20, paddingTop: 12, paddingBottom: 420, gap: 16 }
           }
           keyboardShouldPersistTaps="handled"
           keyboardDismissMode="on-drag"

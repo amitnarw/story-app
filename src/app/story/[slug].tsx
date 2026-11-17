@@ -1,8 +1,7 @@
-import { Fragment, useRef, useCallback, useEffect, type ComponentRef } from 'react';
-import { Image, ScrollView, View } from 'react-native';
+import { Fragment, useCallback, useEffect, useMemo, useRef } from 'react';
+import { Image, ScrollView, useWindowDimensions, View } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
-import { BlurView, BlurTargetView } from 'expo-blur';
-import { ArrowUp, ChevronLeft, ChevronRight, Heart } from 'lucide-react-native';
+import { ArrowUp, ChevronLeft, Heart } from 'lucide-react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -19,7 +18,7 @@ import { PressableScale } from '@/components/ui/pressable-scale';
 import { Appear } from '@/components/ui/reveal';
 import { Rule } from '@/components/ui/rule';
 import { Screen } from '@/components/ui/screen';
-import { useStory, useStories } from '@/content';
+import { useStory } from '@/content';
 import { useIsFavorite, useLibrary } from '@/store/library';
 import { useSettings } from '@/store/settings';
 import { layout } from '@/theme/scale';
@@ -58,19 +57,30 @@ export default function StoryScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
 
   const story = useStory(slug);
-  const allStories = useStories();
   const adsConsented = useSettings((state) => state.adsConsented);
   const { t } = useI18n();
 
   const scrollRef = useRef<any>(null);
-  const blurTargetRef = useRef<ComponentRef<typeof View> | null>(null);
   const scrollY = useSharedValue(0);
   const progress = useSharedValue(0);
 
   const saved = useIsFavorite(story?.slug ?? '');
   const toggleFavorite = useLibrary((state) => state.toggleFavorite);
   const setReadingProgress = useLibrary((state) => state.setReadingProgress);
-  const { colors, scheme } = useTheme();
+  const { colors } = useTheme();
+
+  // Running global block index across all chapters (resets per story).
+  const chapterBlockCounts = useMemo(
+    () => story?.chapters.map((ch) => ch.blocks.length) ?? [],
+    [story?.chapters],
+  );
+
+  const chapterOffsets = useMemo(() => {
+    return chapterBlockCounts.reduce((acc, n) => {
+      acc.push(acc.length ? acc[acc.length - 1] + n : 0);
+      return acc;
+    }, [] as number[]);
+  }, [chapterBlockCounts]);
 
   const onScroll = useCallback(
     (event: any) => {
@@ -108,19 +118,12 @@ export default function StoryScreen() {
     scrollRef.current?.scrollTo({ y: 0, animated: true });
   };
 
-  const index = allStories.findIndex((item) => item.slug === story?.slug);
-  const nextStory = index >= 0 ? allStories[index + 1] : undefined;
-
   const animatedProgressStyle = useAnimatedStyle(
     () => ({
       width: `${progress.value * 100}%`,
     }),
     [progress],
   );
-
-  const headerBgOpacity = useAnimatedStyle(() => ({
-    opacity: withTiming(scrollY.value > 40 ? 1 : 0, { duration: 200 }),
-  }));
 
   if (!story) {
     return <NotFound />;
@@ -133,29 +136,6 @@ export default function StoryScreen() {
       style={{ width: '100%', maxWidth: layout.maxWidth, alignSelf: 'center' }}>
       {/* Sticky Top Header */}
       <View className="px-5 pt-2 pb-2">
-        <Animated.View style={[headerBgOpacity]}>
-          <BlurView
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              height: 56,
-            }}
-            tint={scheme === 'dark' ? 'dark' : 'light'}
-            intensity={50}
-            blurMethod="dimezisBlurView"
-            blurTarget={blurTargetRef ?? undefined}
-          />
-          <View
-            className="absolute inset-0"
-            style={{
-              backgroundColor:
-                scheme === 'dark' ? 'rgba(6,6,6,0.75)' : 'rgba(248,246,242,0.75)',
-            }}
-          />
-        </Animated.View>
         <View className="flex-row items-center justify-between">
           <IconButton icon={ChevronLeft} label={t('common.back')} onPress={close} />
           <View className="flex-row items-center gap-3">
@@ -175,15 +155,14 @@ export default function StoryScreen() {
         </View>
       </View>
 
-      <BlurTargetView ref={blurTargetRef} style={{ flex: 1 }}>
-        <ScrollView
-          ref={scrollRef}
-          className="flex-1"
-          showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
-          onScroll={onScroll}
-          scrollEventThrottle={16}
-          contentContainerStyle={{ paddingBottom: 24, flexGrow: 1 }}>
+      <ScrollView
+        ref={scrollRef}
+        className="flex-1"
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+        onScroll={onScroll}
+        scrollEventThrottle={16}
+        contentContainerStyle={{ paddingBottom: 24, flexGrow: 1 }}>
         <View className="px-5">
           {/* Cover Hero */}
           <Appear distance={16} className="mt-2">
@@ -240,59 +219,20 @@ export default function StoryScreen() {
                 </Appear>
               )}
               <Appear delay={chapterIndex * 40 + 20}>
-                {chapter.blocks.map((block, blockIndex) => (
-                  <Fragment key={blockIndex}>
-                    <StoryBlock block={block} />
-                    {adsConsented && blockIndex > 0 && blockIndex % 5 === 0 && (
-                      <InlineNativeAdCard index={blockIndex} />
-                    )}
-                  </Fragment>
-                ))}
+                {chapter.blocks.map((block, blockIndex) => {
+                  const globalIndex = chapterOffsets[chapterIndex] + blockIndex;
+                  return (
+                    <Fragment key={globalIndex}>
+                      <StoryBlock block={block} />
+                      {adsConsented && globalIndex > 0 && globalIndex % 5 === 0 && (
+                        <InlineNativeAdCard index={globalIndex} />
+                      )}
+                    </Fragment>
+                  );
+                })}
               </Appear>
             </View>
           ))}
-
-          <View className="mt-16">
-            <Rule />
-          </View>
-
-          {/* End of story */}
-          {nextStory ? (
-            <PressableScale
-              accessibilityRole="button"
-              accessibilityLabel={t('story.nextA11y', { title: nextStory.title })}
-              scaleTo={0.98}
-              onPress={() =>
-                router.replace({ pathname: '/story/[slug]', params: { slug: nextStory.slug } })
-              }
-              className="flex-row items-center gap-4 py-8 border-t border-line pt-8">
-              <View className="flex-1">
-                <AppText variant="label">{t('story.nextStory')}</AppText>
-                <AppText variant="headline" className="mt-1.5 text-[20px]">
-                  {nextStory.title}
-                </AppText>
-                <AppText variant="caption" className="mt-1">
-                  {t('story.nextStoryMeta', {
-                    author: nextStory.author,
-                    minutes: nextStory.minutes,
-                  })}
-                </AppText>
-              </View>
-              <ChevronRight size={17} color={colors.muted} strokeWidth={1.6} />
-            </PressableScale>
-          ) : (
-            <PressableScale
-              accessibilityRole="button"
-              accessibilityLabel={t('story.backHomeA11y')}
-              scaleTo={0.98}
-              onPress={() => router.replace('/home')}
-              className="flex-row items-center gap-2 py-8 border-t border-line pt-8">
-              <ChevronLeft size={17} color={colors.muted} strokeWidth={1.6} />
-              <AppText variant="small" font="sans-medium">
-                {t('story.backToAll')}
-              </AppText>
-            </PressableScale>
-          )}
 
           <PressableScale
             accessibilityRole="button"
@@ -307,7 +247,6 @@ export default function StoryScreen() {
           </PressableScale>
         </View>
         </ScrollView>
-      </BlurTargetView>
 
       {/* Sticky Bottom Banner Ad */}
       <View className="items-center bg-surface">
@@ -318,13 +257,14 @@ export default function StoryScreen() {
 }
 
 function ImageStory({ source, alt }: { source: any; alt: string }) {
+  const { width, height } = useWindowDimensions();
+  const isLandscape = width > height;
   return (
     <Image
       source={source}
       style={{
         width: '100%',
-        height: 320,
-        maxHeight: 320,
+        ...(isLandscape ? { aspectRatio: 16 / 9 } : { height: 320, maxHeight: 320 }),
       }}
       resizeMode="cover"
       accessibilityLabel={alt}
