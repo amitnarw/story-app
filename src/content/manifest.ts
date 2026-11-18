@@ -205,6 +205,20 @@ export const manifest: StoryManifestEntry[] = [
       require('../../assets/stories/the-taste-of-salt/img-2.png'),
     ],
   },
+  {
+    slug: 'neeli-saree',
+    order: 15,
+    minutes: 7,
+    genre: 'romance',
+    mature: true,
+    cover: require('../../assets/stories/neeli-saree/card-cover.png'),
+    cardCover: require('../../assets/stories/neeli-saree/card-cover.png'),
+    images: [
+      require('../../assets/stories/neeli-saree/img-1.png'),
+      require('../../assets/stories/neeli-saree/img-2.png'),
+      require('../../assets/stories/neeli-saree/img-3.png'),
+    ],
+  },
 ];
 
 export const manifestBySlug = new Map(manifest.map((entry) => [entry.slug, entry]));

@@ -1196,4 +1196,117 @@ export const hinglishCopy: StoryCopy[] = [
       },
     ],
   },
+  {
+    slug: 'neeli-saree',
+    title: 'Ek Hasina Aur Do Bhai',
+    author: 'The Editors',
+    kicker: 'Ek shaadi, do dulhe',
+    summary: 'Vasudha ne Abhay se shadi ki. Shaadi ke baad use pata chala ki Abhays jodwa bhai Ajay bhi usi ghar mein rehta hai. Dono ek jaise dikhte hain. Vasudha ne ek ko nahi chuna. Usne dono ko apna le liya.',
+    tags: ['romance', 'haveli', 'judaawa'],
+    coverAlt: 'Neeli saree mein ek aurat, dono taraf do aadmi',
+    contentNote: 'Adult themes, intimacy',
+    chapters: [
+      {
+        title: 'Pehla Din',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text:
+              'Vasudha ne Abhay se shadi ki. Abhay shanta tha. Ghar ek badi haveli thi, jismein bahut saare kamre aur ek chauda aangan tha. Pehli subah wo khidki par khadi hokar chhat par baithe kabootaron ko dekhti rahi. Uski maa kehti thi ki haveli ek ladki ke liye bahut badi hai. Wo ye baat zor se nahi kehti thi.',
+            dropCap: true,
+          },
+          {
+            kind: 'paragraph',
+            text:
+              'Pehli shaam wo buzurgon ke saath aangan mein baithi. Ghar mein bahut saare log the jinhe wo nahi jaanti thi. Wo nayi dulhan thi, aur sab usse dekhkar muskurate the.',
+          },
+          {
+            kind: 'paragraph',
+            text:
+              'Khaane ke waqt wo ek aadmi ke paas baithi jo Abhay jaisa dikhta tha. Wo gaon ki baatein karte rahe, mausam ki baatein, thali mein rakhe khaane ki baatein. Use laga ye uska pati hai aur wo khulkar baatein karne lagi.',
+          },
+          {
+            kind: 'paragraph',
+            text:
+              'Tabhi Abhay doosre kamre se aaya. Uske bagal mein baitha aadmi utha aur muskuraaya. "Main Ajay hoon," usne kaha. "Uska jodwa." Vasudha ek chehre se doosre ki taraf dekhti rahi aur dono mein farq nahi bata pati thi.',
+          },
+          {
+            kind: 'paragraph',
+            text:
+              'Dono wahan khade the. Ek jaise chashme, ek jaisi muskan, ek sa chehra, ek sa chalna. Use laga jaise zameen uske paon se khisak gayi ho. Wo dobara dekhti rahi aur phir bhi nahi bata pati thi kaun kaun hai.',
+          },
+          {
+            kind: 'paragraph',
+            text:
+              'Us raat wo pehli baar Abhay ke saath akeli thi. Wo narma aur sharmila tha. Mombatti jalti rahi aur kamra garam tha. Baaki un dono ka apna hai, aur kisi aur ko jaanne ki zaroorat nahi.',
+          },
+          {
+            kind: 'paragraph',
+            text:
+              'Aane wale dino mein usne ghar seekha. Rasoi, chhat, bari wala band kamra. Usne seekha kaun sa darwaaza charcharata hai aur kaun sa band rehta hai. Usne ye bhi dekha ki Ajay darwaaze se usse dekhta rehta tha. Wo nazar nahi pherti thi.',
+          },
+        ],
+      },
+      {
+        title: 'Teej Ki Raat',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text:
+              'Teej ke din Vasudha ne neeli saree pehni. Haathon mein mehndi lagayi, bazu aur chudiyan pehni. Ghar mein gaane goonj rahe the aur mithaiyon ki khushboo thi. Auratein purane gaane gaati thi aur bachche kamron ke beech daudte the.',
+          },
+          {
+            kind: 'paragraph',
+            text:
+              'Raat gehraane par wo akeli chhat par gayi. Hawa thandi thi aur chand nikla hua tha. Neeche haveli so rahi thi.',
+          },
+          {
+            kind: 'image',
+            alt: 'Teej ke din chhat par neeli saree mein ek aurat, do aadmi gaalon ko choomte hue',
+            caption: 'Teej ki raat.',
+          },
+          {
+            kind: 'paragraph',
+            text:
+              'Dono bhai pehle se wahan the. Unhone uske gaalon par chuma. Wo dono ka haath tham liya aur chhoda nahi. Hawa ne uske baal hilaaye aur neeli saree chandni mein chamki. Vasudha ne ek ko nahi chuna. Usne dono ko apna le liya, aur wo raat unki thi.',
+          },
+        ],
+      },
+      {
+        title: 'Sach',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text:
+              'Gaon mein baatein banayi gayi. Kuen par auratein kehti thi ye galat hai. Vasudha ne sab suna aur chup rahi. Usne jawaab nahi diya.',
+          },
+          {
+            kind: 'paragraph',
+            text:
+              'Wo ghar sambhalti rahi. Apni jagah par tiki rahi. Khaana banati, safai karti, buzurgon ke saath baithti. Wo kuen se paani bharti aur jaldi nahi karti thi. Apna jawaab kisi ko nahi diya.',
+          },
+          {
+            kind: 'image',
+            alt: 'Subah ki roshni, bistar par ek aurat aur do aadmi',
+            caption: 'Subah.',
+          },
+          {
+            kind: 'paragraph',
+            text:
+              'Kuch mahino baad Vasudha ne bataya ki wo maa banne wali hai. Baccha haveli ka hoga, aur dono ka.',
+          },
+          {
+            kind: 'image',
+            alt: 'Aangan mein, do aadmiyon ne aurat ke pet par haath rakhe',
+            caption: 'Khabar.',
+          },
+          {
+            kind: 'paragraph',
+            text:
+              'Ab teenon saath rehte hain. Koi raaz nahi, kuch chhupa nahi. Haveli unki hai, aur wo ek doosre ke hain. Baccha aise ghar mein bada hoga jahan teen log usse pyaar karte hain. Padosi bhi ab sawaal nahi poochte.',
+          },
+        ],
+      },
+    ],
+  },
 ];

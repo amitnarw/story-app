@@ -1,7 +1,10 @@
-import { Image, useWindowDimensions, View } from 'react-native';
+import { useWindowDimensions, View } from 'react-native';
+import { Image } from 'expo-image';
 
 import { AppText } from '@/components/ui/app-text';
+import { layout } from '@/theme/scale';
 import { cn } from '@/lib/cn';
+import { useImageSize } from '@/lib/use-image-size';
 import { useTheme } from '@/theme/ThemeProvider';
 
 type ParagraphProps = {
@@ -83,20 +86,23 @@ type ImageBlockProps = {
 
 export function ImageBlock({ source, alt, caption, className }: ImageBlockProps) {
   const { colors } = useTheme();
-  const { width, height } = useWindowDimensions();
-  const isLandscape = width > height;
+  const { size } = useImageSize(source);
+  const { width: screenW } = useWindowDimensions();
+  const ratio = size.ratio > 0 && isFinite(size.ratio) ? size.ratio : 16 / 9;
+  const contentW = Math.min(screenW, layout.maxWidth) - 40;
+  const width = Math.max(0, contentW);
+  const height = width > 0 ? width / ratio : 0;
+
   return (
-    <View className={cn('items-center mb-6', className)}>
-      <Image
-        source={source as any}
-        style={{
-          width: '100%',
-          ...(isLandscape ? { aspectRatio: 16 / 9 } : { height: 320, maxHeight: 320 }),
-          borderRadius: 20,
-          backgroundColor: colors.surface2,
-        }}
-        accessibilityLabel={alt}
-      />
+    <View className={cn('w-full mb-6 items-center', className)}>
+      {width > 0 ? (
+        <Image
+          source={source as any}
+          style={{ width, height, borderRadius: 20, backgroundColor: colors.surface2 }}
+          contentFit="contain"
+          accessibilityLabel={alt}
+        />
+      ) : null}
       {caption && (
         <AppText
           variant="caption"

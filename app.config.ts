@@ -50,6 +50,7 @@ const config: ExpoConfig = {
         iosAppId: 'ca-app-pub-3940256099942544~1444665636',
       },
     ],
+    './plugins/with-disable-native-ad-validator',
     'expo-tracking-transparency',
   ],
   experiments: {

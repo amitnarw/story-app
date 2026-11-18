@@ -1,5 +1,7 @@
 import { Image, StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
+
+import { useImageSize } from '@/lib/use-image-size';
 import { Heart } from 'lucide-react-native';
 
 import { AppText } from '@/components/ui/app-text';
@@ -33,8 +35,11 @@ export const StoryCard = function StoryCard({
   const toggleFavorite = useLibrary((state) => state.toggleFavorite);
   const { t } = useI18n();
 
+  const cardCoverSize = useImageSize(story.cardCover);
+  const cardRatio = cardCoverSize.size.ratio ?? 16 / 9;
+
   const cardStyle: StyleProp<ViewStyle> = {
-    aspectRatio: 16 / 9,
+    aspectRatio: cardRatio,
     borderRadius: 22,
     backgroundColor: colors.surface,
   };
@@ -53,7 +58,7 @@ export const StoryCard = function StoryCard({
         <Image
           source={story.cardCover as any}
           style={StyleSheet.absoluteFill as any}
-          resizeMode="cover"
+          resizeMode="contain"
         />
         {/* Gradient scrim: transparent at top, dark at bottom for text legibility */}
         <View

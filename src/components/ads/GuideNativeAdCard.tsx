@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Image, Platform, View } from 'react-native';
 import {
   NativeAdView,
@@ -30,8 +30,10 @@ export function GuideNativeAdCard({ index }: GuideNativeAdCardProps) {
     adUnitId: adsConsented && Platform.OS !== 'web' ? adUnitId : null,
   });
 
+  const retriesRef = useRef(0);
   useEffect(() => {
-    if ((status === 'no-fill' || status === 'error') && adsConsented) {
+    if ((status === 'no-fill' || status === 'error') && adsConsented && retriesRef.current < 1) {
+      retriesRef.current += 1;
       const timer = setTimeout(() => retry(), 15000);
       return () => clearTimeout(timer);
     }

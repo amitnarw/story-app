@@ -1,5 +1,6 @@
 import { Fragment, useCallback, useEffect, useMemo, useRef } from 'react';
-import { Image, ScrollView, useWindowDimensions, View } from 'react-native';
+import { ScrollView, useWindowDimensions, View } from 'react-native';
+import { Image } from 'expo-image';
 import { router, useLocalSearchParams } from 'expo-router';
 import { ArrowUp, ChevronLeft, Heart } from 'lucide-react-native';
 import Animated, {
@@ -24,6 +25,7 @@ import { useSettings } from '@/store/settings';
 import { layout } from '@/theme/scale';
 import { useTheme } from '@/theme/ThemeProvider';
 import { useI18n } from '@/i18n';
+import { useImageSize } from '@/lib/use-image-size';
 
 function close() {
   if (router.canGoBack()) {
@@ -169,15 +171,12 @@ export default function StoryScreen() {
             <View className="relative overflow-hidden" style={{ borderRadius: 20 }}>
               <ImageStory source={story.cover} alt={story.coverAlt} />
               {story.mature && (
-                <View
-                  className="absolute inset-0 flex-row items-center justify-center"
-                  style={{ backgroundColor: 'rgba(0,0,0,0.35)' }}>
+                <View className="absolute top-3 right-3 px-3 py-1 rounded-full bg-black/60">
                   <AppText
                     variant="caption"
                     tone="accentOn"
                     font="sans-semibold"
-                    className="text-[12px] uppercase tracking-wider px-3 py-1 rounded-full"
-                    style={{ backgroundColor: 'rgba(0,0,0,0.55)' }}>
+                    className="text-[11px] uppercase tracking-wider">
                     18+
                   </AppText>
                 </View>
@@ -218,19 +217,19 @@ export default function StoryScreen() {
                   </View>
                 </Appear>
               )}
-              <Appear delay={chapterIndex * 40 + 20}>
+              <View>
                 {chapter.blocks.map((block, blockIndex) => {
                   const globalIndex = chapterOffsets[chapterIndex] + blockIndex;
                   return (
                     <Fragment key={globalIndex}>
                       <StoryBlock block={block} />
-                      {adsConsented && globalIndex > 0 && globalIndex % 5 === 0 && (
+                      {adsConsented && globalIndex === 5 && (
                         <InlineNativeAdCard index={globalIndex} />
                       )}
                     </Fragment>
                   );
                 })}
-              </Appear>
+              </View>
             </View>
           ))}
 
@@ -257,17 +256,18 @@ export default function StoryScreen() {
 }
 
 function ImageStory({ source, alt }: { source: any; alt: string }) {
-  const { width, height } = useWindowDimensions();
-  const isLandscape = width > height;
-  return (
+  const { size } = useImageSize(source);
+  const { width: screenW } = useWindowDimensions();
+  const ratio = size.ratio > 0 && isFinite(size.ratio) ? size.ratio : 16 / 9;
+  const contentW = Math.min(screenW, layout.maxWidth) - 40;
+  const width = Math.max(0, contentW);
+  const height = width > 0 ? Math.min(width / ratio, 480) : 0;
+  return width > 0 ? (
     <Image
       source={source}
-      style={{
-        width: '100%',
-        ...(isLandscape ? { aspectRatio: 16 / 9 } : { height: 320, maxHeight: 320 }),
-      }}
-      resizeMode="cover"
+      style={{ width, height }}
+      contentFit="contain"
       accessibilityLabel={alt}
     />
-  );
+  ) : null;
 }

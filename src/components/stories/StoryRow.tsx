@@ -1,4 +1,4 @@
-import { Image, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
 import { ChevronRight, Heart } from 'lucide-react-native';
 
@@ -9,6 +9,7 @@ import type { Story } from '@/content';
 import { useI18n } from '@/i18n';
 import { useIsFavorite, useLibrary } from '@/store/library';
 import { useTheme } from '@/theme/ThemeProvider';
+import { useImageSize } from '@/lib/use-image-size';
 
 function openStory(slug: string) {
   router.push({ pathname: '/story/[slug]', params: { slug } });
@@ -28,6 +29,9 @@ export const StoryRow = function StoryRow({
   const saved = useIsFavorite(story.slug);
   const toggleFavorite = useLibrary((state) => state.toggleFavorite);
   const { t } = useI18n();
+
+  const cardCoverSize = useImageSize(story.cardCover);
+  const cardRatio = cardCoverSize.size.ratio ?? 16 / 9;
 
   return (
     <Appear delay={staggerDelay(index)}>
@@ -51,15 +55,15 @@ export const StoryRow = function StoryRow({
         <View
           style={{
             width: 68,
-            height: 92,
+            height: 68 / cardRatio,
             borderRadius: 12,
             overflow: 'hidden',
             backgroundColor: colors.surface2,
           }}>
           <Image
-            source={story.cover}
-            style={{ width: '100%', height: '100%' }}
-            resizeMode="cover"
+            source={story.cardCover as any}
+            style={StyleSheet.absoluteFill as any}
+            resizeMode="contain"
           />
         </View>
 

@@ -1195,4 +1195,117 @@ export const enCopy: StoryCopy[] = [
       },
     ],
   },
+  {
+    slug: 'neeli-saree',
+    title: 'One Beauty and Two Brothers',
+    author: 'The Editors',
+    kicker: 'One wedding, two grooms',
+    summary: 'Vasudha married Abhay. After the wedding she learned that Abhays twin brother Ajay also lives in the same house. Both look alike. Vasudha did not choose one man. She accepted both.',
+    tags: ['romance', 'haveli', 'twins'],
+    coverAlt: 'A woman in a blue saree with two men on both sides',
+    contentNote: 'Adult themes, intimacy',
+    chapters: [
+      {
+        title: 'The Wedding',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text:
+              'Vasudha married Abhay. He was a quiet man. The home was a big haveli, with many rooms and a wide courtyard. On her first morning there she stood at the window and watched the pigeons on the roof. Her mother had said the haveli was too big for one girl. She did not say it out loud.',
+            dropCap: true,
+          },
+          {
+            kind: 'paragraph',
+            text:
+              'The first evening she sat in the courtyard with the elders. The house was full of people she did not know. She was the new bride, and everyone looked at her and smiled.',
+          },
+          {
+            kind: 'paragraph',
+            text:
+              'At dinner she sat next to a man who looked like Abhay. They talked about the village, about the weather, about the food on the plate. She thought it was her husband and spoke freely.',
+          },
+          {
+            kind: 'paragraph',
+            text:
+              'Then Abhay walked in from the other room. The man beside her stood up and smiled. "I am Ajay," he said. "His twin." Vasudha looked from one face to the other and could not tell them apart.',
+          },
+          {
+            kind: 'paragraph',
+            text:
+              'Both stood there together. Same glasses, same smile, same face, same walk. She felt the floor shift under her feet. She looked again and still could not tell who was who.',
+          },
+          {
+            kind: 'paragraph',
+            text:
+              'That night she was alone with Abhay for the first time. He was gentle and shy. The candle burned low and the room was warm. The rest is theirs to keep, and no one else needs to know.',
+          },
+          {
+            kind: 'paragraph',
+            text:
+              'In the days that followed she learned the house. The kitchen, the terrace, the locked room at the end of the hall. She learned which door creaked and which one stayed shut. She also learned that Ajay watched her from the doorway. She did not look away.',
+          },
+        ],
+      },
+      {
+        title: 'Teej Night',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text:
+              'On Teej, Vasudha wore a blue saree. She wore mehndi on her hands and bangles on her arms. The house was full of songs and the smell of sweets. The women sang the old songs and the children ran between the rooms.',
+          },
+          {
+            kind: 'paragraph',
+            text:
+              'Late at night she went up to the terrace alone. The air was cool and the moon was out. The haveli slept below her.',
+          },
+          {
+            kind: 'image',
+            alt: 'On the haveli terrace, a woman in a blue saree, two men kissing her cheeks',
+            caption: 'Teej night.',
+          },
+          {
+            kind: 'paragraph',
+            text:
+              'Both brothers were already there. They kissed her cheeks. She took both their hands and did not let go. The wind moved her hair and the blue saree glowed in the moonlight. Vasudha did not choose one man. She accepted both, and the night was theirs.',
+          },
+        ],
+      },
+      {
+        title: 'The Truth',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text:
+              'The village talked. Women at the well said it was wrong. Vasudha heard all of it and stayed quiet. She did not answer back.',
+          },
+          {
+            kind: 'paragraph',
+            text:
+              'She kept the house. She kept her place. She cooked, she cleaned, she sat with the elders. She carried water from the well and did not hurry. She did not explain herself to anyone.',
+          },
+          {
+            kind: 'image',
+            alt: 'Morning light, a woman in bed with two men',
+            caption: 'Morning.',
+          },
+          {
+            kind: 'paragraph',
+            text:
+              'A few months later she told them she was going to be a mother. The child would belong to the haveli, and to both of them.',
+          },
+          {
+            kind: 'image',
+            alt: 'In the courtyard, two men place their hands on the belly',
+            caption: 'The news.',
+          },
+          {
+            kind: 'paragraph',
+            text:
+              'Now the three live together. No secret, nothing hidden. The haveli is theirs, and they are each other\'s. The child will grow up in a house where three people love it. The neighbours have stopped asking.',
+          },
+        ],
+      },
+    ],
+  },
 ];

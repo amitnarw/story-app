@@ -39,3 +39,4 @@ Android Bundled 9520ms node_modules\expo-router\entry.js (4616 modules)
 Android Bundled 2950ms node_modules\expo-router\entry.js (1 module)
  LOG  [ads] admob initialized (testMode=true)
  LOG  [ads] provider=admob testMode=true
+ WARN  [Reanimated] Dependencies should only be used on the web and are always ignored on native. Check DevTools to see the offending code.
