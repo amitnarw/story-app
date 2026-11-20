@@ -1,14 +1,13 @@
 import { router } from 'expo-router';
 import { Heart, Search, Sun, Moon } from 'lucide-react-native';
 import { useMemo, useState } from 'react';
-import { Animated, FlatList, ScrollView, View } from 'react-native';
+import { Animated, FlatList, View } from 'react-native';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 
 import { GuideNativeAdCard } from '@/components/ads/GuideNativeAdCard';
 import { StoryCard } from '@/components/stories/StoryCard';
 import { AppText } from '@/components/ui/app-text';
 import { IconButton } from '@/components/ui/icon-button';
-import { PressableScale } from '@/components/ui/pressable-scale';
 import { useStories, type Story } from '@/content';
 import { useI18n } from '@/i18n';
 import { useSettings } from '@/store/settings';
@@ -18,28 +17,19 @@ type ListItem =
   | { kind: 'story'; story: Story }
   | { kind: 'native-ad'; id: string };
 
-const FILTERS: { value: string; label: string }[] = [
-  { value: 'all', label: 'All' },
-  { value: 'romance', label: 'Romance' },
-  { value: 'mystery', label: 'Mystery' },
-  { value: 'drama', label: 'Drama' },
-  { value: 'fantasy', label: 'Fantasy' },
-];
-
 /**
- * The Home page: header with actions, filter chips, and the story feed with
- * native ads interleaved. Rendered as a swipeable pager page — the host owns
- * the screen chrome (safe areas, background).
+ * The Home page: header with actions and the story feed with native ads
+ * interleaved. Rendered as a swipeable pager page — the host owns the screen
+ * chrome (safe areas, background).
  */
 export function HomeScreen() {
-  const { colors, scheme } = useTheme();
+  const { scheme } = useTheme();
   const setTheme = useSettings((state) => state.setTheme);
   const adsConsented = useSettings((state) => state.adsConsented);
   const matureOn = useSettings((state) => state.mature);
   const { t } = useI18n();
   const allStories = useStories();
   const [scrollY] = useState(() => new Animated.Value(0));
-  const [filter, setFilter] = useState<'all' | 'romance' | 'mystery' | 'drama' | 'fantasy' | 'mature'>('all');
 
   const topFadeOpacity = useMemo(
     () =>
@@ -59,28 +49,21 @@ export function HomeScreen() {
     [scrollY],
   );
 
-  const filteredStories = useMemo<Story[]>(() => {
-    if (filter === 'all') {
-      return matureOn ? allStories : allStories.filter((s) => !s.mature);
-    }
-    if (filter === 'mature') {
-      return allStories.filter((s) => s.mature);
-    }
-    return allStories.filter((s) => s.genre === filter && (matureOn || !s.mature));
-  }, [allStories, filter, matureOn]);
-
-  const rest = useMemo(() => filteredStories.slice(1), [filteredStories]);
+  const filteredStories = useMemo<Story[]>(
+    () => (matureOn ? allStories : allStories.filter((s) => !s.mature)),
+    [allStories, matureOn],
+  );
 
   const listItems = useMemo<ListItem[]>(() => {
     const items: ListItem[] = [];
-    rest.forEach((story, idx) => {
+    filteredStories.forEach((story, idx) => {
       items.push({ kind: 'story', story });
-      if (adsConsented && (idx + 1) % 6 === 0) {
+      if (adsConsented && (idx + 1) % 4 === 0) {
         items.push({ kind: 'native-ad', id: `native-ad-${idx}` });
       }
     });
     return items;
-  }, [rest, adsConsented]);
+  }, [filteredStories, adsConsented]);
 
   const header = (
     <View className="px-5 pb-2 pt-2">
@@ -133,47 +116,6 @@ export function HomeScreen() {
   return (
     <View className="flex-1">
       {header}
-
-      {/* Filter chips */}
-      <View className="mt-4 mb-2">
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
-          nestedScrollEnabled
-          style={{ height: 44 }}
-          contentContainerStyle={{ paddingHorizontal: 20, alignItems: 'center', gap: 8 }}>
-          {FILTERS.map((f) => {
-            const active = f.value === filter;
-            return (
-              <PressableScale
-                key={f.value}
-                accessibilityRole="button"
-                accessibilityLabel={f.label}
-                scaleTo={0.96}
-                onPress={() => setFilter(f.value as any)}
-                className="flex-row items-center gap-1.5 rounded-full"
-                style={{
-                  backgroundColor: active ? colors.clay : colors.surface,
-                  borderWidth: 1,
-                  borderColor: active ? colors.clay : colors.line,
-                  paddingHorizontal: 12,
-                  paddingVertical: 6,
-                }}>
-                <AppText
-                  variant="caption"
-                  font="sans-semibold"
-                  className="text-[12px]"
-                  style={{
-                    color: active ? colors.accentOn : colors.inkSoft,
-                  }}>
-                  {f.label}
-                </AppText>
-              </PressableScale>
-            );
-          })}
-        </ScrollView>
-      </View>
 
       <View className="flex-1 relative">
         <FlatList

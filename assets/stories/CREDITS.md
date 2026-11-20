@@ -1,32 +1,30 @@
 # Image Credits
 
-All story cover and in-story images in `assets/stories/` are original SVG
-artwork created for Loom. No third-party photography or illustration is used.
+All story cover and in-story images in `assets/stories/` ship with the
+story packs used to build Loom. Each story folder holds its own cover,
+in-story artwork, and narration.
 
 ## Story image inventory
 
-| Story | Cover | In-story images |
-|---|---|---|
-| The Lamplighter's Daughter | cover.svg | img-1.svg, img-2.svg |
-| A Room with Yellow Curtains | cover.svg | img-1.svg, img-2.svg |
-| The Last Train to Somewhere | cover.svg | img-1.svg, img-2.svg |
-| What the Orchard Kept | cover.svg | img-1.svg, img-2.svg |
-| Small Hours | cover.svg | img-1.svg, img-2.svg |
-| The Cartographer of Rain | cover.svg | img-1.svg, img-2.svg |
+| Story | Cover | In-story images | Audio |
+|---|---|---|---|
+| Neeli Saree | card-cover.jpg | img-1.jpg, img-2.jpg, img-3.jpg | audio-hi.mp3 |
+| Kirayedar Ki Jhijhak | card-cover.jpg | img-1.jpg, img-2.jpg, img-3.jpg | audio-hi.mp3 |
+| Bas Itni Si Jagah | card-cover.jpg | img-1.jpg, img-2.jpg, img-3.jpg | audio-hi.mp3 |
+| Holi Ka Ek Rang | card-cover.jpg | img-1.jpg, img-2.jpg, img-3.jpg | audio-hi.mp3 |
+| Muskaan Ka Raaz | card-cover.jpg | img-1.jpg, img-2.jpg, img-3.jpg | audio-hi.mp3 |
+
+The remaining 50 stories imported from the supplied pack use the same layout —
+`card-cover.jpg` (the titled 16:9 thumbnail), `img-1.jpg`…`img-3.jpg`, and
+`audio-hi.mp3` — and are enumerated in `src/content/manifest.ts`. Every image
+was re-encoded to stay at or under 200 KB.
 
 ## Build pipeline
 
-The SVG files are the design source of truth, but React Native's `<Image>`
-cannot decode SVG on Android. Rasterized PNGs live alongside the SVGs and are
-what the app loads at runtime (`src/content/stories.ts` requires the `.png`
-files). Regenerate them after editing any SVG with:
-
-```
-node scripts/build-story-images.mjs
-```
-
-The script renders each SVG via `@resvg/resvg-js` at its intrinsic size,
-capping the long edge at 1200px. Existing PNGs are skipped unless deleted.
+Assets are bundled directly through `src/content/manifest.ts`, which
+`require()`s each story's cover, in-story images, and audio. No build step is
+needed — dropping files into a story folder and adding the matching
+`require()` lines is enough.
 
 ## Brand assets
 

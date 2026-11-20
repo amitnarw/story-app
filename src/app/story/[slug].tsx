@@ -1,23 +1,23 @@
 import { Fragment, useCallback, useEffect, useMemo, useRef } from 'react';
 import { ScrollView, useWindowDimensions, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 import { router, useLocalSearchParams } from 'expo-router';
 import { ArrowUp, ChevronLeft, Heart } from 'lucide-react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
-  withTiming,
 } from 'react-native-reanimated';
 
 import { AdSlot } from '@/components/ads/AdSlot';
 import { InlineNativeAdCard } from '@/components/ads/InlineNativeAdCard';
+import { StoryAudioPlayer } from '@/components/stories/StoryAudioPlayer';
 import { StoryBlock } from '@/components/stories/StoryBlock';
 import { AppText } from '@/components/ui/app-text';
 import { Button } from '@/components/ui/button';
 import { IconButton } from '@/components/ui/icon-button';
 import { PressableScale } from '@/components/ui/pressable-scale';
 import { Appear } from '@/components/ui/reveal';
-import { Rule } from '@/components/ui/rule';
 import { Screen } from '@/components/ui/screen';
 import { useStory } from '@/content';
 import { useIsFavorite, useLibrary } from '@/store/library';
@@ -70,6 +70,7 @@ export default function StoryScreen() {
   const toggleFavorite = useLibrary((state) => state.toggleFavorite);
   const setReadingProgress = useLibrary((state) => state.setReadingProgress);
   const { colors } = useTheme();
+  const insets = useSafeAreaInsets();
 
   // Running global block index across all chapters (resets per story).
   const chapterBlockCounts = useMemo(
@@ -82,6 +83,20 @@ export default function StoryScreen() {
       acc.push(acc.length ? acc[acc.length - 1] + n : 0);
       return acc;
     }, [] as number[]);
+  }, [chapterBlockCounts]);
+
+  // Native ads are spread through the story at roughly the 1/3 and 2/3 marks,
+  // so every story shows two even when it is short. `total - 1` keeps the last
+  // block ad-free.
+  const adAfterIndexes = useMemo(() => {
+    const total = chapterBlockCounts.reduce((sum, count) => sum + count, 0);
+    if (total < 2) return new Set<number>();
+    const slots = Math.min(2, total - 1);
+    return new Set(
+      Array.from({ length: slots }, (_, slot) =>
+        Math.floor(((slot + 1) * total) / (slots + 1)),
+      ),
+    );
   }, [chapterBlockCounts]);
 
   const onScroll = useCallback(
@@ -136,26 +151,42 @@ export default function StoryScreen() {
       edges={['top', 'bottom']}
       gradient
       style={{ width: '100%', maxWidth: layout.maxWidth, alignSelf: 'center' }}>
-      {/* Sticky Top Header */}
-      <View className="px-5 pt-2 pb-2">
-        <View className="flex-row items-center justify-between">
-          <IconButton icon={ChevronLeft} label={t('common.back')} onPress={close} />
-          <View className="flex-row items-center gap-3">
-            <AppText variant="caption" tone="muted">
-              {t('story.minRead', { minutes: story.minutes })}
-            </AppText>
-            <IconButton
-              icon={Heart}
-              label={saved ? t('story.removeSaved') : t('story.saveStory')}
-              selected={saved}
-              onPress={() => toggleFavorite(story.slug)}
-            />
+      {/* Sticky Top Header — the tinted fill doubles as the scroll progress bar */}
+      <View
+        className="relative overflow-hidden"
+        style={{ marginTop: -insets.top, paddingTop: insets.top }}>
+        <Animated.View
+          pointerEvents="none"
+          style={[
+            {
+              position: 'absolute',
+              left: 0,
+              top: 0,
+              bottom: 0,
+              backgroundColor: colors.surface2,
+            },
+            animatedProgressStyle,
+          ]}
+        />
+        <View className="px-5 pt-2 pb-2">
+          <View className="flex-row items-center justify-between">
+            <IconButton icon={ChevronLeft} label={t('common.back')} onPress={close} />
+            <View className="flex-row items-center gap-3">
+              <AppText variant="caption" tone="muted">
+                {t('story.minRead', { minutes: story.minutes })}
+              </AppText>
+              <IconButton
+                icon={Heart}
+                label={saved ? t('story.removeSaved') : t('story.saveStory')}
+                selected={saved}
+                onPress={() => toggleFavorite(story.slug)}
+              />
+            </View>
           </View>
         </View>
-        <View className="mt-2 h-0.5 w-full overflow-hidden rounded-full bg-line">
-          <Animated.View style={[{ height: 2 }, animatedProgressStyle]} className="bg-clay" />
-        </View>
       </View>
+
+      {story.audio ? <StoryAudioPlayer source={story.audio.source} /> : null}
 
       <ScrollView
         ref={scrollRef}
@@ -199,22 +230,14 @@ export default function StoryScreen() {
             </AppText>
           </Appear>
 
-          <View className="mt-10">
-            <Rule />
-          </View>
-
           {/* Chapters */}
           {story.chapters.map((chapter, chapterIndex) => (
             <View key={chapterIndex}>
               {chapter.title && (
-                <Appear delay={chapterIndex * 40} className="mt-10 mb-4">
-                  <View className="flex-row items-center gap-2">
-                    <View className="h-px w-8 bg-line" />
-                    <AppText variant="headline" className="text-[20px]">
-                      {chapter.title}
-                    </AppText>
-                    <View className="h-px flex-1 bg-line" />
-                  </View>
+                <Appear delay={chapterIndex * 40} className={chapterIndex === 0 ? 'mt-6 mb-4' : 'mt-10 mb-4'}>
+                  <AppText variant="headline" className="text-[20px]">
+                    {chapter.title}
+                  </AppText>
                 </Appear>
               )}
               <View>
@@ -223,7 +246,7 @@ export default function StoryScreen() {
                   return (
                     <Fragment key={globalIndex}>
                       <StoryBlock block={block} />
-                      {adsConsented && globalIndex === 5 && (
+                      {adsConsented && adAfterIndexes.has(globalIndex) && (
                         <InlineNativeAdCard index={globalIndex} />
                       )}
                     </Fragment>

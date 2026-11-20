@@ -52,6 +52,17 @@ const config: ExpoConfig = {
     ],
     './plugins/with-disable-native-ad-validator',
     'expo-tracking-transparency',
+    [
+      'expo-audio',
+      {
+        // Playback only: never ask for the microphone.
+        microphonePermission: false,
+        recordAudioAndroid: false,
+        enableBackgroundRecording: false,
+        // In-app listening only; no foreground service or notification.
+        enableBackgroundPlayback: false,
+      },
+    ],
   ],
   experiments: {
     typedRoutes: true,

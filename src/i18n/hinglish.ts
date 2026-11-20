@@ -99,6 +99,17 @@ export const hinglish: Messages = {
     rowA11y: '{title}, by {author}',
     rowMeta: 'by {author} · {minutes} min read',
   },
+  audio: {
+    listen: 'Suno',
+    play: 'Audio chalao',
+    pause: 'Audio roko',
+    replay: 'Phir se suno',
+    hindi: 'Hindi audio',
+    skipBack: '15 second peeche',
+    skipAhead: '15 second aage',
+    seek: 'Audio mein aage-peeche jaayein',
+    position: '{current} / {duration}',
+  },
   privacy: {
     title: 'Privacy policy',
     intro:

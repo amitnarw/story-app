@@ -189,7 +189,7 @@ export default function SearchScreen() {
       </ScrollView>
 
       <View className="items-center pb-2 pt-1 bg-transparent">
-        <AdSlot />
+        <AdSlot variant="dock" />
       </View>
     </Screen>
   );

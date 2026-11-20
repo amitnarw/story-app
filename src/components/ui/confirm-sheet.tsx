@@ -1,8 +1,14 @@
+import { BlurView } from 'expo-blur';
 import { View } from 'react-native';
+import Animated, {
+  useSharedValue,
+  withTiming,
+  withSpring,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
 
 import { PressableScale } from '@/components/ui/pressable-scale';
 import { AppText } from '@/components/ui/app-text';
-import { cn } from '@/lib/cn';
 import { useTheme } from '@/theme/ThemeProvider';
 
 type ConfirmSheetProps = {
@@ -24,29 +30,85 @@ export function ConfirmSheet({
   onCancel,
   onConfirm,
 }: ConfirmSheetProps) {
-  const { colors } = useTheme();
+  const { colors, scheme } = useTheme();
+  const isDark = scheme === 'dark';
 
-  if (!visible) return null;
+  const opacity = useSharedValue(visible ? 1 : 0);
+  const scale = useSharedValue(visible ? 1 : 0.8);
+
+  if (visible) {
+    opacity.value = withTiming(1, { duration: 180 });
+    scale.value = withSpring(1, { damping: 18, stiffness: 140 });
+  } else {
+    opacity.value = withTiming(0, { duration: 180 });
+    scale.value = withSpring(0.8, { damping: 18, stiffness: 140 });
+  }
+
+  const containerStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+    transform: [{ scale: scale.value }],
+  }));
+
+  const cardStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
 
   return (
-    <View
-      className="absolute inset-0 items-center justify-center z-50"
-      style={{ backgroundColor: 'rgba(0,0,0,0.45)' }}
+    <Animated.View
+      style={[
+        {
+          position: 'absolute',
+          inset: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 100,
+        },
+        containerStyle,
+      ]}
       pointerEvents="box-none"
     >
+      {/* Blurred background, same style as bottom nav bar */}
+      <BlurView
+        tint={isDark ? 'dark' : 'light'}
+        intensity={70}
+        blurMethod="dimezisBlurView"
+        style={{ position: 'absolute', inset: 0 }}
+        pointerEvents="none"
+      />
+      {/* Dim overlay */}
+      <View
+        style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundColor: isDark ? 'rgba(0,0,0,0.45)' : 'rgba(0,0,0,0.3)',
+        }}
+        pointerEvents="none"
+      />
+      {/* Backdrop tap to cancel */}
       <PressableScale
         accessibilityRole="button"
         accessibilityLabel="Cancel"
         scaleTo={0.96}
         haptic="select"
         onPress={onCancel}
-        className="absolute inset-0 z-1"
+        style={{ position: 'absolute', inset: 0 }}
       >
         {' '}
       </PressableScale>
-      <View
-        className="w-11/12 max-w-[340px] rounded-sheet overflow-hidden"
-        style={{ backgroundColor: colors.surface }}
+
+      {/* Modal card */}
+      <Animated.View
+        style={[
+          {
+            width: '90%',
+            maxWidth: 340,
+            borderRadius: 16,
+            backgroundColor: colors.surface,
+            overflow: 'hidden',
+            alignSelf: 'center',
+          },
+          cardStyle,
+        ]}
         pointerEvents="auto"
       >
         <View className="px-6 pt-6 pb-1">
@@ -82,7 +144,7 @@ export function ConfirmSheet({
             </AppText>
           </PressableScale>
         </View>
-      </View>
-    </View>
+      </Animated.View>
+    </Animated.View>
   );
 }

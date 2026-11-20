@@ -1,4 +1,5 @@
-import { Image, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { ChevronRight, Heart } from 'lucide-react-native';
 
@@ -63,7 +64,9 @@ export const StoryRow = function StoryRow({
           <Image
             source={story.cardCover as any}
             style={StyleSheet.absoluteFill as any}
-            resizeMode="contain"
+            contentFit="cover"
+            transition={120}
+            alt={story.title}
           />
         </View>
 

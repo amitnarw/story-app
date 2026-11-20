@@ -1,5 +1,6 @@
-import { Image, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
+import { Image } from 'expo-image';
 
 import { useImageSize } from '@/lib/use-image-size';
 import { Heart } from 'lucide-react-native';
@@ -13,15 +14,11 @@ import { useIsFavorite, useLibrary } from '@/store/library';
 import { useTheme } from '@/theme/ThemeProvider';
 import type { StyleProp, ViewStyle } from 'react-native';
 
-function openStory(slug: string) {
-  router.push({ pathname: '/story/[slug]', params: { slug } });
-}
-
 const heartColor = '#FFFFFF';
 
 /**
  * Home-page story card: landscape cover, title over a gradient scrim,
- * author · reading time meta, optional 18+ badge, and an icon-only heart.
+ * and an icon-only heart.
  */
 export const StoryCard = function StoryCard({
   story,
@@ -52,13 +49,15 @@ export const StoryCard = function StoryCard({
         accessibilityHint={t('story.byAuthor', { author: story.author })}
         scaleTo={0.965}
         haptic="none"
-        onPress={() => openStory(story.slug)}
+        onPress={() => router.push({ pathname: '/story/[slug]', params: { slug: story.slug } })}
         className="w-full overflow-hidden relative"
         style={cardStyle}>
         <Image
           source={story.cardCover as any}
           style={StyleSheet.absoluteFill as any}
-          resizeMode="contain"
+          contentFit="contain"
+          transition={120}
+          alt={story.title}
         />
         {/* Gradient scrim: transparent at top, dark at bottom for text legibility */}
         <View
@@ -68,47 +67,20 @@ export const StoryCard = function StoryCard({
               rgba(0,0,0,0.72),
               rgba(0,0,0,0.42) 35%,
               rgba(0,0,0,0.12) 65%,
-              transparent)}`,
+              transparent)`,
           }}
         />
         <View
           pointerEvents="none"
-          className="absolute inset-x-0 bottom-0 px-6 pb-6 items-start justify-end"
+          className="absolute inset-x-0 bottom-0 px-6 pb-2 items-start justify-end"
           style={{ paddingTop: 60 }}>
-          <View className="flex-row items-center gap-2 mb-2">
-            {story.mature && (
-              <View
-                className="flex-row items-center gap-1 rounded-full bg-accent px-2 py-0.5">
-                <AppText
-                  variant="caption"
-                  tone="accentOn"
-                  font="sans-semibold"
-                  className="text-[10px] uppercase leading-none">
-                  18+
-                </AppText>
-              </View>
-            )}
-            <AppText
-              variant="caption"
-              tone="muted"
-              className="text-[11px] uppercase tracking-wider"
-              style={{ color: 'rgba(255,255,255,0.7)' }}>
-              {story.genre}
-            </AppText>
-          </View>
           <AppText
             variant="headline"
             numberOfLines={2}
             tone="ink"
             style={{ color: '#FFFFFF' }}
-            className="text-[20px] leading-tight mb-2">
+            className="w-full text-[20px] leading-tight mb-2">
             {story.title}
-          </AppText>
-          <AppText
-            variant="caption"
-            className="text-[13px]"
-            style={{ color: 'rgba(255,255,255,0.85)' }}>
-            {t('story.rowMeta', { author: story.author, minutes: story.minutes })}
           </AppText>
         </View>
 

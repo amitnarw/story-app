@@ -5,10 +5,11 @@ import {
   CardStyleInterpolators,
   Stack,
 } from 'expo-router/js-stack';
+import { usePathname } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
-import { Easing, Platform } from 'react-native';
+import { BackHandler, Easing, Platform } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import * as TrackingTransparency from 'expo-tracking-transparency';
@@ -20,6 +21,7 @@ import { fontAssets } from '@/theme/fonts';
 import { ThemeProvider, useTheme } from '@/theme/ThemeProvider';
 import { InterstitialHost } from '@/components/ads/InterstitialHost';
 import { initAds } from '@/ads/adManager';
+import { ConfirmSheet } from '@/components/ui/confirm-sheet';
 
 SplashScreen.preventAutoHideAsync();
 SplashScreen.setOptions({ duration: 220, fade: true });
@@ -108,14 +110,39 @@ export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts(fontAssets);
   const settingsHydrated = useSettings((state) => state.hydrated);
   const libraryHydrated = useLibrary((state) => state.hydrated);
+  const [forceReady, setForceReady] = useState(false);
+  const [trackingRequested, setTrackingRequested] = useState(false);
+  const [exitConfirm, setExitConfirm] = useState(false);
+  const [isExiting, setIsExiting] = useState(false);
+  const pathname = usePathname();
   const ready =
     (fontsLoaded || Boolean(fontError)) && settingsHydrated && libraryHydrated;
-  const [trackingRequested, setTrackingRequested] = useState(false);
+
+  // Safety net: if hydration never completes (e.g. storage unavailable in a
+  // release build), still proceed so the user isn't stuck on a blank screen.
+  useEffect(() => {
+    const timer = setTimeout(() => setForceReady(true), 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const show = ready || forceReady;
 
   useEffect(() => {
-    if (!ready) return;
+    if (!show) return;
     SplashScreen.hide();
-  }, [ready]);
+  }, [show]);
+
+  // Exit confirmation when the user presses back on the home screen.
+  useEffect(() => {
+    const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
+      if (pathname === '/(tabs)/home' || pathname === '/home') {
+        setExitConfirm(true);
+        return true;
+      }
+      return false;
+    });
+    return () => subscription.remove();
+  }, [pathname]);
 
   useEffect(() => {
     if (!trackingRequested && Platform.OS === 'ios' && ready) {
@@ -130,7 +157,7 @@ export default function RootLayout() {
     }
   }, [ready, trackingRequested]);
 
-  if (!ready) {
+  if (!show) {
     return null;
   }
 
@@ -139,6 +166,24 @@ export default function RootLayout() {
       <SafeAreaProvider>
         <ThemeProvider>
           <RootNavigator />
+          {(exitConfirm || isExiting) && (
+            <ConfirmSheet
+              visible={exitConfirm}
+              title="Exit Loom?"
+              message="Do you want to close the app?"
+              confirmLabel="Yes"
+              cancelLabel="No"
+              onCancel={() => setExitConfirm(false)}
+              onConfirm={() => {
+                setExitConfirm(false);
+                setIsExiting(true);
+                setTimeout(() => {
+                  setIsExiting(false);
+                  BackHandler.exitApp();
+                }, 220);
+              }}
+            />
+          )}
         </ThemeProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>

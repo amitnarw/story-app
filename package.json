@@ -8,6 +8,7 @@
     "@expo-google-fonts/noto-sans-devanagari": "^0.4.2",
     "@expo-google-fonts/noto-serif-devanagari": "^0.4.1",
     "expo": "~58.0.24",
+    "expo-audio": "~58.0.12",
     "expo-blur": "~58.0.6",
     "expo-constants": "~58.0.16",
     "expo-dev-client": "~58.0.19",

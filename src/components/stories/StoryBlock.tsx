@@ -80,11 +80,10 @@ export function HeadingBlock({ text, className }: HeadingProps) {
 type ImageBlockProps = {
   source: any;
   alt: string;
-  caption?: string;
   className?: string;
 };
 
-export function ImageBlock({ source, alt, caption, className }: ImageBlockProps) {
+export function ImageBlock({ source, alt, className }: ImageBlockProps) {
   const { colors } = useTheme();
   const { size } = useImageSize(source);
   const { width: screenW } = useWindowDimensions();
@@ -103,15 +102,6 @@ export function ImageBlock({ source, alt, caption, className }: ImageBlockProps)
           accessibilityLabel={alt}
         />
       ) : null}
-      {caption && (
-        <AppText
-          variant="caption"
-          tone="muted"
-          className="mt-3 text-[12px] text-center max-w-[560px]"
-          numberOfLines={2}>
-          {caption}
-        </AppText>
-      )}
     </View>
   );
 }
@@ -155,7 +145,7 @@ export function StoryBlock({ block }: { block: any }) {
     return <HeadingBlock text={block.text} />;
   }
   if (block.kind === 'image') {
-    return <ImageBlock source={block.source} alt={block.alt} caption={block.caption} />;
+    return <ImageBlock source={block.source} alt={block.alt} />;
   }
   if (block.kind === 'quote') {
     return <QuoteBlock text={block.text} cite={block.cite} />;

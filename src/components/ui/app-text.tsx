@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import type { TextProps } from 'react-native';
 import { Text } from 'react-native';
 
@@ -93,6 +94,26 @@ const variantFont: Record<TextVariant, FontRole> = {
   button: 'sans-semibold',
 };
 
+/**
+ * Devanagari's serif face has a taller ascent/descent (1.55em) than the Latin
+ * display sizes assume, so a tight CSS line-height clips the top of matras and
+ * the shirorekha. These floors only apply to the Hindi display cuts.
+ */
+const hindiLineHeight: Partial<Record<TextVariant, number>> = {
+  display: 63,
+  title: 47,
+  headline: 33,
+  quote: 33,
+};
+
+const DEVANAGARI = /[\u0900-\u097F]/;
+
+function hasDevanagari(node: ReactNode): boolean {
+  if (typeof node === 'string') return DEVANAGARI.test(node);
+  if (Array.isArray(node)) return node.some(hasDevanagari);
+  return false;
+}
+
 export type AppTextProps = TextProps & {
   variant?: TextVariant;
   tone?: TextTone;
@@ -113,11 +134,13 @@ export function AppText({
   const language = useSettings((state) => state.language);
   const families = language === 'hi' ? devanagariFonts : latinFonts;
   const fontFamily = families[font ?? variantFont[variant]];
+  const hindiLeading =
+    language === 'hi' && hasDevanagari(children) ? hindiLineHeight[variant] : undefined;
 
   return (
     <Text
       className={cn(variantClass[variant], toneClass[tone ?? defaultTone[variant]], className)}
-      style={[{ fontFamily }, style]}
+      style={[{ fontFamily }, hindiLeading ? { lineHeight: hindiLeading } : null, style]}
       maxFontSizeMultiplier={maxFontSizeMultiplier ?? maxScale[variant] ?? 1.35}
       {...rest}>
       {children}

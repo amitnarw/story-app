@@ -65,7 +65,7 @@ export function SettingsScreen() {
         <View className="px-5">
           <Appear>
             <View className="pb-1 pt-2">
-              <AppText variant="display" className="pb-1.5" style={{ lineHeight: 46 }}>
+              <AppText variant="display" className="pb-1.5">
                 {t('settings.title')}
               </AppText>
               <AppText variant="subtitle" tone="muted" className="mt-1 text-[15px]">

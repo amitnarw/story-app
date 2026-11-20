@@ -98,6 +98,17 @@ export const hi: Messages = {
     rowA11y: '{title}, {author} द्वारा',
     rowMeta: '{author} · {minutes} मिनट का पाठ',
   },
+  audio: {
+    listen: 'सुनें',
+    play: 'ऑडियो चलाएँ',
+    pause: 'ऑडियो रोकें',
+    replay: 'फिर से सुनें',
+    hindi: 'हिंदी ऑडियो',
+    skipBack: '15 सेकंड पीछे',
+    skipAhead: '15 सेकंड आगे',
+    seek: 'ऑडियो में आगे-पीछे जाएँ',
+    position: '{current} / {duration}',
+  },
   privacy: {
     title: 'प्राइवेसी नीति',
     intro:

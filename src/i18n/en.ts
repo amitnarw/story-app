@@ -95,6 +95,17 @@ export const en = {
     rowA11y: '{title}, by {author}',
     rowMeta: 'by {author} · {minutes} min read',
   },
+  audio: {
+    listen: 'Listen',
+    play: 'Play narration',
+    pause: 'Pause narration',
+    replay: 'Play again',
+    hindi: 'Hindi audio',
+    skipBack: 'Back 15 seconds',
+    skipAhead: 'Forward 15 seconds',
+    seek: 'Seek narration',
+    position: '{current} of {duration}',
+  },
   privacy: {
     title: 'Privacy policy',
     intro:

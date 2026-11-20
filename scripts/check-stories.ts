@@ -43,24 +43,65 @@ function manifestSlugs(): string[] {
   return slugs;
 }
 
+const IMAGE_EXTENSIONS = ['png', 'jpg', 'jpeg', 'webp'];
+
+/** First `basename.<ext>` that exists on disk, in a stable extension order. */
+function findImage(dir: string, basename: string): string | null {
+  for (const extension of IMAGE_EXTENSIONS) {
+    const file = path.join(dir, `${basename}.${extension}`);
+    if (fs.existsSync(file)) return file;
+  }
+  return null;
+}
+
 function imagesOnDisk(slug: string): number {
   const dir = path.join(ASSETS_DIR, slug);
   if (!fs.existsSync(dir)) {
     fail(`[assets] missing assets dir for "${slug}": ${dir}`);
     return 0;
   }
-  if (!fs.existsSync(path.join(dir, 'cover.png'))) {
-    fail(`[assets] missing cover.png for "${slug}"`);
+  if (!findImage(dir, 'cover') && !findImage(dir, 'card-cover')) {
+    fail(`[assets] missing cover for "${slug}" (expected one of ${IMAGE_EXTENSIONS.join(', ')})`);
   }
   let count = 0;
-  while (fs.existsSync(path.join(dir, `img-${count + 1}.png`))) {
+  while (findImage(dir, `img-${count + 1}`)) {
     count += 1;
   }
   return count;
 }
 
+/**
+ * Audio clips declared in the manifest. They are read from the source text
+ * because the manifest `require()`s assets that only resolve in the app bundle.
+ */
+function audioFiles(): { slug: string; file: string }[] {
+  const text = fs.readFileSync(MANIFEST_FILE, 'utf8');
+  // Each manifest entry starts with its slug, so a split keeps every audio
+  // declaration attached to the story that owns it.
+  const entries = text.split(/(?=\n\s*slug: ')/).slice(1);
+  const found: { slug: string; file: string }[] = [];
+  for (const entry of entries) {
+    const slug = entry.match(/slug: '([^']+)'/)?.[1];
+    const source = entry.match(/audio:\s*\{[\s\S]*?source:\s*require\('([^']+)'\)/)?.[1];
+    if (slug && source) {
+      found.push({
+        slug,
+        file: path.resolve(path.dirname(MANIFEST_FILE), source),
+      });
+    }
+  }
+  return found;
+}
+
 const slugs = manifestSlugs();
 const imagesAvailable = new Map(slugs.map((slug) => [slug, imagesOnDisk(slug)]));
+
+// 1b. Every declared audio clip must exist on disk.
+for (const audio of audioFiles()) {
+  if (!fs.existsSync(audio.file)) {
+    fail(`[assets] missing audio file for "${audio.slug}": ${audio.file}`);
+  }
+}
 
 // 2. Every language copy must mirror the manifest and each other exactly:
 // same slugs in the same order, same chapter counts, same block kinds and
