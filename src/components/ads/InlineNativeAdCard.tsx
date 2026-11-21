@@ -30,8 +30,6 @@ export function InlineNativeAdCard({ index }: InlineNativeAdCardProps) {
     adUnitId: adsConsented && Platform.OS !== 'web' ? adUnitId : null,
   });
 
-  // Cap retries so a failing ad unit doesn't keep re-requesting (and re-firing
-  // the AdMob native-ad validator notification) forever.
   const retriesRef = useRef(0);
   useEffect(() => {
     if ((status === 'no-fill' || status === 'error') && adsConsented && retriesRef.current < 1) {

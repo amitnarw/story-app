@@ -17,8 +17,9 @@ import type { StyleProp, ViewStyle } from 'react-native';
 const heartColor = '#FFFFFF';
 
 /**
- * Home-page story card: landscape cover, title over a gradient scrim,
- * and an icon-only heart.
+ * Home-page story card: landscape cover image, heart on the cover, and the
+ * title shown underneath the image. The whole card — image and title — opens
+ * the story.
  */
 export const StoryCard = function StoryCard({
   story,
@@ -46,74 +47,64 @@ export const StoryCard = function StoryCard({
       <PressableScale
         accessibilityRole="button"
         accessibilityLabel={story.title}
-        accessibilityHint={t('story.byAuthor', { author: story.author })}
         scaleTo={0.965}
         haptic="none"
         onPress={() => router.push({ pathname: '/story/[slug]', params: { slug: story.slug } })}
-        className="w-full overflow-hidden relative"
-        style={cardStyle}>
-        <Image
-          source={story.cardCover as any}
-          style={StyleSheet.absoluteFill as any}
-          contentFit="contain"
-          transition={120}
-          alt={story.title}
-        />
-        {/* Gradient scrim: transparent at top, dark at bottom for text legibility */}
-        <View
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `linear-gradient(to top,
-              rgba(0,0,0,0.72),
-              rgba(0,0,0,0.42) 35%,
-              rgba(0,0,0,0.12) 65%,
-              transparent)`,
-          }}
-        />
-        <View
-          pointerEvents="none"
-          className="absolute inset-x-0 bottom-0 px-6 pb-2 items-start justify-end"
-          style={{ paddingTop: 60 }}>
+        className="w-full">
+        <View className="w-full overflow-hidden" style={cardStyle}>
+          <Image
+            source={story.cardCover as any}
+            style={StyleSheet.absoluteFill as any}
+            contentFit="cover"
+            transition={120}
+            alt={story.title}
+          />
+          <View className="absolute right-4 top-4">
+            <PressableScale
+              accessibilityRole="button"
+              accessibilityLabel={
+                saved
+                  ? t('story.removeCardA11y', { title: story.title })
+                  : t('story.saveCardA11y', { title: story.title })
+              }
+              accessibilityState={{ selected: saved }}
+              scaleTo={0.82}
+              haptic="select"
+              onPress={(event) => {
+                event.stopPropagation();
+                toggleFavorite(story.slug);
+              }}
+              className="h-10 w-10 items-center justify-center">
+              <View
+                className="absolute inset-0 rounded-full bg-black/40"
+                style={{
+                  shadowColor: '#000',
+                  shadowOffset: { width: 0, height: 2 },
+                  shadowOpacity: 0.25,
+                  shadowRadius: 4,
+                  elevation: 4,
+                }}
+              />
+              <Heart
+                size={24}
+                color={heartColor}
+                fill={saved ? heartColor : 'transparent'}
+                strokeWidth={1.8}
+              />
+            </PressableScale>
+          </View>
+        </View>
+
+        {/* Title below the image */}
+        <View className="mt-2 px-2">
           <AppText
             variant="headline"
             numberOfLines={2}
             tone="ink"
-            style={{ color: '#FFFFFF' }}
-            className="w-full text-[20px] leading-tight mb-2">
+            style={{ color: colors.ink }}
+            className="w-full text-[17px] leading-tight">
             {story.title}
           </AppText>
-        </View>
-
-        <View className="absolute right-4 top-4">
-          <PressableScale
-            accessibilityRole="button"
-            accessibilityLabel={
-              saved
-                ? t('story.removeCardA11y', { title: story.title })
-                : t('story.saveCardA11y', { title: story.title })
-            }
-            accessibilityState={{ selected: saved }}
-            scaleTo={0.82}
-            haptic="select"
-            onPress={() => toggleFavorite(story.slug)}
-            className="h-10 w-10 items-center justify-center">
-            <View
-              className="absolute inset-0 rounded-full bg-black/40"
-              style={{
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: 0.25,
-                shadowRadius: 4,
-                elevation: 4,
-              }}
-            />
-            <Heart
-              size={24}
-              color={heartColor}
-              fill={saved ? heartColor : 'transparent'}
-              strokeWidth={1.8}
-            />
-          </PressableScale>
         </View>
       </PressableScale>
     </Appear>

@@ -10,6 +10,10 @@ export const hinglish: Messages = {
     back: 'Wapas',
     cancel: 'Cancel',
     done: 'Done',
+    exitTitle: '{app} band karein?',
+    exitBody: 'Kya aap app band karna chahte hain?',
+    exitYes: 'Haan',
+    exitNo: 'Nahi',
   },
   onboarding: {
     eyebrow: 'Kahaniyon ka collection',
@@ -56,7 +60,7 @@ export const hinglish: Messages = {
       'Isse aapki saved stories, reading progress aur settings mit jayengi. Ye wapas nahi ho sakta.',
     resetConfirm: 'Reset karein',
     cancel: 'Cancel',
-    versionNote: 'Loom {version} · Aapki library isi device par rehti hai',
+    versionNote: 'Romantic Stories {version} · Aapki library isi device par rehti hai',
   },
   search: {
     back: 'Wapas',
@@ -109,6 +113,15 @@ export const hinglish: Messages = {
     skipAhead: '15 second aage',
     seek: 'Audio mein aage-peeche jaayein',
     position: '{current} / {duration}',
+    unlockTitle: 'Audio locked hai',
+    unlockBody: 'Is kahani ka audio {days} din tak unlock karne ke liye ek chhota video dekhein.',
+    unlock: 'Unlock karein',
+    unlockFailed: 'Abhi ad available nahi hai. Kripya thodi der baad dobara try karein.',
+  },
+  offline: {
+    title: 'Internet connection nahi hai',
+    body: 'Padhna continue karne ke liye kripya internet se connect karein.',
+    retry: 'Retry',
   },
   privacy: {
     title: 'Privacy policy',

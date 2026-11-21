@@ -1,5 +1,6 @@
 import { Image, StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
+import React from 'react';
 
 import { AppText } from '@/components/ui/app-text';
 import { PressableScale } from '@/components/ui/pressable-scale';
@@ -10,6 +11,7 @@ import { useFeatured } from '@/content';
 import { useI18n, type Language } from '@/i18n';
 import { LANGUAGES } from '@/i18n/types';
 import { useSettings } from '@/store/settings';
+import { APP_NAME } from '@/config/branding';
 
 /**
  * The first-run experience: language choice and one button to enter the library.
@@ -44,8 +46,13 @@ export default function GetInScreen() {
               resizeMode="cover"
             />
           </View>
-          <AppText variant="display" className="mt-9 text-center text-[56px]">
-            Loom
+          <AppText variant="display" className="mt-9 text-center text-[44px] leading-tight">
+            {APP_NAME.split(' ').map((word, i) => (
+              <React.Fragment key={i}>
+                {i > 0 && <br />}
+                {word}
+              </React.Fragment>
+            ))}
           </AppText>
           <AppText variant="body" className="mt-3 max-w-[300px] text-center">
             {t('onboarding.tagline')}

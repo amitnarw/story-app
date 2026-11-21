@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useMemo, useRef } from 'react';
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ScrollView, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
@@ -11,8 +11,10 @@ import Animated, {
 
 import { AdSlot } from '@/components/ads/AdSlot';
 import { InlineNativeAdCard } from '@/components/ads/InlineNativeAdCard';
+import { markStoryClosedForInterstitial, showRewarded } from '@/ads/adManager';
 import { StoryAudioPlayer } from '@/components/stories/StoryAudioPlayer';
 import { StoryBlock } from '@/components/stories/StoryBlock';
+import { ConfirmSheet } from '@/components/ui/confirm-sheet';
 import { AppText } from '@/components/ui/app-text';
 import { Button } from '@/components/ui/button';
 import { IconButton } from '@/components/ui/icon-button';
@@ -26,6 +28,7 @@ import { layout } from '@/theme/scale';
 import { useTheme } from '@/theme/ThemeProvider';
 import { useI18n } from '@/i18n';
 import { useImageSize } from '@/lib/use-image-size';
+import { useNow } from '@/lib/use-now';
 
 function close() {
   if (router.canGoBack()) {
@@ -60,6 +63,14 @@ export default function StoryScreen() {
 
   const story = useStory(slug);
   const adsConsented = useSettings((state) => state.adsConsented);
+  const audioUnlockedUntil = useSettings(
+    (state) => state.audioUnlockedUntil[story?.slug ?? ''],
+  );
+  const unlockAudio = useSettings((state) => state.unlockAudio);
+  const now = useNow(30_000);
+  const [unlockVisible, setUnlockVisible] = useState(false);
+  const [unlocking, setUnlocking] = useState(false);
+  const [unlockError, setUnlockError] = useState<string | null>(null);
   const { t } = useI18n();
 
   const scrollRef = useRef<any>(null);
@@ -118,7 +129,6 @@ export default function StoryScreen() {
     scrollY.value = 0;
   }, [story?.slug]);
 
-  // Throttled progress save — write no more than once per second.
   const lastSaveTime = useRef(0);
   useEffect(() => {
     if (!story) return;
@@ -131,8 +141,42 @@ export default function StoryScreen() {
     }
   }, [story, progress.value, setReadingProgress]);
 
+  // Count every exit from a story (header back, hardware back, swipe-down
+  // dismiss) so the interstitial frequency check sees all natural breaks.
+  useEffect(() => () => markStoryClosedForInterstitial(), []);
+
   const scrollToTop = () => {
     scrollRef.current?.scrollTo({ y: 0, animated: true });
+  };
+
+  const audioLocked = !audioUnlockedUntil || audioUnlockedUntil <= now;
+
+  const requestAudioUnlock = () => {
+    setUnlockError(null);
+    setUnlockVisible(true);
+  };
+
+  const cancelAudioUnlock = () => {
+    setUnlockVisible(false);
+    setUnlockError(null);
+  };
+
+  const confirmAudioUnlock = async () => {
+    if (!story || unlocking) return;
+    setUnlocking(true);
+    setUnlockError(null);
+    const outcome = await showRewarded();
+    setUnlocking(false);
+    if (outcome?.kind === 'earned') {
+      unlockAudio(story.slug, 7);
+      setUnlockVisible(false);
+      return;
+    }
+    if (outcome?.kind === 'user-closed') {
+      setUnlockVisible(false);
+      return;
+    }
+    setUnlockError(t('audio.unlockFailed'));
   };
 
   const animatedProgressStyle = useAnimatedStyle(
@@ -147,10 +191,11 @@ export default function StoryScreen() {
   }
 
   return (
-    <Screen
-      edges={['top', 'bottom']}
-      gradient
-      style={{ width: '100%', maxWidth: layout.maxWidth, alignSelf: 'center' }}>
+    <>
+      <Screen
+        edges={['top', 'bottom']}
+        gradient
+        style={{ width: '100%', maxWidth: layout.maxWidth, alignSelf: 'center' }}>
       {/* Sticky Top Header — the tinted fill doubles as the scroll progress bar */}
       <View
         className="relative overflow-hidden"
@@ -186,8 +231,6 @@ export default function StoryScreen() {
         </View>
       </View>
 
-      {story.audio ? <StoryAudioPlayer source={story.audio.source} /> : null}
-
       <ScrollView
         ref={scrollRef}
         className="flex-1"
@@ -197,34 +240,31 @@ export default function StoryScreen() {
         scrollEventThrottle={16}
         contentContainerStyle={{ paddingBottom: 24, flexGrow: 1 }}>
         <View className="px-5">
-          {/* Cover Hero */}
+          {/* Title block at top */}
           <Appear distance={16} className="mt-2">
-            <View className="relative overflow-hidden" style={{ borderRadius: 20 }}>
-              <ImageStory source={story.cover} alt={story.coverAlt} />
-              {story.mature && (
-                <View className="absolute top-3 right-3 px-3 py-1 rounded-full bg-black/60">
-                  <AppText
-                    variant="caption"
-                    tone="accentOn"
-                    font="sans-semibold"
-                    className="text-[11px] uppercase tracking-wider">
-                    18+
-                  </AppText>
-                </View>
-              )}
+            <View className="flex-row items-center flex-wrap gap-2 mt-3">
+              <AppText variant="label">
+                {t('story.storyNumber', {
+                  number: String(story.order).padStart(2, '0'),
+                  tags: story.tags.join(' · '),
+                })}
+              </AppText>
             </View>
-            <AppText variant="label" className="mt-3">
-              {t('story.storyNumber', {
-                number: String(story.order).padStart(2, '0'),
-                tags: story.tags.join(' · '),
-              })}
-            </AppText>
             <AppText variant="title" className="mt-2">
               {story.title}
             </AppText>
-            <AppText variant="subtitle" className="mt-1">
-              {t('story.byAuthor', { author: story.author })}
-            </AppText>
+
+            {/* Audio player directly under the title */}
+            {story.audio ? (
+              <View className="mt-4">
+                <StoryAudioPlayer
+                  source={story.audio.source}
+                  locked={audioLocked}
+                  onRequestUnlock={requestAudioUnlock}
+                />
+              </View>
+            ) : null}
+
             <AppText variant="body" className="mt-3 max-w-[600px]">
               {story.summary}
             </AppText>
@@ -256,6 +296,11 @@ export default function StoryScreen() {
             </View>
           ))}
 
+          {/* Cover thumbnail shown last */}
+          <View className="mt-8">
+            <ImageStory source={story.cover} alt={story.coverAlt} />
+          </View>
+
           <PressableScale
             accessibilityRole="button"
             accessibilityLabel={t('story.backToTopA11y')}
@@ -274,13 +319,29 @@ export default function StoryScreen() {
       <View className="items-center bg-surface">
         <AdSlot variant="dock" />
       </View>
-    </Screen>
+      </Screen>
+
+      {unlockVisible && (
+        <ConfirmSheet
+          visible={unlockVisible}
+          title={t('audio.unlockTitle')}
+          message={t('audio.unlockBody', { days: 7 })}
+          confirmLabel={t('audio.unlock')}
+          cancelLabel={t('common.cancel')}
+          busy={unlocking}
+          error={unlockError}
+          onCancel={cancelAudioUnlock}
+          onConfirm={confirmAudioUnlock}
+        />
+      )}
+    </>
   );
 }
 
 function ImageStory({ source, alt }: { source: any; alt: string }) {
   const { size } = useImageSize(source);
   const { width: screenW } = useWindowDimensions();
+  const { colors } = useTheme();
   const ratio = size.ratio > 0 && isFinite(size.ratio) ? size.ratio : 16 / 9;
   const contentW = Math.min(screenW, layout.maxWidth) - 40;
   const width = Math.max(0, contentW);
@@ -288,8 +349,8 @@ function ImageStory({ source, alt }: { source: any; alt: string }) {
   return width > 0 ? (
     <Image
       source={source}
-      style={{ width, height }}
-      contentFit="contain"
+      style={{ width, height, borderRadius: 20, backgroundColor: colors.surface2 }}
+      contentFit="cover"
       accessibilityLabel={alt}
     />
   ) : null;

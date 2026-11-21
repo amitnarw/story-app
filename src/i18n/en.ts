@@ -6,6 +6,10 @@ export const en = {
     back: 'Back',
     cancel: 'Cancel',
     done: 'Done',
+    exitTitle: 'Exit {app}?',
+    exitBody: 'Do you want to close the app?',
+    exitYes: 'Yes',
+    exitNo: 'No',
   },
   onboarding: {
     eyebrow: 'A library of stories',
@@ -52,7 +56,7 @@ export const en = {
       'This clears your saved stories, reading progress, and settings. It cannot be undone.',
     resetConfirm: 'Reset',
     cancel: 'Cancel',
-    versionNote: 'Loom {version} · Your library stays on this device',
+    versionNote: 'Romantic Stories {version} · Your library stays on this device',
   },
   search: {
     back: 'Back',
@@ -105,6 +109,15 @@ export const en = {
     skipAhead: 'Forward 15 seconds',
     seek: 'Seek narration',
     position: '{current} of {duration}',
+    unlockTitle: 'Audio locked',
+    unlockBody: 'Watch a short video to unlock audio for this story for {days} days.',
+    unlock: 'Unlock',
+    unlockFailed: 'Ad not available right now. Please try again later.',
+  },
+  offline: {
+    title: 'No internet connection',
+    body: 'Please connect to the internet to continue reading.',
+    retry: 'Retry',
   },
   privacy: {
     title: 'Privacy policy',

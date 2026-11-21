@@ -12,6 +12,7 @@ import { useStories, type Story } from '@/content';
 import { useI18n } from '@/i18n';
 import { useSettings } from '@/store/settings';
 import { useTheme } from '@/theme/ThemeProvider';
+import { APP_NAME } from '@/config/branding';
 
 type ListItem =
   | { kind: 'story'; story: Story }
@@ -68,8 +69,8 @@ export function HomeScreen() {
   const header = (
     <View className="px-5 pb-2 pt-2">
       <View className="flex-row items-center justify-between">
-        <AppText variant="display" className="text-[32px] leading-[36px]">
-          Loom
+        <AppText variant="display" className="text-[26px] leading-[32px]">
+          {APP_NAME}
         </AppText>
 
         <View className="flex-row items-center gap-2.5">
@@ -141,7 +142,7 @@ export function HomeScreen() {
                   paddingHorizontal: 20,
                   paddingBottom: 220,
                 }
-              : { paddingHorizontal: 20, paddingTop: 12, paddingBottom: 420, gap: 16 }
+              : { paddingHorizontal: 20, paddingTop: 12, paddingBottom: 420, gap: 28 }
           }
           keyboardShouldPersistTaps="handled"
           keyboardDismissMode="on-drag"

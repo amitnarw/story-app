@@ -1,7 +1,7 @@
 # Image Credits
 
 All story cover and in-story images in `assets/stories/` ship with the
-story packs used to build Loom. Each story folder holds its own cover,
+story packs used to build Romantic Stories. Each story folder holds its own cover,
 in-story artwork, and narration.
 
 ## Story image inventory

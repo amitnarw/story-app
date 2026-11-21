@@ -9,6 +9,10 @@ export const hi: Messages = {
     back: 'वापस',
     cancel: 'रद्द करें',
     done: 'हो गया',
+    exitTitle: '{app} बंद करें?',
+    exitBody: 'क्या आप ऐप बंद करना चाहते हैं?',
+    exitYes: 'हाँ',
+    exitNo: 'नहीं',
   },
   onboarding: {
     eyebrow: 'कहानियों का संग्रह',
@@ -55,7 +59,7 @@ export const hi: Messages = {
       'इससे आपकी सेव की गई कहानियाँ, पढ़ाई की प्रगति और सेटिंग्स मिट जाएँगी। यह वापस नहीं किया जा सकता।',
     resetConfirm: 'रीसेट करें',
     cancel: 'रद्द करें',
-    versionNote: 'Loom {version} · आपकी लाइब्रेरी इसी डिवाइस पर रहती है',
+    versionNote: 'Romantic Stories {version} · आपकी लाइब्रेरी इसी डिवाइस पर रहती है',
   },
   search: {
     back: 'वापस',
@@ -108,6 +112,15 @@ export const hi: Messages = {
     skipAhead: '15 सेकंड आगे',
     seek: 'ऑडियो में आगे-पीछे जाएँ',
     position: '{current} / {duration}',
+    unlockTitle: 'ऑडियो लॉक है',
+    unlockBody: 'इस कहानी का ऑडियो {days} दिनों तक अनलॉक करने के लिए एक छोटा वीडियो देखें।',
+    unlock: 'अनलॉक करें',
+    unlockFailed: 'अभी विज्ञापन उपलब्ध नहीं है। कृपया थोड़ी देर बाद पुनः प्रयास करें।',
+  },
+  offline: {
+    title: 'इंटरनेट कनेक्शन नहीं है',
+    body: 'पढ़ना जारी रखने के लिए कृपया इंटरनेट से कनेक्ट करें।',
+    retry: 'पुनः प्रयास करें',
   },
   privacy: {
     title: 'प्राइवेसी नीति',

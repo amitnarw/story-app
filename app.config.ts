@@ -1,12 +1,12 @@
 import type { ExpoConfig } from 'expo/config';
 
 const config: ExpoConfig = {
-  name: 'Loom',
-  slug: 'loom',
+  name: 'Romantic Stories',
+  slug: 'romantic-stories',
   version: '1.0.0',
   orientation: 'portrait',
   icon: './assets/images/icon.png',
-  scheme: 'loom',
+  scheme: 'romanticstories',
   userInterfaceStyle: 'automatic',
   backgroundColor: '#F7F2EA',
   platforms: ['ios', 'android'],
@@ -22,7 +22,7 @@ const config: ExpoConfig = {
       monochromeImage: './assets/images/android-icon-monochrome.png',
     },
     predictiveBackGestureEnabled: false,
-    package: 'com.loom.stories',
+    package: 'kahaniya_app_in_hindi_offline.story_app_in_english.kahaniya_app.kahaniya_hindi_free',
   },
   web: {
     output: 'single',
@@ -35,11 +35,9 @@ const config: ExpoConfig = {
       'expo-splash-screen',
       {
         backgroundColor: '#F7F2EA',
-        image: './assets/images/splash-icon.png',
         imageWidth: 96,
         dark: {
           backgroundColor: '#0F0D0C',
-          image: './assets/images/splash-icon-dark.png',
         },
       },
     ],

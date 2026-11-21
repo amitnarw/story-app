@@ -4,7 +4,7 @@
  * Keep these plain booleans so every branch is easy to audit.
  */
 export const features = {
-  /** Hidden 18+ gate — not used in Loom, kept for API compatibility. */
+  /** Hidden 18+ gate — not used in Romantic Stories, kept for API compatibility. */
   ageGate: false,
   /** Show interstitial ads at natural breaks. */
   interstitialAds: true,

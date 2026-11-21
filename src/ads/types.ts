@@ -1,11 +1,12 @@
 /**
- * Ad provider interface. Loom uses AdMob test units by default.
+ * Ad provider interface. Romantic Stories uses AdMob test units by default.
  */
 
 export type AdKind = 'banner' | 'interstitial' | 'rewarded' | 'appOpen';
 
 export type AdOutcome =
   | { kind: 'ok' }
+  | { kind: 'earned' }
   | { kind: 'no-fill'; zoneId: string }
   | { kind: 'error'; zoneId: string; message: string }
   | { kind: 'capped'; reason: 'frequency' | 'first-open' }
