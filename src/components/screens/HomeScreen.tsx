@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { Heart, Search, Sun, Moon } from 'lucide-react-native';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Animated, FlatList, View } from 'react-native';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 
@@ -14,14 +14,27 @@ import { useSettings } from '@/store/settings';
 import { useTheme } from '@/theme/ThemeProvider';
 import { APP_NAME } from '@/config/branding';
 
+const INITIAL_FIXED_COUNT = 15;
+const BATCH_SIZE = 15;
+
+function shuffle<T>(array: T[]): T[] {
+  const result = [...array];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
 type ListItem =
-  | { kind: 'story'; story: Story }
-  | { kind: 'native-ad'; id: string };
+  | { kind: 'story'; story: Story; key: string }
+  | { kind: 'native-ad'; id: string; key: string };
 
 /**
  * The Home page: header with actions and the story feed with native ads
- * interleaved. Rendered as a swipeable pager page — the host owns the screen
- * chrome (safe areas, background).
+ * interleaved. The first 15 stories remain in their original curated order,
+ * after which the feed infinitely randomizes stories on scroll so the user
+ * can never reach the bottom.
  */
 export function HomeScreen() {
   const { scheme } = useTheme();
@@ -55,16 +68,118 @@ export function HomeScreen() {
     [allStories, matureOn],
   );
 
-  const listItems = useMemo<ListItem[]>(() => {
+  // First 15 stories in fixed order, plus an initial randomized batch so scrolling has momentum
+  const initialItems = useMemo<ListItem[]>(() => {
+    if (filteredStories.length === 0) return [];
     const items: ListItem[] = [];
-    filteredStories.forEach((story, idx) => {
-      items.push({ kind: 'story', story });
-      if (adsConsented && (idx + 1) % 4 === 0) {
-        items.push({ kind: 'native-ad', id: `native-ad-${idx}` });
+    let sCount = 0;
+    let uid = 0;
+
+    // 1. First 15 stories in fixed curated order
+    const fixedStories = filteredStories.slice(0, INITIAL_FIXED_COUNT);
+    fixedStories.forEach((story) => {
+      uid += 1;
+      sCount += 1;
+      items.push({
+        kind: 'story',
+        story,
+        key: `story-${story.slug}-${uid}`,
+      });
+      if (adsConsented && sCount % 4 === 0) {
+        uid += 1;
+        const adIdx = Math.floor(sCount / 4);
+        items.push({
+          kind: 'native-ad',
+          id: `native-ad-${adIdx}`,
+          key: `ad-${adIdx}-${uid}`,
+        });
       }
     });
+
+    // 2. Beyond 15 items: initial randomized batch
+    const shuffled = shuffle(filteredStories);
+    const initialRandom = shuffled.slice(0, BATCH_SIZE);
+    initialRandom.forEach((story) => {
+      uid += 1;
+      sCount += 1;
+      items.push({
+        kind: 'story',
+        story,
+        key: `story-${story.slug}-${uid}`,
+      });
+      if (adsConsented && sCount % 4 === 0) {
+        uid += 1;
+        const adIdx = Math.floor(sCount / 4);
+        items.push({
+          kind: 'native-ad',
+          id: `native-ad-${adIdx}`,
+          key: `ad-${adIdx}-${uid}`,
+        });
+      }
+    });
+
     return items;
   }, [filteredStories, adsConsented]);
+
+  // Dynamically appended batches
+  const [extraItems, setExtraItems] = useState<ListItem[]>([]);
+  const currentFilterKey = `${matureOn}-${adsConsented}-${filteredStories.length}`;
+  const [prevFilterKey, setPrevFilterKey] = useState(currentFilterKey);
+
+  // Reset extra items when filters change (React pattern for prop/state sync)
+  if (prevFilterKey !== currentFilterKey) {
+    setPrevFilterKey(currentFilterKey);
+    setExtraItems([]);
+  }
+
+  const feedItems = useMemo<ListItem[]>(
+    () => [...initialItems, ...extraItems],
+    [initialItems, extraItems],
+  );
+
+  // Infinite scroll: dynamically append randomized batches so user never reaches bottom
+  const loadMore = useCallback(() => {
+    if (filteredStories.length === 0) return;
+
+    setExtraItems((prev) => {
+      const nextItems = [...prev];
+      const allCurrent = prev.length > 0 ? prev : initialItems;
+      const shuffled = shuffle(filteredStories);
+
+      // Prevent immediate consecutive duplicate at the boundary
+      const lastStory = allCurrent.slice().reverse().find((it) => it.kind === 'story');
+      if (lastStory && shuffled[0]?.slug === lastStory.story.slug && shuffled.length > 1) {
+        [shuffled[0], shuffled[1]] = [shuffled[1], shuffled[0]];
+      }
+
+      let sCount =
+        INITIAL_FIXED_COUNT +
+        BATCH_SIZE +
+        prev.filter((it) => it.kind === 'story').length;
+      let uid = Date.now() + nextItems.length;
+
+      const toAdd = shuffled.slice(0, BATCH_SIZE);
+      toAdd.forEach((story) => {
+        uid += 1;
+        sCount += 1;
+        nextItems.push({
+          kind: 'story',
+          story,
+          key: `story-${story.slug}-${uid}`,
+        });
+        if (adsConsented && sCount % 4 === 0) {
+          uid += 1;
+          const adIdx = Math.floor(sCount / 4);
+          nextItems.push({
+            kind: 'native-ad',
+            id: `native-ad-${adIdx}`,
+            key: `ad-${adIdx}-${uid}`,
+          });
+        }
+      });
+      return nextItems;
+    });
+  }, [filteredStories, adsConsented, initialItems]);
 
   const header = (
     <View className="px-5 pb-2 pt-2">
@@ -121,12 +236,12 @@ export function HomeScreen() {
       <View className="flex-1 relative">
         <FlatList
           key="stories"
-          data={listItems}
-          keyExtractor={(item) =>
-            item.kind === 'story' ? `story-${item.story.slug}` : `ad-${item.id}`
-          }
+          data={feedItems}
+          keyExtractor={(item) => item.key}
           onScroll={onScrollEvent}
           scrollEventThrottle={16}
+          onEndReached={loadMore}
+          onEndReachedThreshold={0.8}
           renderItem={({ item, index }) => {
             if (item.kind === 'story') {
               return <StoryCard story={item.story} index={index} />;
@@ -134,7 +249,7 @@ export function HomeScreen() {
             return <GuideNativeAdCard index={index} />;
           }}
           contentContainerStyle={
-            listItems.length === 0
+            feedItems.length === 0
               ? {
                   flexGrow: 1,
                   justifyContent: 'center',
@@ -142,7 +257,7 @@ export function HomeScreen() {
                   paddingHorizontal: 20,
                   paddingBottom: 220,
                 }
-              : { paddingHorizontal: 20, paddingTop: 12, paddingBottom: 420, gap: 28 }
+              : { paddingHorizontal: 20, paddingTop: 12, paddingBottom: 160, gap: 28 }
           }
           keyboardShouldPersistTaps="handled"
           keyboardDismissMode="on-drag"

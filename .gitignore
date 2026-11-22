@@ -19,6 +19,10 @@ expo-env.d.ts
 
 # Metro
 .metro-health-check*
+*.log
+
+# Staging
+staging/
 
 # Brand assets (git-ignored; regenerate with scripts/)
 design/

@@ -69,13 +69,13 @@ const config: ExpoConfig = {
   extra: {
     ads: {
       provider: 'admob',
-      testMode: true,
+      testMode: false,
       zones: {
-        appOpen: 'ca-app-pub-3940256099942544/9257395921',
-        interstitial: 'ca-app-pub-3940256099942544/1033173712',
-        banner: 'ca-app-pub-3940256099942544/6300978111',
-        native: 'ca-app-pub-3940256099942544/2247696110',
-        rewarded: 'ca-app-pub-3940256099942544/5224354917',
+        appOpen: 'ca-app-pub-9461789746935863/3923222506',
+        interstitial: 'ca-app-pub-9461789746935863/4629783602',
+        banner: 'ca-app-pub-9461789746935863/1888070190',
+        native: 'ca-app-pub-9461789746935863/2937443897',
+        rewarded: 'ca-app-pub-9461789746935863/8150226216',
       },
       interstitialCapPerSession: 3,
       interstitialOnFirstOpen: false,

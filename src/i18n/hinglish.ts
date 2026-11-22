@@ -113,9 +113,12 @@ export const hinglish: Messages = {
     skipAhead: '15 second aage',
     seek: 'Audio mein aage-peeche jaayein',
     position: '{current} / {duration}',
-    unlockTitle: 'Audio locked hai',
-    unlockBody: 'Is kahani ka audio {days} din tak unlock karne ke liye ek chhota video dekhein.',
-    unlock: 'Unlock karein',
+    unlockTitle: 'Audio unlock karein',
+    unlockBody:
+      'Audio play aur unlock karne ke liye ek chhota video ad dekhein.',
+    unlockConfirm: 'Video dekhein',
+    unlockCancel: 'Audio nahi sunna hai',
+    unlock: 'Video dekhein',
     unlockFailed: 'Abhi ad available nahi hai. Kripya thodi der baad dobara try karein.',
   },
   offline: {

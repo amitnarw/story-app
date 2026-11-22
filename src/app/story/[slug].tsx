@@ -325,9 +325,9 @@ export default function StoryScreen() {
         <ConfirmSheet
           visible={unlockVisible}
           title={t('audio.unlockTitle')}
-          message={t('audio.unlockBody', { days: 7 })}
-          confirmLabel={t('audio.unlock')}
-          cancelLabel={t('common.cancel')}
+          message={t('audio.unlockBody')}
+          confirmLabel={t('audio.unlockConfirm')}
+          cancelLabel={t('audio.unlockCancel')}
           busy={unlocking}
           error={unlockError}
           onCancel={cancelAudioUnlock}

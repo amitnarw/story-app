@@ -13,7 +13,7 @@ import { useTheme } from '@/theme/ThemeProvider';
 
 type ConfirmSheetProps = {
   visible: boolean;
-  title: string;
+  title?: string;
   message: string;
   confirmLabel: string;
   cancelLabel?: string;
@@ -100,27 +100,33 @@ export function ConfirmSheet({
       <View
         style={{
           width: '90%',
-          maxWidth: 340,
-          borderRadius: 16,
+          maxWidth: 350,
+          borderRadius: 20,
           backgroundColor: colors.surface,
           overflow: 'hidden',
           alignSelf: 'center',
         }}
         pointerEvents="auto">
-        <View className="px-6 pt-6 pb-1">
-          <AppText variant="headline" tone="ink">
-            {title}
-          </AppText>
-          <AppText variant="body" tone="soft" className="mt-2 max-w-[280px]">
+        <View className="px-6 pt-6 pb-2">
+          {title ? (
+            <AppText variant="headline" tone="ink" style={{ textAlign: 'center' }}>
+              {title}
+            </AppText>
+          ) : null}
+          <AppText
+            variant="body"
+            tone="ink"
+            className={title ? 'mt-2 text-center' : 'text-[15.5px] leading-[23px] text-center'}
+            style={{ textAlign: 'center' }}>
             {message}
           </AppText>
           {error ? (
-            <AppText variant="small" tone="danger" className="mt-2 max-w-[280px]">
+            <AppText variant="small" tone="danger" className="mt-2 text-center">
               {error}
             </AppText>
           ) : null}
         </View>
-        <View className="flex-row px-6 pb-6">
+        <View className="flex-row px-5 pb-6 gap-2.5 pt-4">
           <PressableScale
             accessibilityRole="button"
             accessibilityLabel={cancelLabel}
@@ -128,12 +134,17 @@ export function ConfirmSheet({
             haptic="tap"
             disabled={busy}
             onPress={onCancel}
-            className="flex-1 items-center py-3 rounded-pill border border-line">
-            <AppText variant="button" tone="ink">
+            className="flex-1 items-center justify-center py-3 px-2 rounded-pill border border-line">
+            <AppText
+              variant="button"
+              tone="ink"
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.75}
+              style={{ textAlign: 'center' }}>
               {cancelLabel}
             </AppText>
           </PressableScale>
-          <View className="w-4" />
           <PressableScale
             accessibilityRole="button"
             accessibilityLabel={confirmLabel}
@@ -141,8 +152,14 @@ export function ConfirmSheet({
             haptic="tap"
             disabled={busy}
             onPress={onConfirm}
-            className="flex-1 items-center py-3 rounded-pill bg-clay">
-            <AppText variant="button" tone="accentOn">
+            className="flex-1 items-center justify-center py-3 px-2 rounded-pill bg-clay">
+            <AppText
+              variant="button"
+              tone="accentOn"
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.75}
+              style={{ textAlign: 'center' }}>
               {confirmLabel}
             </AppText>
           </PressableScale>

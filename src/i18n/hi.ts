@@ -112,9 +112,12 @@ export const hi: Messages = {
     skipAhead: '15 सेकंड आगे',
     seek: 'ऑडियो में आगे-पीछे जाएँ',
     position: '{current} / {duration}',
-    unlockTitle: 'ऑडियो लॉक है',
-    unlockBody: 'इस कहानी का ऑडियो {days} दिनों तक अनलॉक करने के लिए एक छोटा वीडियो देखें।',
-    unlock: 'अनलॉक करें',
+    unlockTitle: 'ऑडियो अनलॉक करें',
+    unlockBody:
+      'ऑडियो सुनने और अनलॉक करने के लिए एक छोटा वीडियो ऐड देखें।',
+    unlockConfirm: 'वीडियो देखें',
+    unlockCancel: 'ऑडियो नहीं सुनना है',
+    unlock: 'वीडियो देखें',
     unlockFailed: 'अभी विज्ञापन उपलब्ध नहीं है। कृपया थोड़ी देर बाद पुनः प्रयास करें।',
   },
   offline: {

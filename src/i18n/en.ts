@@ -109,9 +109,12 @@ export const en = {
     skipAhead: 'Forward 15 seconds',
     seek: 'Seek narration',
     position: '{current} of {duration}',
-    unlockTitle: 'Audio locked',
-    unlockBody: 'Watch a short video to unlock audio for this story for {days} days.',
-    unlock: 'Unlock',
+    unlockTitle: 'Unlock audio',
+    unlockBody:
+      'Watch a short video ad to unlock and play this audio.',
+    unlockConfirm: 'Watch video',
+    unlockCancel: "Don't listen to audio",
+    unlock: 'Watch video',
     unlockFailed: 'Ad not available right now. Please try again later.',
   },
   offline: {
