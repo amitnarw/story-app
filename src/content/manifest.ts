@@ -31,6 +31,22 @@ export type StoryManifestEntry = {
   };
 };
 
+const ASSETS_BASE = 'https://nritraders.com/app/story_app_1';
+
+const storyAsset = (slug: string) => ({
+  cover: { uri: `${ASSETS_BASE}/${slug}/card-cover.jpg`, width: 1200, height: 675 },
+  cardCover: { uri: `${ASSETS_BASE}/${slug}/card-cover.jpg`, width: 1200, height: 675 },
+  images: [
+    { uri: `${ASSETS_BASE}/${slug}/img-1.jpg`, width: 1200, height: 675 },
+    { uri: `${ASSETS_BASE}/${slug}/img-2.jpg`, width: 1200, height: 675 },
+    { uri: `${ASSETS_BASE}/${slug}/img-3.jpg`, width: 1200, height: 675 },
+  ],
+  audio: {
+    language: 'hi' as const,
+    source: { uri: `${ASSETS_BASE}/${slug}/audio-hi.mp3` },
+  },
+});
+
 export const manifest: StoryManifestEntry[] = [
   {
     slug: 'neeli-saree',
@@ -38,17 +54,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/neeli-saree/card-cover.jpg'),
-    cardCover: require('../../assets/stories/neeli-saree/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/neeli-saree/img-1.jpg'),
-      require('../../assets/stories/neeli-saree/img-2.jpg'),
-      require('../../assets/stories/neeli-saree/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/neeli-saree/audio-hi.mp3'),
-    },
+    ...storyAsset('neeli-saree'),
   },
   {
     slug: 'kirayedar-ki-jhijhak',
@@ -56,17 +62,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/kirayedar-ki-jhijhak/card-cover.jpg'),
-    cardCover: require('../../assets/stories/kirayedar-ki-jhijhak/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/kirayedar-ki-jhijhak/img-1.jpg'),
-      require('../../assets/stories/kirayedar-ki-jhijhak/img-2.jpg'),
-      require('../../assets/stories/kirayedar-ki-jhijhak/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/kirayedar-ki-jhijhak/audio-hi.mp3'),
-    },
+    ...storyAsset('kirayedar-ki-jhijhak'),
   },
   {
     slug: 'bas-itni-si-jagah',
@@ -74,17 +70,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/bas-itni-si-jagah/card-cover.jpg'),
-    cardCover: require('../../assets/stories/bas-itni-si-jagah/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/bas-itni-si-jagah/img-1.jpg'),
-      require('../../assets/stories/bas-itni-si-jagah/img-2.jpg'),
-      require('../../assets/stories/bas-itni-si-jagah/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/bas-itni-si-jagah/audio-hi.mp3'),
-    },
+    ...storyAsset('bas-itni-si-jagah'),
   },
   {
     slug: 'holi-ka-ek-rang',
@@ -92,17 +78,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/holi-ka-ek-rang/card-cover.jpg'),
-    cardCover: require('../../assets/stories/holi-ka-ek-rang/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/holi-ka-ek-rang/img-1.jpg'),
-      require('../../assets/stories/holi-ka-ek-rang/img-2.jpg'),
-      require('../../assets/stories/holi-ka-ek-rang/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/holi-ka-ek-rang/audio-hi.mp3'),
-    },
+    ...storyAsset('holi-ka-ek-rang'),
   },
   {
     slug: 'muskaan-ka-raaz',
@@ -110,17 +86,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/muskaan-ka-raaz/card-cover.jpg'),
-    cardCover: require('../../assets/stories/muskaan-ka-raaz/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/muskaan-ka-raaz/img-1.jpg'),
-      require('../../assets/stories/muskaan-ka-raaz/img-2.jpg'),
-      require('../../assets/stories/muskaan-ka-raaz/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/muskaan-ka-raaz/audio-hi.mp3'),
-    },
+    ...storyAsset('muskaan-ka-raaz'),
   },
   {
     slug: 'aadhi-raat-ki-muskaan',
@@ -128,17 +94,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/aadhi-raat-ki-muskaan/card-cover.jpg'),
-    cardCover: require('../../assets/stories/aadhi-raat-ki-muskaan/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/aadhi-raat-ki-muskaan/img-1.jpg'),
-      require('../../assets/stories/aadhi-raat-ki-muskaan/img-2.jpg'),
-      require('../../assets/stories/aadhi-raat-ki-muskaan/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/aadhi-raat-ki-muskaan/audio-hi.mp3'),
-    },
+    ...storyAsset('aadhi-raat-ki-muskaan'),
   },
   {
     slug: 'aadhi-raat-ki-phusphusahat',
@@ -146,17 +102,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/aadhi-raat-ki-phusphusahat/card-cover.jpg'),
-    cardCover: require('../../assets/stories/aadhi-raat-ki-phusphusahat/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/aadhi-raat-ki-phusphusahat/img-1.jpg'),
-      require('../../assets/stories/aadhi-raat-ki-phusphusahat/img-2.jpg'),
-      require('../../assets/stories/aadhi-raat-ki-phusphusahat/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/aadhi-raat-ki-phusphusahat/audio-hi.mp3'),
-    },
+    ...storyAsset('aadhi-raat-ki-phusphusahat'),
   },
   {
     slug: 'khidki-wala-raaz',
@@ -164,17 +110,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/khidki-wala-raaz/card-cover.jpg'),
-    cardCover: require('../../assets/stories/khidki-wala-raaz/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/khidki-wala-raaz/img-1.jpg'),
-      require('../../assets/stories/khidki-wala-raaz/img-2.jpg'),
-      require('../../assets/stories/khidki-wala-raaz/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/khidki-wala-raaz/audio-hi.mp3'),
-    },
+    ...storyAsset('khidki-wala-raaz'),
   },
   {
     slug: 'aadhi-raat-ki-hansi',
@@ -182,17 +118,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/aadhi-raat-ki-hansi/card-cover.jpg'),
-    cardCover: require('../../assets/stories/aadhi-raat-ki-hansi/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/aadhi-raat-ki-hansi/img-1.jpg'),
-      require('../../assets/stories/aadhi-raat-ki-hansi/img-2.jpg'),
-      require('../../assets/stories/aadhi-raat-ki-hansi/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/aadhi-raat-ki-hansi/audio-hi.mp3'),
-    },
+    ...storyAsset('aadhi-raat-ki-hansi'),
   },
   {
     slug: 'muskaan-ka-naya-raaz',
@@ -200,17 +126,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/muskaan-ka-naya-raaz/card-cover.jpg'),
-    cardCover: require('../../assets/stories/muskaan-ka-naya-raaz/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/muskaan-ka-naya-raaz/img-1.jpg'),
-      require('../../assets/stories/muskaan-ka-naya-raaz/img-2.jpg'),
-      require('../../assets/stories/muskaan-ka-naya-raaz/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/muskaan-ka-naya-raaz/audio-hi.mp3'),
-    },
+    ...storyAsset('muskaan-ka-naya-raaz'),
   },
   {
     slug: 'baramde-ka-raaz',
@@ -218,17 +134,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/baramde-ka-raaz/card-cover.jpg'),
-    cardCover: require('../../assets/stories/baramde-ka-raaz/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/baramde-ka-raaz/img-1.jpg'),
-      require('../../assets/stories/baramde-ka-raaz/img-2.jpg'),
-      require('../../assets/stories/baramde-ka-raaz/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/baramde-ka-raaz/audio-hi.mp3'),
-    },
+    ...storyAsset('baramde-ka-raaz'),
   },
   {
     slug: 'wo-ek-mulaqaat',
@@ -236,17 +142,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/wo-ek-mulaqaat/card-cover.jpg'),
-    cardCover: require('../../assets/stories/wo-ek-mulaqaat/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/wo-ek-mulaqaat/img-1.jpg'),
-      require('../../assets/stories/wo-ek-mulaqaat/img-2.jpg'),
-      require('../../assets/stories/wo-ek-mulaqaat/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/wo-ek-mulaqaat/audio-hi.mp3'),
-    },
+    ...storyAsset('wo-ek-mulaqaat'),
   },
   {
     slug: 'itni-si-himmat',
@@ -254,17 +150,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/itni-si-himmat/card-cover.jpg'),
-    cardCover: require('../../assets/stories/itni-si-himmat/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/itni-si-himmat/img-1.jpg'),
-      require('../../assets/stories/itni-si-himmat/img-2.jpg'),
-      require('../../assets/stories/itni-si-himmat/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/itni-si-himmat/audio-hi.mp3'),
-    },
+    ...storyAsset('itni-si-himmat'),
   },
   {
     slug: 'dosti-se-zara-aage',
@@ -272,17 +158,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/dosti-se-zara-aage/card-cover.jpg'),
-    cardCover: require('../../assets/stories/dosti-se-zara-aage/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/dosti-se-zara-aage/img-1.jpg'),
-      require('../../assets/stories/dosti-se-zara-aage/img-2.jpg'),
-      require('../../assets/stories/dosti-se-zara-aage/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/dosti-se-zara-aage/audio-hi.mp3'),
-    },
+    ...storyAsset('dosti-se-zara-aage'),
   },
   {
     slug: 'phir-wahi-jhijhak',
@@ -290,17 +166,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/phir-wahi-jhijhak/card-cover.jpg'),
-    cardCover: require('../../assets/stories/phir-wahi-jhijhak/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/phir-wahi-jhijhak/img-1.jpg'),
-      require('../../assets/stories/phir-wahi-jhijhak/img-2.jpg'),
-      require('../../assets/stories/phir-wahi-jhijhak/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/phir-wahi-jhijhak/audio-hi.mp3'),
-    },
+    ...storyAsset('phir-wahi-jhijhak'),
   },
   {
     slug: 'chhat-par-badhi-nazdeekiyan',
@@ -308,17 +174,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/chhat-par-badhi-nazdeekiyan/card-cover.jpg'),
-    cardCover: require('../../assets/stories/chhat-par-badhi-nazdeekiyan/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/chhat-par-badhi-nazdeekiyan/img-1.jpg'),
-      require('../../assets/stories/chhat-par-badhi-nazdeekiyan/img-2.jpg'),
-      require('../../assets/stories/chhat-par-badhi-nazdeekiyan/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/chhat-par-badhi-nazdeekiyan/audio-hi.mp3'),
-    },
+    ...storyAsset('chhat-par-badhi-nazdeekiyan'),
   },
   {
     slug: 'rasoi-mein-chhupa-raaz',
@@ -326,17 +182,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/rasoi-mein-chhupa-raaz/card-cover.jpg'),
-    cardCover: require('../../assets/stories/rasoi-mein-chhupa-raaz/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/rasoi-mein-chhupa-raaz/img-1.jpg'),
-      require('../../assets/stories/rasoi-mein-chhupa-raaz/img-2.jpg'),
-      require('../../assets/stories/rasoi-mein-chhupa-raaz/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/rasoi-mein-chhupa-raaz/audio-hi.mp3'),
-    },
+    ...storyAsset('rasoi-mein-chhupa-raaz'),
   },
   {
     slug: 'ek-baar-phir-pyaar',
@@ -344,17 +190,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/ek-baar-phir-pyaar/card-cover.jpg'),
-    cardCover: require('../../assets/stories/ek-baar-phir-pyaar/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/ek-baar-phir-pyaar/img-1.jpg'),
-      require('../../assets/stories/ek-baar-phir-pyaar/img-2.jpg'),
-      require('../../assets/stories/ek-baar-phir-pyaar/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/ek-baar-phir-pyaar/audio-hi.mp3'),
-    },
+    ...storyAsset('ek-baar-phir-pyaar'),
   },
   {
     slug: 'rasoi-mein-chhupa-pyaar',
@@ -362,17 +198,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/rasoi-mein-chhupa-pyaar/card-cover.jpg'),
-    cardCover: require('../../assets/stories/rasoi-mein-chhupa-pyaar/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/rasoi-mein-chhupa-pyaar/img-1.jpg'),
-      require('../../assets/stories/rasoi-mein-chhupa-pyaar/img-2.jpg'),
-      require('../../assets/stories/rasoi-mein-chhupa-pyaar/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/rasoi-mein-chhupa-pyaar/audio-hi.mp3'),
-    },
+    ...storyAsset('rasoi-mein-chhupa-pyaar'),
   },
   {
     slug: 'rasoi-ka-ankaha-raaz',
@@ -380,17 +206,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/rasoi-ka-ankaha-raaz/card-cover.jpg'),
-    cardCover: require('../../assets/stories/rasoi-ka-ankaha-raaz/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/rasoi-ka-ankaha-raaz/img-1.jpg'),
-      require('../../assets/stories/rasoi-ka-ankaha-raaz/img-2.jpg'),
-      require('../../assets/stories/rasoi-ka-ankaha-raaz/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/rasoi-ka-ankaha-raaz/audio-hi.mp3'),
-    },
+    ...storyAsset('rasoi-ka-ankaha-raaz'),
   },
   {
     slug: 'bahu-aur-sasur-ki-mulaqaat',
@@ -398,17 +214,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/bahu-aur-sasur-ki-mulaqaat/card-cover.jpg'),
-    cardCover: require('../../assets/stories/bahu-aur-sasur-ki-mulaqaat/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/bahu-aur-sasur-ki-mulaqaat/img-1.jpg'),
-      require('../../assets/stories/bahu-aur-sasur-ki-mulaqaat/img-2.jpg'),
-      require('../../assets/stories/bahu-aur-sasur-ki-mulaqaat/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/bahu-aur-sasur-ki-mulaqaat/audio-hi.mp3'),
-    },
+    ...storyAsset('bahu-aur-sasur-ki-mulaqaat'),
   },
   {
     slug: 'purane-pyaar-ki-mulaqaat',
@@ -416,17 +222,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/purane-pyaar-ki-mulaqaat/card-cover.jpg'),
-    cardCover: require('../../assets/stories/purane-pyaar-ki-mulaqaat/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/purane-pyaar-ki-mulaqaat/img-1.jpg'),
-      require('../../assets/stories/purane-pyaar-ki-mulaqaat/img-2.jpg'),
-      require('../../assets/stories/purane-pyaar-ki-mulaqaat/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/purane-pyaar-ki-mulaqaat/audio-hi.mp3'),
-    },
+    ...storyAsset('purane-pyaar-ki-mulaqaat'),
   },
   {
     slug: 'rasoi-mein-dil-ka-raaz',
@@ -434,17 +230,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/rasoi-mein-dil-ka-raaz/card-cover.jpg'),
-    cardCover: require('../../assets/stories/rasoi-mein-dil-ka-raaz/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/rasoi-mein-dil-ka-raaz/img-1.jpg'),
-      require('../../assets/stories/rasoi-mein-dil-ka-raaz/img-2.jpg'),
-      require('../../assets/stories/rasoi-mein-dil-ka-raaz/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/rasoi-mein-dil-ka-raaz/audio-hi.mp3'),
-    },
+    ...storyAsset('rasoi-mein-dil-ka-raaz'),
   },
   {
     slug: 'aaine-mein-chhupa-raaz',
@@ -452,17 +238,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/aaine-mein-chhupa-raaz/card-cover.jpg'),
-    cardCover: require('../../assets/stories/aaine-mein-chhupa-raaz/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/aaine-mein-chhupa-raaz/img-1.jpg'),
-      require('../../assets/stories/aaine-mein-chhupa-raaz/img-2.jpg'),
-      require('../../assets/stories/aaine-mein-chhupa-raaz/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/aaine-mein-chhupa-raaz/audio-hi.mp3'),
-    },
+    ...storyAsset('aaine-mein-chhupa-raaz'),
   },
   {
     slug: 'akeli-bahu-ka-raaz',
@@ -470,17 +246,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/akeli-bahu-ka-raaz/card-cover.jpg'),
-    cardCover: require('../../assets/stories/akeli-bahu-ka-raaz/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/akeli-bahu-ka-raaz/img-1.jpg'),
-      require('../../assets/stories/akeli-bahu-ka-raaz/img-2.jpg'),
-      require('../../assets/stories/akeli-bahu-ka-raaz/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/akeli-bahu-ka-raaz/audio-hi.mp3'),
-    },
+    ...storyAsset('akeli-bahu-ka-raaz'),
   },
   {
     slug: 'makan-malikin-ki-mohabbat',
@@ -488,17 +254,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/makan-malikin-ki-mohabbat/card-cover.jpg'),
-    cardCover: require('../../assets/stories/makan-malikin-ki-mohabbat/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/makan-malikin-ki-mohabbat/img-1.jpg'),
-      require('../../assets/stories/makan-malikin-ki-mohabbat/img-2.jpg'),
-      require('../../assets/stories/makan-malikin-ki-mohabbat/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/makan-malikin-ki-mohabbat/audio-hi.mp3'),
-    },
+    ...storyAsset('makan-malikin-ki-mohabbat'),
   },
   {
     slug: 'akeli-bahu-aur-sasur',
@@ -506,17 +262,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/akeli-bahu-aur-sasur/card-cover.jpg'),
-    cardCover: require('../../assets/stories/akeli-bahu-aur-sasur/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/akeli-bahu-aur-sasur/img-1.jpg'),
-      require('../../assets/stories/akeli-bahu-aur-sasur/img-2.jpg'),
-      require('../../assets/stories/akeli-bahu-aur-sasur/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/akeli-bahu-aur-sasur/audio-hi.mp3'),
-    },
+    ...storyAsset('akeli-bahu-aur-sasur'),
   },
   {
     slug: 'chupke-se-badhi-nazdeekiyan',
@@ -524,17 +270,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/chupke-se-badhi-nazdeekiyan/card-cover.jpg'),
-    cardCover: require('../../assets/stories/chupke-se-badhi-nazdeekiyan/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/chupke-se-badhi-nazdeekiyan/img-1.jpg'),
-      require('../../assets/stories/chupke-se-badhi-nazdeekiyan/img-2.jpg'),
-      require('../../assets/stories/chupke-se-badhi-nazdeekiyan/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/chupke-se-badhi-nazdeekiyan/audio-hi.mp3'),
-    },
+    ...storyAsset('chupke-se-badhi-nazdeekiyan'),
   },
   {
     slug: 'dewar-ki-bahon-mein-bhabhi',
@@ -542,17 +278,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/dewar-ki-bahon-mein-bhabhi/card-cover.jpg'),
-    cardCover: require('../../assets/stories/dewar-ki-bahon-mein-bhabhi/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/dewar-ki-bahon-mein-bhabhi/img-1.jpg'),
-      require('../../assets/stories/dewar-ki-bahon-mein-bhabhi/img-2.jpg'),
-      require('../../assets/stories/dewar-ki-bahon-mein-bhabhi/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/dewar-ki-bahon-mein-bhabhi/audio-hi.mp3'),
-    },
+    ...storyAsset('dewar-ki-bahon-mein-bhabhi'),
   },
   {
     slug: 'chhupi-nazdeekiyon-ka-raaz',
@@ -560,17 +286,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/chhupi-nazdeekiyon-ka-raaz/card-cover.jpg'),
-    cardCover: require('../../assets/stories/chhupi-nazdeekiyon-ka-raaz/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/chhupi-nazdeekiyon-ka-raaz/img-1.jpg'),
-      require('../../assets/stories/chhupi-nazdeekiyon-ka-raaz/img-2.jpg'),
-      require('../../assets/stories/chhupi-nazdeekiyon-ka-raaz/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/chhupi-nazdeekiyon-ka-raaz/audio-hi.mp3'),
-    },
+    ...storyAsset('chhupi-nazdeekiyon-ka-raaz'),
   },
   {
     slug: 'rasoi-mein-chhupi-nazdeekiyan',
@@ -578,17 +294,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/rasoi-mein-chhupi-nazdeekiyan/card-cover.jpg'),
-    cardCover: require('../../assets/stories/rasoi-mein-chhupi-nazdeekiyan/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/rasoi-mein-chhupi-nazdeekiyan/img-1.jpg'),
-      require('../../assets/stories/rasoi-mein-chhupi-nazdeekiyan/img-2.jpg'),
-      require('../../assets/stories/rasoi-mein-chhupi-nazdeekiyan/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/rasoi-mein-chhupi-nazdeekiyan/audio-hi.mp3'),
-    },
+    ...storyAsset('rasoi-mein-chhupi-nazdeekiyan'),
   },
   {
     slug: 'college-ki-madam',
@@ -596,17 +302,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 3,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/college-ki-madam/card-cover.jpg'),
-    cardCover: require('../../assets/stories/college-ki-madam/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/college-ki-madam/img-1.jpg'),
-      require('../../assets/stories/college-ki-madam/img-2.jpg'),
-      require('../../assets/stories/college-ki-madam/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/college-ki-madam/audio-hi.mp3'),
-    },
+    ...storyAsset('college-ki-madam'),
   },
   {
     slug: 'makan-malik-ki-betii',
@@ -614,17 +310,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/makan-malik-ki-betii/card-cover.jpg'),
-    cardCover: require('../../assets/stories/makan-malik-ki-betii/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/makan-malik-ki-betii/img-1.jpg'),
-      require('../../assets/stories/makan-malik-ki-betii/img-2.jpg'),
-      require('../../assets/stories/makan-malik-ki-betii/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/makan-malik-ki-betii/audio-hi.mp3'),
-    },
+    ...storyAsset('makan-malik-ki-betii'),
   },
   {
     slug: 'bahu-aur-sasur-ki-anokhi-kahani',
@@ -632,17 +318,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/bahu-aur-sasur-ki-anokhi-kahani/card-cover.jpg'),
-    cardCover: require('../../assets/stories/bahu-aur-sasur-ki-anokhi-kahani/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/bahu-aur-sasur-ki-anokhi-kahani/img-1.jpg'),
-      require('../../assets/stories/bahu-aur-sasur-ki-anokhi-kahani/img-2.jpg'),
-      require('../../assets/stories/bahu-aur-sasur-ki-anokhi-kahani/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/bahu-aur-sasur-ki-anokhi-kahani/audio-hi.mp3'),
-    },
+    ...storyAsset('bahu-aur-sasur-ki-anokhi-kahani'),
   },
   {
     slug: 'rasoi-mein-bahu-aur-sasur',
@@ -650,17 +326,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/rasoi-mein-bahu-aur-sasur/card-cover.jpg'),
-    cardCover: require('../../assets/stories/rasoi-mein-bahu-aur-sasur/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/rasoi-mein-bahu-aur-sasur/img-1.jpg'),
-      require('../../assets/stories/rasoi-mein-bahu-aur-sasur/img-2.jpg'),
-      require('../../assets/stories/rasoi-mein-bahu-aur-sasur/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/rasoi-mein-bahu-aur-sasur/audio-hi.mp3'),
-    },
+    ...storyAsset('rasoi-mein-bahu-aur-sasur'),
   },
   {
     slug: 'purane-dost-ka-raaz',
@@ -668,17 +334,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/purane-dost-ka-raaz/card-cover.jpg'),
-    cardCover: require('../../assets/stories/purane-dost-ka-raaz/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/purane-dost-ka-raaz/img-1.jpg'),
-      require('../../assets/stories/purane-dost-ka-raaz/img-2.jpg'),
-      require('../../assets/stories/purane-dost-ka-raaz/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/purane-dost-ka-raaz/audio-hi.mp3'),
-    },
+    ...storyAsset('purane-dost-ka-raaz'),
   },
   {
     slug: 'chhat-par-dewar-aur-bhabhi',
@@ -686,17 +342,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/chhat-par-dewar-aur-bhabhi/card-cover.jpg'),
-    cardCover: require('../../assets/stories/chhat-par-dewar-aur-bhabhi/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/chhat-par-dewar-aur-bhabhi/img-1.jpg'),
-      require('../../assets/stories/chhat-par-dewar-aur-bhabhi/img-2.jpg'),
-      require('../../assets/stories/chhat-par-dewar-aur-bhabhi/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/chhat-par-dewar-aur-bhabhi/audio-hi.mp3'),
-    },
+    ...storyAsset('chhat-par-dewar-aur-bhabhi'),
   },
   {
     slug: 'akeli-makan-malikin',
@@ -704,17 +350,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/akeli-makan-malikin/card-cover.jpg'),
-    cardCover: require('../../assets/stories/akeli-makan-malikin/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/akeli-makan-malikin/img-1.jpg'),
-      require('../../assets/stories/akeli-makan-malikin/img-2.jpg'),
-      require('../../assets/stories/akeli-makan-malikin/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/akeli-makan-malikin/audio-hi.mp3'),
-    },
+    ...storyAsset('akeli-makan-malikin'),
   },
   {
     slug: 'purane-premi-ka-raaz',
@@ -722,17 +358,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 3,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/purane-premi-ka-raaz/card-cover.jpg'),
-    cardCover: require('../../assets/stories/purane-premi-ka-raaz/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/purane-premi-ka-raaz/img-1.jpg'),
-      require('../../assets/stories/purane-premi-ka-raaz/img-2.jpg'),
-      require('../../assets/stories/purane-premi-ka-raaz/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/purane-premi-ka-raaz/audio-hi.mp3'),
-    },
+    ...storyAsset('purane-premi-ka-raaz'),
   },
   {
     slug: 'makan-malikin-ki-nayi-mohabbat',
@@ -740,17 +366,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/makan-malikin-ki-nayi-mohabbat/card-cover.jpg'),
-    cardCover: require('../../assets/stories/makan-malikin-ki-nayi-mohabbat/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/makan-malikin-ki-nayi-mohabbat/img-1.jpg'),
-      require('../../assets/stories/makan-malikin-ki-nayi-mohabbat/img-2.jpg'),
-      require('../../assets/stories/makan-malikin-ki-nayi-mohabbat/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/makan-malikin-ki-nayi-mohabbat/audio-hi.mp3'),
-    },
+    ...storyAsset('makan-malikin-ki-nayi-mohabbat'),
   },
   {
     slug: 'shaadi-se-pehle-wada',
@@ -758,17 +374,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 3,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/shaadi-se-pehle-wada/card-cover.jpg'),
-    cardCover: require('../../assets/stories/shaadi-se-pehle-wada/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/shaadi-se-pehle-wada/img-1.jpg'),
-      require('../../assets/stories/shaadi-se-pehle-wada/img-2.jpg'),
-      require('../../assets/stories/shaadi-se-pehle-wada/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/shaadi-se-pehle-wada/audio-hi.mp3'),
-    },
+    ...storyAsset('shaadi-se-pehle-wada'),
   },
   {
     slug: 'mangetar-ka-ankaha-raaz',
@@ -776,17 +382,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/mangetar-ka-ankaha-raaz/card-cover.jpg'),
-    cardCover: require('../../assets/stories/mangetar-ka-ankaha-raaz/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/mangetar-ka-ankaha-raaz/img-1.jpg'),
-      require('../../assets/stories/mangetar-ka-ankaha-raaz/img-2.jpg'),
-      require('../../assets/stories/mangetar-ka-ankaha-raaz/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/mangetar-ka-ankaha-raaz/audio-hi.mp3'),
-    },
+    ...storyAsset('mangetar-ka-ankaha-raaz'),
   },
   {
     slug: 'purane-pyaar-ka-ankaha-raaz',
@@ -794,17 +390,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/purane-pyaar-ka-ankaha-raaz/card-cover.jpg'),
-    cardCover: require('../../assets/stories/purane-pyaar-ka-ankaha-raaz/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/purane-pyaar-ka-ankaha-raaz/img-1.jpg'),
-      require('../../assets/stories/purane-pyaar-ka-ankaha-raaz/img-2.jpg'),
-      require('../../assets/stories/purane-pyaar-ka-ankaha-raaz/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/purane-pyaar-ka-ankaha-raaz/audio-hi.mp3'),
-    },
+    ...storyAsset('purane-pyaar-ka-ankaha-raaz'),
   },
   {
     slug: 'office-ka-raaz',
@@ -812,17 +398,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/office-ka-raaz/card-cover.jpg'),
-    cardCover: require('../../assets/stories/office-ka-raaz/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/office-ka-raaz/img-1.jpg'),
-      require('../../assets/stories/office-ka-raaz/img-2.jpg'),
-      require('../../assets/stories/office-ka-raaz/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/office-ka-raaz/audio-hi.mp3'),
-    },
+    ...storyAsset('office-ka-raaz'),
   },
   {
     slug: 'jab-dosti-mohabbat-bani',
@@ -830,17 +406,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/jab-dosti-mohabbat-bani/card-cover.jpg'),
-    cardCover: require('../../assets/stories/jab-dosti-mohabbat-bani/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/jab-dosti-mohabbat-bani/img-1.jpg'),
-      require('../../assets/stories/jab-dosti-mohabbat-bani/img-2.jpg'),
-      require('../../assets/stories/jab-dosti-mohabbat-bani/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/jab-dosti-mohabbat-bani/audio-hi.mp3'),
-    },
+    ...storyAsset('jab-dosti-mohabbat-bani'),
   },
   {
     slug: 'bas-ek-ichchha',
@@ -848,17 +414,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/bas-ek-ichchha/card-cover.jpg'),
-    cardCover: require('../../assets/stories/bas-ek-ichchha/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/bas-ek-ichchha/img-1.jpg'),
-      require('../../assets/stories/bas-ek-ichchha/img-2.jpg'),
-      require('../../assets/stories/bas-ek-ichchha/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/bas-ek-ichchha/audio-hi.mp3'),
-    },
+    ...storyAsset('bas-ek-ichchha'),
   },
   {
     slug: 'patni-ki-ek-baat',
@@ -866,17 +422,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/patni-ki-ek-baat/card-cover.jpg'),
-    cardCover: require('../../assets/stories/patni-ki-ek-baat/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/patni-ki-ek-baat/img-1.jpg'),
-      require('../../assets/stories/patni-ki-ek-baat/img-2.jpg'),
-      require('../../assets/stories/patni-ki-ek-baat/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/patni-ki-ek-baat/audio-hi.mp3'),
-    },
+    ...storyAsset('patni-ki-ek-baat'),
   },
   {
     slug: 'ek-kamra-do-saheliyan',
@@ -884,17 +430,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 3,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/ek-kamra-do-saheliyan/card-cover.jpg'),
-    cardCover: require('../../assets/stories/ek-kamra-do-saheliyan/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/ek-kamra-do-saheliyan/img-1.jpg'),
-      require('../../assets/stories/ek-kamra-do-saheliyan/img-2.jpg'),
-      require('../../assets/stories/ek-kamra-do-saheliyan/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/ek-kamra-do-saheliyan/audio-hi.mp3'),
-    },
+    ...storyAsset('ek-kamra-do-saheliyan'),
   },
   {
     slug: 'jethani-ke-kamre-mein-dewar',
@@ -902,17 +438,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 3,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/jethani-ke-kamre-mein-dewar/card-cover.jpg'),
-    cardCover: require('../../assets/stories/jethani-ke-kamre-mein-dewar/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/jethani-ke-kamre-mein-dewar/img-1.jpg'),
-      require('../../assets/stories/jethani-ke-kamre-mein-dewar/img-2.jpg'),
-      require('../../assets/stories/jethani-ke-kamre-mein-dewar/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/jethani-ke-kamre-mein-dewar/audio-hi.mp3'),
-    },
+    ...storyAsset('jethani-ke-kamre-mein-dewar'),
   },
   {
     slug: 'bhabhi-ka-chupke-se-ishara',
@@ -920,17 +446,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/bhabhi-ka-chupke-se-ishara/card-cover.jpg'),
-    cardCover: require('../../assets/stories/bhabhi-ka-chupke-se-ishara/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/bhabhi-ka-chupke-se-ishara/img-1.jpg'),
-      require('../../assets/stories/bhabhi-ka-chupke-se-ishara/img-2.jpg'),
-      require('../../assets/stories/bhabhi-ka-chupke-se-ishara/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/bhabhi-ka-chupke-se-ishara/audio-hi.mp3'),
-    },
+    ...storyAsset('bhabhi-ka-chupke-se-ishara'),
   },
   {
     slug: 'office-ki-malikin-aur-driver',
@@ -938,17 +454,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 3,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/office-ki-malikin-aur-driver/card-cover.jpg'),
-    cardCover: require('../../assets/stories/office-ki-malikin-aur-driver/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/office-ki-malikin-aur-driver/img-1.jpg'),
-      require('../../assets/stories/office-ki-malikin-aur-driver/img-2.jpg'),
-      require('../../assets/stories/office-ki-malikin-aur-driver/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/office-ki-malikin-aur-driver/audio-hi.mp3'),
-    },
+    ...storyAsset('office-ki-malikin-aur-driver'),
   },
   {
     slug: 'chhat-wali-mohabbat',
@@ -956,17 +462,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 3,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/chhat-wali-mohabbat/card-cover.jpg'),
-    cardCover: require('../../assets/stories/chhat-wali-mohabbat/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/chhat-wali-mohabbat/img-1.jpg'),
-      require('../../assets/stories/chhat-wali-mohabbat/img-2.jpg'),
-      require('../../assets/stories/chhat-wali-mohabbat/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/chhat-wali-mohabbat/audio-hi.mp3'),
-    },
+    ...storyAsset('chhat-wali-mohabbat'),
   },
   {
     slug: 'saas-aur-damad',
@@ -974,17 +470,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/saas-aur-damad/card-cover.jpg'),
-    cardCover: require('../../assets/stories/saas-aur-damad/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/saas-aur-damad/img-1.jpg'),
-      require('../../assets/stories/saas-aur-damad/img-2.jpg'),
-      require('../../assets/stories/saas-aur-damad/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/saas-aur-damad/audio-hi.mp3'),
-    },
+    ...storyAsset('saas-aur-damad'),
   },
   {
     slug: 'padosan-ne-aadhi-raat-ko-kaha',
@@ -992,17 +478,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 3,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/padosan-ne-aadhi-raat-ko-kaha/card-cover.jpg'),
-    cardCover: require('../../assets/stories/padosan-ne-aadhi-raat-ko-kaha/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/padosan-ne-aadhi-raat-ko-kaha/img-1.jpg'),
-      require('../../assets/stories/padosan-ne-aadhi-raat-ko-kaha/img-2.jpg'),
-      require('../../assets/stories/padosan-ne-aadhi-raat-ko-kaha/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/padosan-ne-aadhi-raat-ko-kaha/audio-hi.mp3'),
-    },
+    ...storyAsset('padosan-ne-aadhi-raat-ko-kaha'),
   },
   {
     slug: 'dost-ki-girlfriend-ka-raaz',
@@ -1010,17 +486,7 @@ export const manifest: StoryManifestEntry[] = [
     minutes: 2,
     genre: 'romance',
     mature: true,
-    cover: require('../../assets/stories/dost-ki-girlfriend-ka-raaz/card-cover.jpg'),
-    cardCover: require('../../assets/stories/dost-ki-girlfriend-ka-raaz/card-cover.jpg'),
-    images: [
-      require('../../assets/stories/dost-ki-girlfriend-ka-raaz/img-1.jpg'),
-      require('../../assets/stories/dost-ki-girlfriend-ka-raaz/img-2.jpg'),
-      require('../../assets/stories/dost-ki-girlfriend-ka-raaz/img-3.jpg'),
-    ],
-    audio: {
-      language: 'hi',
-      source: require('../../assets/stories/dost-ki-girlfriend-ka-raaz/audio-hi.mp3'),
-    },
+    ...storyAsset('dost-ki-girlfriend-ka-raaz'),
   },
 ];
 
