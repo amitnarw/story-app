@@ -3,7 +3,7 @@ import type { ExpoConfig } from 'expo/config';
 const config: ExpoConfig = {
   name: 'Romantic Stories',
   slug: 'romantic-stories',
-  version: '1.0.0',
+  version: '5.0.0',
   orientation: 'portrait',
   icon: './assets/images/icon.png',
   scheme: 'romanticstories',
@@ -15,6 +15,7 @@ const config: ExpoConfig = {
     supportsTablet: true,
   },
   android: {
+    versionCode: 5,
     adaptiveIcon: {
       backgroundColor: '#F7F2EA',
       foregroundImage: './assets/images/android-icon-foreground.png',
