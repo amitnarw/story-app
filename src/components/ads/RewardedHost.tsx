@@ -23,7 +23,16 @@ export function RewardedHost() {
   });
 
   const pendingResolve = useRef<((outcome: AdOutcome) => void) | null>(null);
+  const rewardEarnedRef = useRef(false);
   const retriedRef = useRef(false);
+
+  // Track when reward is granted during the ad playback.
+  // We do not resolve immediately so the ad can finish and close first.
+  useEffect(() => {
+    if (earnedReward) {
+      rewardEarnedRef.current = true;
+    }
+  }, [earnedReward]);
 
   // One delayed retry after a real load failure. Never a retry loop.
   useEffect(() => {
@@ -40,24 +49,22 @@ export function RewardedHost() {
     return () => clearTimeout(timer);
   }, [status, retry]);
 
-  // Resolve the pending request: reward earned, ad closed, or show failed.
+  // Resolve the pending request ONLY after the ad is closed or on error.
+  // This guarantees narration audio never starts while the ad video or end card is still on screen.
   useEffect(() => {
     const resolve = pendingResolve.current;
     if (!resolve) return;
 
-    if (earnedReward) {
-      pendingResolve.current = null;
-      resolve({ kind: 'earned' });
-      return;
-    }
-
     if (status === 'closed') {
+      const earned = rewardEarnedRef.current;
+      rewardEarnedRef.current = false;
       pendingResolve.current = null;
-      resolve({ kind: 'user-closed' });
+      resolve(earned ? { kind: 'earned' } : { kind: 'user-closed' });
       return;
     }
 
     if (status === 'error') {
+      rewardEarnedRef.current = false;
       pendingResolve.current = null;
       resolve({
         kind: 'error',
@@ -65,7 +72,7 @@ export function RewardedHost() {
         message: 'rewarded ad failed to show',
       });
     }
-  }, [earnedReward, status, adUnitId]);
+  }, [status, adUnitId]);
 
   // Do not leave a caller waiting if the host unmounts.
   useEffect(
@@ -84,6 +91,7 @@ export function RewardedHost() {
     }
 
     const showRewarded = (): Promise<AdOutcome> => {
+      rewardEarnedRef.current = false;
       if (pendingResolve.current) {
         return Promise.resolve({ kind: 'user-closed' });
       }

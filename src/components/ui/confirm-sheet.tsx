@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { BlurView } from 'expo-blur';
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -85,16 +85,12 @@ export function ConfirmSheet({
         pointerEvents="none"
       />
       {/* Backdrop tap to cancel */}
-      <PressableScale
+      <Pressable
         accessibilityRole="button"
         accessibilityLabel="Cancel"
-        scaleTo={0.96}
-        haptic="select"
         onPress={onCancel}
         style={{ position: 'absolute', inset: 0 }}
-      >
-        {' '}
-      </PressableScale>
+      />
 
       {/* Modal card */}
       <View
